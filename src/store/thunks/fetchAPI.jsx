@@ -7,6 +7,7 @@ export const GET_ALL_PRODUCT =
 export const GET_ALL_REVIEW = "http://localhost:3000/reviews";
 export const ADD_PRODUCT = "http://localhost:3000/products/create-product";
 export const GET_ALL_USER = "http://localhost:3000/users/users";
+export const GET_ALL_ORDER = "http://localhost:3000/orders/";
 
 // Function
 
@@ -25,5 +26,10 @@ export const fetchReview = createAsyncThunk("reviews/fetch", async () => {
 export const fetchUser = createAsyncThunk("users/fetch", async () => {
   const response = await axios.get(GET_ALL_USER);
 
+  return response.data;
+});
+
+export const fetchOrder = createAsyncThunk("order/fetch", async () => {
+  const response = await axios.get(GET_ALL_ORDER);
   return response.data;
 });

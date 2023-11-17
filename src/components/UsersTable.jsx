@@ -12,6 +12,12 @@ import { fetchProducts, fetchUser } from "../store";
 
 const columns = [
   {
+    id: "id",
+    label: "ID",
+    minWidth: 170,
+    align: "left",
+  },
+  {
     id: "FullName",
     label: "Name",
     minWidth: 170,
@@ -98,6 +104,7 @@ export default function UsersTable() {
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((user, index) => (
                   <TableRow hover role="checkbox" tabIndex={-1} key={index}>
+                    <TableCell>{user._id}</TableCell>
                     <TableCell align="left">
                       {user.firstName} {user.lastName}
                     </TableCell>

@@ -17,6 +17,8 @@ import PeopleIcon from "@mui/icons-material/People";
 import RateReviewIcon from "@mui/icons-material/RateReview";
 import AddIcon from "@mui/icons-material/Add";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { Link } from 'react-router-dom';
+import '../style/Dashboard.css'
 
 export default function TopAppBar() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -44,13 +46,17 @@ export default function TopAppBar() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography
-            variant="h6"
-            component="div"
-            sx={{ flexGrow: 1, color: "green" }}
-          >
-            KAKSIKOR
-          </Typography>
+
+          <Link to="/" className="link">
+            <Typography
+              variant="h6"
+              component="div"
+              sx={{ flexGrow: 1, color: "green"}}
+            >
+              KAKSIKOR
+            </Typography>
+          </Link>
+
         </Toolbar>
       </AppBar>
 
@@ -72,7 +78,7 @@ export default function TopAppBar() {
               {
                 text: "Dashboard",
                 icon: <DashboardIcon />,
-                link: "/dashboard",
+                link: "/",
               },
               {
                 text: "Product",

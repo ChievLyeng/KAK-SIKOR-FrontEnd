@@ -1,0 +1,33 @@
+.container-all {
+    margin: 160px auto;
+  }
+  
+  .container {
+    margin: auto;
+    justify-content: space-between;
+    width: 80%;
+  }
+  
+  .sub-container {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    margin-bottom: 24px;
+    
+  }
+  
+  .link {
+    text-decoration: none;
+  }
+
+  .dashboard-box {
+    height: 100px;
+    background-color: aqua;
+  }
+
+  .dashboard-box p {
+    text-align: center;
+    
+  }  
+  
+  
