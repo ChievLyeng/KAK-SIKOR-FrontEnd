@@ -90,17 +90,15 @@ export default function TableComponent() {
           width: "100%",
           overflow: "hidden",
           margin: "auto",
-          // marginLeft: "auto",
-          // marginRight: "0",
-          marginTop: 6,
+          marginTop: 4,
         }}
       >
         <h1>Recent Order </h1>
         <br />
         <TableContainer sx={{ maxHeight: 440 }}>
           <Table stickyHeader aria-label="sticky table">
-            <TableHead>
-              <TableRow>
+            <TableHead  > 
+              <TableRow >
                 {columns.map((column) => (
                   <TableCell
                     key={column.id}

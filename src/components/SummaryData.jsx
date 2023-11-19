@@ -1,17 +1,17 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import OutlinedCard from '../common-component/Card';
+import SaleCard from '../common-component/SaleCard';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import Inventory2Icon from '@mui/icons-material/Inventory2';
 import ReviewsIcon from '@mui/icons-material/Reviews';
 import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
+import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProducts, fetchUser, fetchReview, fetchOrder } from '../store';
-import TopAppBar from './TopAppBar';
 import Header from '../common-component/Header';
 import Grid from '@mui/material/Grid';
-import Container from '@mui/material/Container';
 import '../style/Dashboard.css';
 
 function SummaryData() {
@@ -37,26 +37,20 @@ function SummaryData() {
 
   return (
     <>
-      <TopAppBar />
+      
 
        {/* Add margin styles and center content */}
        <Header
-          backgroundColor="white"
-          color="#82B440"
-          marginBottom={6}
-          height="100px"
-          titlePaddingLeft={4}
-          titlePaddingTop={4}
-          titlePaddingBottom={4}
+          title="Dashboard"
         />
 
         <Grid
           container
-          rowSpacing={4}
-          columnSpacing={{ xs: 1, sm: 1, md: 4 }}
-          // sx={{ backgroundColor: 'black', margin: '0 auto' }}
+          rowSpacing={2}
+          columnSpacing={{ xs: 1, sm: 1, md: 2 }}
+          className='MuiGrid-root suumary-container'
         >
-          <Grid item xs={4}>
+          <Grid item xs={4} >
             <Link to="" className="link">
               <OutlinedCard
                 title="Total Product"
@@ -78,11 +72,12 @@ function SummaryData() {
 
           <Grid item xs={4}>
             <Link to="" className="link">
-              <OutlinedCard 
+              <SaleCard
                 title="Total Sale"
                 value={productLength}
-                icon={<Inventory2Icon />}
-              />
+                icon={<MonetizationOnIcon />}
+            />
+
             </Link>
           </Grid>
 

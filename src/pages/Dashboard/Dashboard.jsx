@@ -1,22 +1,19 @@
 import SummaryData from "../../components/summaryData";
 import OrderTable from "../../components/OrderTable";
-import Container from '@mui/material/Container';
+import Container from "@mui/material/Container";
+import TopAppBar from "../../components/TopAppBar";
 
 const Dashboard = () => {
-    return (
-        
+  return (
+    <>
 
-        <div className='container-all'>
-            <Container maxWidth="Lg" className="MuiContainer-maxWidthMd" >
-
-                <SummaryData />
-
-                <OrderTable />
-
-            </Container>
-        </div>
-
-    );
-}
+        <Container maxWidth="Lg" className="MuiContainer-maxWidthMd">
+          <TopAppBar />
+          <SummaryData />
+          <OrderTable />
+        </Container>
+    </>
+  );
+};
 
 export default Dashboard;

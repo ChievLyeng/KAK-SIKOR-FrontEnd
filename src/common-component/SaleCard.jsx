@@ -4,7 +4,7 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 
-const OutlinedCard = ({ title, value, icon }) => {
+const SaleCard = ({ title, value, icon }) => {
   return (
     <Box className="outside-box">
       <Card variant="outlined">
@@ -14,7 +14,7 @@ const OutlinedCard = ({ title, value, icon }) => {
             {title}
           </Typography>
 
-          <Typography variant="h5" component="div" className="MuiTypography-root customTypography">
+          <Typography variant="h5" component="div" className="MuiTypography-root saleTypography">
             {value}
           </Typography>
 
@@ -29,4 +29,4 @@ const OutlinedCard = ({ title, value, icon }) => {
   );
 };
 
-export default OutlinedCard;
+export default SaleCard;
