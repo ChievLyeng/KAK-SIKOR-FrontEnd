@@ -4,8 +4,13 @@
   margin: 0;
 }
 .container-all {
-  margin: 160px auto;
+  margin: 100px auto;
 }
+
+body {
+  background-color: #E5E4E2;
+}
+
 
 
 

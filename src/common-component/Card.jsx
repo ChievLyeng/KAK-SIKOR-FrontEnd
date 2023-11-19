@@ -9,13 +9,13 @@ const OutlinedCard = ({ title, value, icon }) => {
   const defaultIconColor = '#82B440';
 
   return (
-    <Box sx={{ minWidth: 400 }}>
+    <Box sx={{ minWidth: 275 }}>
       <Card variant="outlined" sx={{ backgroundColor: 'white' }}>
         <CardContent sx={{ position: 'relative' }}>
           <Typography sx={{ fontSize: 24 ,fontWeight : "bold"}} color="#000000" gutterBottom>
             {title}
           </Typography>
-          <Typography variant="h5" component="div" color={defaultIconColor} sx={{ mb: 4 ,ml: 2}}>
+          <Typography variant="h5" component="div" color={defaultIconColor} sx={{ mb: 2 ,ml: 2}}>
             {value}
           </Typography>
           <Box

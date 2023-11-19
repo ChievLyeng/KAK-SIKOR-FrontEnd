@@ -16,13 +16,13 @@ const columns = [
   {
     id: "ID",
     label: "ID",
-    minWidth: 170,
+    minWidth: 100,
     align: "left",
   },
   {
     id: "Customer",
     label: "Customer",
-    minWidth: 170,
+    minWidth: 120,
     align: "left",
   },
   {
@@ -35,34 +35,34 @@ const columns = [
   {
     id: "Amount",
     label: "Amount",
-    minWidth: 170,
+    minWidth: 120,
     align: "left",
   },
   {
     id: "Status",
     label: "Status",
-    minWidth: 170,
+    minWidth: 120,
     align: "left",
   },
   { id: "Date", label: "Date", minWidth: 170 },
   {
     id: "Action",
     label: "Action",
-    minWidth: 170,
+    minWidth: 150,
     align: "left",
   },
 ];
 
 export default function TableComponent() {
   const dispatch = useDispatch();
-  const productData = useSelector((state) => state.products.data.products);
+  // const productData = useSelector((state) => state.products.data.products);
 
   const orders = useSelector((state) => {
     return state.orders?.data?.orders
   })
 
   const countOrder = orders
-  console.log(countOrder)
+  // console.log(countOrder)
 
   useEffect(() => {
     dispatch(fetchProducts());
@@ -87,11 +87,12 @@ export default function TableComponent() {
     <>
       <Paper
         sx={{
-          width: "80%",
+          width: "100%",
           overflow: "hidden",
-          marginLeft: "100px",
-          marginRight: "0",
-          marginTop: 0,
+          margin: "auto",
+          // marginLeft: "auto",
+          // marginRight: "0",
+          marginTop: 6,
         }}
       >
         <h1>Recent Order </h1>
@@ -117,7 +118,7 @@ export default function TableComponent() {
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((order, index) => (
                     <TableRow hover role="checkbox" tabIndex={-1} key={index}>
-                      <TableCell align="left">{order._id}</TableCell>
+                      <TableCell align="left">{order._id.slice(-8)}</TableCell>
                       <TableCell align="left">{`${order.orderBy.firstName} ${order.orderBy.lastName}`}</TableCell>
                       <TableCell>{ order.products.length >= 2 ? `(${order.products.length}) items`: `(${order.products.length}) item`} </TableCell>
                       <TableCell align="left">{}</TableCell>
@@ -137,7 +138,7 @@ export default function TableComponent() {
         </TableContainer>
         <TablePagination
           rowsPerPageOptions={[5, 10, 25, 100]}
-          component="div"
+          // component=
           count={orders && orders.map((order) => {
 
           })}

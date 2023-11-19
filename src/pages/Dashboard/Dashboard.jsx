@@ -1,14 +1,19 @@
 import SummaryData from "../../components/summaryData";
 import OrderTable from "../../components/OrderTable";
+import Container from '@mui/material/Container';
 
 const Dashboard = () => {
     return (
         
 
         <div className='container-all'>
-            <SummaryData />
+            <Container maxWidth="Lg" className="MuiContainer-maxWidthMd" >
 
-            <OrderTable />
+                <SummaryData />
+
+                <OrderTable />
+
+            </Container>
         </div>
 
     );
