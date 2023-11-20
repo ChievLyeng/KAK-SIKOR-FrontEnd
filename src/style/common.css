@@ -1,0 +1,10 @@
+.create-form {
+  width: 50%;
+  margin: 100px auto;
+}
+
+@media (max-width: 600px) {
+  .create-form {
+    width: 90%;
+  }
+}

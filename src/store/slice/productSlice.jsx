@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchProducts } from "../thunks/fetchAPI";
+import { fetchProducts, addProduct } from "../thunks/fetchAPI";
 
 const productSlice = createSlice({
   name: "product",
@@ -7,6 +7,8 @@ const productSlice = createSlice({
     data: [],
     isLoading: false,
     error: null,
+    isAdding: false,
+    addError: null,
   },
   extraReducers(builder) {
     builder
@@ -21,6 +23,18 @@ const productSlice = createSlice({
       .addCase(fetchProducts.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.error.message;
+      })
+      .addCase(addProduct.pending, (state) => {
+        state.isAdding = true;
+        state.addError = null;
+      })
+      .addCase(addProduct.fulfilled, (state, action) => {
+        state.isAdding = false;
+        // You might handle the successful addition of the product here
+      })
+      .addCase(addProduct.rejected, (state, action) => {
+        state.isAdding = false;
+        state.addError = action.error.message;
       });
   },
 });

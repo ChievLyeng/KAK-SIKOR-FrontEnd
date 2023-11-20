@@ -9,6 +9,7 @@ import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProducts, fetchUser } from "../store";
+import { FormControl, InputLabel, Select, MenuItem } from "@mui/material";
 
 const columns = [
   {
@@ -37,7 +38,6 @@ const columns = [
     minWidth: 170,
     align: "right",
   },
-
   {
     id: "CreateAt",
     label: "Create At",
@@ -46,21 +46,18 @@ const columns = [
   },
 ];
 
-export default function UsersTable() {
+const UsersTable = () => {
   const dispatch = useDispatch();
   const usersData = useSelector((state) => state.users.data?.data?.users);
-  const productData = useSelector((state) => state.products.data.products);
 
   useEffect(() => {
     dispatch(fetchUser());
     dispatch(fetchProducts());
   }, [dispatch]);
 
-  console.log("Product data ", productData);
-  console.log("Userdata", usersData);
-
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [selectedRole, setSelectedRole] = useState(""); // State to store selected role
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -70,6 +67,17 @@ export default function UsersTable() {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
+
+  const handleRoleChange = (event) => {
+    setSelectedRole(event.target.value); // Update selected role
+    setPage(0); // Reset page when role changes
+  };
+
+  const filteredUsers = (usersData || []).filter((user) =>
+    selectedRole ? user.role === selectedRole : true
+  );
+
+  console.log("agagsd", usersData);
 
   return (
     <Paper
@@ -81,9 +89,42 @@ export default function UsersTable() {
         marginTop: 30,
       }}
     >
-      <h1>User List :</h1>
-      <br />
-      <TableContainer sx={{ maxHeight: 440 }}>
+      <h1 className="users-header">User List :</h1>
+      <FormControl sx={{ m: 1, minWidth: 150 }}>
+        <InputLabel
+          id="demo-simple-select-label"
+          shrink={selectedRole !== ""}
+          sx={{
+            backgroundColor: "white",
+            paddingTop: "5px",
+            paddingRight: "5px",
+            borderRadius: "4px",
+          }}
+        >
+          Select Role
+        </InputLabel>
+        <Select
+          labelId="demo-simple-select-label"
+          id="demo-simple-select-label"
+          value={selectedRole}
+          onChange={handleRoleChange}
+          sx={{
+            paddingTop: "6px",
+            border: "1px solid #ced4da",
+            borderRadius: "4px",
+            "&:focus": {
+              borderColor: "#4a90e2",
+              boxShadow: "0 0 0 0.2rem rgba(74, 144, 226, 0.25)",
+            },
+          }}
+        >
+          <MenuItem value="">All</MenuItem>
+          <MenuItem value="user">User</MenuItem>
+          <MenuItem value="supplier">Supplier</MenuItem>
+        </Select>
+      </FormControl>
+
+      <TableContainer>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>
@@ -99,31 +140,30 @@ export default function UsersTable() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {usersData &&
-              usersData
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((user, index) => (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={index}>
-                    <TableCell>{user._id}</TableCell>
-                    <TableCell align="left">
-                      {user.firstName} {user.lastName}
-                    </TableCell>
-                    <TableCell>{user.email}</TableCell>
-                    <TableCell>{user.gender}</TableCell>
-                    <TableCell align="right">{user.phoneNumber}</TableCell>
-                    <TableCell align="right">{user.role}</TableCell>
-                    <TableCell align="right">
-                      {new Date(user.createdAt).toLocaleDateString()}
-                    </TableCell>
-                  </TableRow>
-                ))}
+            {filteredUsers
+              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              .map((user, index) => (
+                <TableRow hover role="checkbox" tabIndex={-1} key={index}>
+                  <TableCell>{user._id}</TableCell>
+                  <TableCell align="left">
+                    {user.firstName} {user.lastName}
+                  </TableCell>
+                  <TableCell>{user.email}</TableCell>
+                  <TableCell>{user.gender}</TableCell>
+                  <TableCell align="right">{user.phoneNumber}</TableCell>
+                  <TableCell align="right">{user.role}</TableCell>
+                  <TableCell align="right">
+                    {new Date(user.createdAt).toLocaleDateString()}
+                  </TableCell>
+                </TableRow>
+              ))}
           </TableBody>
         </Table>
       </TableContainer>
       <TablePagination
         rowsPerPageOptions={[5, 10, 25, 100]}
         component="div"
-        count={usersData ? usersData.length : 0}
+        count={filteredUsers ? filteredUsers.length : 0}
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={handleChangePage}
@@ -131,4 +171,6 @@ export default function UsersTable() {
       />
     </Paper>
   );
-}
+};
+
+export default UsersTable;
