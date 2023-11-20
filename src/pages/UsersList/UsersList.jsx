@@ -1,12 +1,14 @@
 import TopAppBar from "../../components/TopAppBar";
 import UsersTable from "../../components/UsersTable";
-
+import Container from "@mui/material/Container";
 
 const UsersList = () => {
   return (
     <>
-      <TopAppBar />
-      <UsersTable />
+      <Container maxWidth="Lg" >
+        <TopAppBar />
+        <UsersTable />
+      </Container>
     </>
   );
 };

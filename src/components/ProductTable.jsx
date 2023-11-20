@@ -77,7 +77,7 @@ export default function TableComponent() {
           overflow: "hidden",
           marginLeft: "auto",
           marginRight: "0",
-          marginTop: 30,
+          marginTop: 24,
         }}
       >
         <h1>Product List :</h1>

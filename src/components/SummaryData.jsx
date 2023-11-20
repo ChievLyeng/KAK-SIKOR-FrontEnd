@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import OutlinedCard from "../common-component/Card";
 import SaleCard from "../common-component/SaleCard";

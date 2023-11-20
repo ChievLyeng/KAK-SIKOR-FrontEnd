@@ -1,10 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { fetchUser } from "../thunks/fetchAPI";
+import { fetchSupplierById } from "../thunks/fetchAPI";
 
 const userSlice = createSlice({
   name: "user",
   initialState: {
     data: [],
+    supplier: [],
     isLoading: false,
     error: null,
   },
@@ -21,7 +23,20 @@ const userSlice = createSlice({
       .addCase(fetchUser.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.error.message;
-      });
+      })
+      .addCase(fetchSupplierById.pending, (state,action) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(fetchSupplierById.fulfilled, (state,action) => {
+        state.isLoading = false;
+        state.supplier = action.payload;
+      })
+      .addCase(fetchSupplierById.rejected, (state,action) => {
+        state.isLoading = false;
+        state.error = action.error.message
+      })
+     
   },
 });
 

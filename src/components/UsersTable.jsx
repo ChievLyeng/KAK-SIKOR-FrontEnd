@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -30,19 +31,25 @@ const columns = [
     id: "Phone Number",
     label: "Phone Number",
     minWidth: 170,
-    align: "right",
+    align: "left",
   },
   {
     id: "role",
     label: "Role",
     minWidth: 170,
-    align: "right",
+    align: "left",
   },
   {
     id: "CreateAt",
     label: "Create At",
     minWidth: 170,
-    align: "right",
+    align: "left",
+  },
+  {
+    id: "Action",
+    label: "Action",
+    minWidth: 170,
+    align: "left",
   },
 ];
 
@@ -77,16 +84,20 @@ const UsersTable = () => {
     selectedRole ? user.role === selectedRole : true
   );
 
-  console.log("agagsd", usersData);
+  const handleView = () => {
+    console.log("Clicked!")
+  }
+
 
   return (
     <Paper
       sx={{
         width: "85%",
         overflow: "hidden",
-        marginLeft: "auto",
-        marginRight: "0",
-        marginTop: 30,
+        margin: "auto",
+        // marginLeft: "auto",
+        // marginRight: "0",
+        marginTop: 24,
       }}
     >
       <h1 className="users-header">User List :</h1>
@@ -150,10 +161,20 @@ const UsersTable = () => {
                   </TableCell>
                   <TableCell>{user.email}</TableCell>
                   <TableCell>{user.gender}</TableCell>
-                  <TableCell align="right">{user.phoneNumber}</TableCell>
-                  <TableCell align="right">{user.role}</TableCell>
-                  <TableCell align="right">
+                  <TableCell align="left">{user.phoneNumber}</TableCell>
+                  <TableCell align="left">{user.role}</TableCell>
+                  <TableCell align="left">
                     {new Date(user.createdAt).toLocaleDateString()}
+                  </TableCell>
+                  <TableCell>
+                        <div className="action-icon">
+                          <Link to={`/supplier/${user._id}`}>
+                            <i className="fa-regular fa-eye"></i>
+                          </Link>
+                          <Link>
+                            <i className="fa-solid fa-pen-to-square"></i>
+                          </Link>
+                        </div>
                   </TableCell>
                 </TableRow>
               ))}

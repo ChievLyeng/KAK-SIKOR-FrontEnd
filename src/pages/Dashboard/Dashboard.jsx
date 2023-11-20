@@ -6,7 +6,7 @@ import TopAppBar from "../../components/TopAppBar";
 const Dashboard = () => {
   return (
     <>
-      <Container maxWidth="Lg" className="MuiContainer-maxWidthMd">
+      <Container maxWidth="xl" className="MuiContainer-maxWidthMd">
         <TopAppBar />
         <SummaryData />
         <OrderTable />

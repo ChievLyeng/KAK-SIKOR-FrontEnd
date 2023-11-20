@@ -10,6 +10,10 @@ export const GET_ALL_USER = "http://localhost:3000/users/users";
 export const GET_ALL_ORDER = "http://localhost:3000/orders/";
 export const GET_ALL_CATEGORIES =
   "http://localhost:3000/category/get-all-categories";
+  
+export const GET_SUPPPLIER_By_Id = (id) => 
+`http://localhost:3000/users/supplier/${id}`
+
 
 // Function
 
@@ -59,3 +63,15 @@ export const fetchCategories = createAsyncThunk(
     }
   }
 );
+
+export const fetchSupplierById = createAsyncThunk(
+  "supplier/fetchById",
+  async(id) => {
+    try{
+      const response = await axios.get(GET_SUPPPLIER_By_Id(id))
+      return response.data
+    }catch(error){
+      return error.response.data
+    }
+  }
+)
