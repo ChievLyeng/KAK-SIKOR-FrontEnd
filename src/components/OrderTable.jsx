@@ -53,22 +53,14 @@ const columns = [
   },
 ];
 
-export default function TableComponent() {
-  const dispatch = useDispatch();
-  // const productData = useSelector((state) => state.products.data.products);
+export default function ProductTable({orders}) {
+  // const dispatch = useDispatch();
+  // const orders = useSelector((state) => state.orders?.data?.orders);
 
-  const orders = useSelector((state) => {
-    return state.orders?.data?.orders
-  })
-
-  const countOrder = orders
-  // console.log(countOrder)
-
-  useEffect(() => {
-    dispatch(fetchProducts());
-    dispatch(fetchOrder());
-  }, [dispatch]);
-
+  // useEffect(() => {
+  //   dispatch(fetchProducts());
+  //   dispatch(fetchOrder());
+  // }, [dispatch]);
 
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -82,7 +74,6 @@ export default function TableComponent() {
     setPage(0);
   };
 
-  
   return (
     <>
       <Paper
@@ -97,8 +88,8 @@ export default function TableComponent() {
         <br />
         <TableContainer sx={{ maxHeight: 440 }}>
           <Table stickyHeader aria-label="sticky table">
-            <TableHead  > 
-              <TableRow >
+            <TableHead>
+              <TableRow>
                 {columns.map((column) => (
                   <TableCell
                     key={column.id}
@@ -116,7 +107,7 @@ export default function TableComponent() {
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((order, index) => (
                     <TableRow hover role="checkbox" tabIndex={-1} key={index}>
-                      <TableCell align="left">{order._id.slice(-8)}</TableCell>
+                      <TableCell align="left">{}</TableCell>
                       <TableCell align="left">{`${order.orderBy.firstName} ${order.orderBy.lastName}`}</TableCell>
                       <TableCell>{ order.products.length >= 2 ? `(${order.products.length}) items`: `(${order.products.length}) item`} </TableCell>
                       <TableCell align="left">{}</TableCell>
@@ -136,10 +127,7 @@ export default function TableComponent() {
         </TableContainer>
         <TablePagination
           rowsPerPageOptions={[5, 10, 25, 100]}
-          // component=
-          count={orders && orders.map((order) => {
-
-          })}
+          count={orders && orders.map((order) => {})}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}

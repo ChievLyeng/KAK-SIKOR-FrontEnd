@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import OutlinedCard from "../common-component/Card";
+import OutlinedCard from "../common-component/OutlineCard";
 import SaleCard from "../common-component/SaleCard";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import Inventory2Icon from "@mui/icons-material/Inventory2";

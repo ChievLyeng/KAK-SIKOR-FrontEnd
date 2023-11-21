@@ -3,6 +3,6 @@
 * {
   margin: 0;
 }
-.container-all {
-  margin: 100px auto;
+body {
+  background-color: lightgray;
 }

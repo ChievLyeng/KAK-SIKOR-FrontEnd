@@ -1,0 +1,63 @@
+.communication-item{
+    margin-top: 24px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 16px
+}
+
+.userinfo-box{
+    background-color: white;
+    color: black;
+    padding: 16px;
+    margin-top: 24px;
+    height: 320px;
+    border-radius: 10px;
+}
+
+.total-info-box{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 24px;
+}
+
+.stack-avatar{
+    margin-top: 24px;
+}
+
+.MuiAvatar-root.supplier-profile{
+    width: 160px;
+    height: 160px;
+    border-radius: 80px;
+}
+
+.MuiTypography-root.supplier-name{
+    margin-left: 16px;
+    margin-top: 24px;
+    font-weight: bold;
+}
+
+.MuiTypography-root.supplier-email{
+    margin-left: 16px;
+    margin-top: 8px;
+    color: gray;
+}
+
+.MuiTypography-root.title{
+    font-weight: bold;
+    color: #82B440;
+}
+
+.MuiTypography-root.sub-title{
+    font-weight: bold;
+    color: #000000;
+    /* margin-bottom: px; */
+}
+
+.communication-icon{
+    color: #82B440;
+}
+
+
+
