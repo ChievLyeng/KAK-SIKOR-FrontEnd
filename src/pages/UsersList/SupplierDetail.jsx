@@ -14,6 +14,10 @@ import Grid from '@mui/material/Grid';
 import { BorderAllRounded } from "@mui/icons-material";
 import Avatar from '@mui/material/Avatar';
 import Stack from '@mui/material/Stack';
+import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
+import MyLocationIcon from '@mui/icons-material/MyLocation';
+import AgricultureIcon from '@mui/icons-material/Agriculture';
+import OfflinePinIcon from '@mui/icons-material/OfflinePin';
 
 function SupplierDetail() {
   const dispatch = useDispatch();
@@ -33,7 +37,7 @@ function SupplierDetail() {
 
   return (
     <>
-      <Container maxWidth="xl" className="MuiContainer-maxWidthMd">
+      <Container maxWidth="Lg" className="MuiContainer-maxWidthMd">
         <TopAppBar />
         <Header title="Supplier" />
 
@@ -61,27 +65,48 @@ function SupplierDetail() {
 
              <Grid container spacing={2} columns={16} >
                 <Grid item xs={8}>
-                    <Stack direction="row" spacing={2}>
-                        <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
-                    </Stack>
+                <Stack direction="row" spacing={2}>
+                  <Avatar 
+                      alt="Remy Sharp" 
+                      src="/static/images/avatar/1.jpg" 
+                      style={{ 
+                          width: '160px', 
+                          height: '160px',
+                          borderRadius: '80px',
+                          marginTop: '24px'
+                      }} 
+                  />
+                 </Stack>
+                 <Typography variant="h5" component="div">
+                        Chiev Lyeng
+                  </Typography>
+                  <Typography variant="h5" component="div">
+                        Lyeng@gmail.com
+                  </Typography>
+
                 </Grid>
 
                 <Grid item xs={8}>
                    <Typography variant="h5" component="div">
-                        Chiev Lyeng
+                        Communication
                      </Typography>
-                     <Typography variant="h5" component="div">
-                        lyeng@gmail.com
+                     <Typography variant="h5" component="div" >
+                        <LocalPhoneIcon/> 061 328822
+                     </Typography>
+
+                     <Typography variant="h5" component="div" >
+                        <MyLocationIcon/> Phnom Penh, Steung Mean Chey, Mean Chey,St 271
+                     </Typography>
+
+                     <Typography variant="h5" component="div" >
+                        <AgricultureIcon/> Amarak Farm
+                     </Typography>
+
+                     <Typography variant="h5" component="div" >
+                        <OfflinePinIcon/> 2 days ago
                      </Typography>
                 </Grid>
 
-                <Card>
-                    <Typography variant="h5" component="div">
-                        communication
-                    </Typography>
-                </Card>
-
-                
              </Grid>
 
                     
@@ -89,20 +114,29 @@ function SupplierDetail() {
                 
             </Grid>
             <Grid item xs={8}>
-                <Box
-                    sx={{ backgroundColor: "#3498db", 
-                    color: "#ffffff", 
-                    padding: "16px",
-                    marginTop:'100px',
-                    height: '300px'
-                    }}
-                    >
-                    <Card>
-                        <Typography variant="h5" component="div">
-                            User Information
-                        </Typography>
-                    </Card>
-                </Box>
+               <Box
+               sx={{ backgroundColor: "#3498db", 
+               color: "#ffffff", 
+               padding: "16px",
+               marginTop:'100px',
+               height: '300px'
+               }}>
+               <Grid item xs={4}>
+                    <OutlinedCard
+                    title="Total Product"
+                    value="2"
+                    icon={<Inventory2Icon />}
+                    />
+                </Grid>
+
+                <Grid item xs={4}>
+                    <OutlinedCard
+                    title="Total Product"
+                    value="2"
+                    icon={<Inventory2Icon />}
+                    />
+                </Grid>
+               </Box>
             </Grid>
             </Grid>
 
