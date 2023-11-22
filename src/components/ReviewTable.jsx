@@ -95,9 +95,9 @@ export default function ReviewTable() {
                 .map((review, index) => (
                   <TableRow hover role="checkbox" tabIndex={-1} key={index}>
                     <TableCell align="left">
-                      {review.userId.firstName} {review.userId.lastName}
+                      {review.userId?.firstName} {review.userId?.lastName}
                     </TableCell>
-                    <TableCell align="left">{review.product.name}</TableCell>
+                    <TableCell align="left">{review.product?.name}</TableCell>
                     <TableCell align="right">{review.description}</TableCell>
                     <TableCell align="right">{review.rating}</TableCell>
                     <TableCell align="right">

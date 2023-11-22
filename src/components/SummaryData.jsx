@@ -39,61 +39,67 @@ function SummaryData() {
       {/* Add margin styles and center content */}
       <Header title="Dashboard" />
 
-      <Grid
-        container
-        rowSpacing={2}
-        columnSpacing={{ xs: 1, sm: 1, md: 2 }}
-        className="MuiGrid-root suumary-container"
-      >
-        <Grid item xs={4}>
-          <Link to="/productsList" className="link">
-            <OutlinedCard
-              title="Total Product"
-              value={productLength}
-              icon={<Inventory2Icon />}
-            />
-          </Link>
+      <Grid container spacing={4} className="MuiGrid-root suumary-container">
+        <Grid item xs={8}>
+          <Grid
+            container
+            spacing={2}
+            sx={{padding:"0px"}}
+          >
+            <Grid item xs={6}>
+              <Link to="/productsList" className="link">
+                <OutlinedCard
+                  title="Total Product"
+                  value={productLength}
+                  icon={<Inventory2Icon />}
+                />
+              </Link>
+            </Grid>
+
+            <Grid item xs={6}>
+              <Link to="/usersList" className="link">
+                <OutlinedCard
+                  title="Total User"
+                  value={users.result}
+                  icon={<PersonOutlineIcon />}
+                />
+              </Link>
+            </Grid>
+
+            <Grid item xs={6}>
+              <Link to="" className="link">
+                <OutlinedCard
+                  title="Total Order"
+                  value={orderLength}
+                  icon={<ShoppingBagIcon />}
+                />
+              </Link>
+            </Grid>
+
+            <Grid item xs={6}>
+              <Link to="/review-list" className="link">
+                <OutlinedCard
+                  title="Total Review"
+                  value={reviews.result}
+                  icon={<ReviewsIcon />}
+                />
+              </Link>
+            </Grid>
+          </Grid>
         </Grid>
 
-        <Grid item xs={4}>
-          <Link to="usersList" className="link">
-            <OutlinedCard
-              title="Total User"
-              value={users.result}
-              icon={<PersonOutlineIcon />}
-            />
-          </Link>
+        <Grid item xs={4} >
+          <Grid item xs={16}>
+            <Link to="" className="link">
+              <SaleCard
+                title="Total Sale"
+                value="$ 299999"
+                icon={<MonetizationOnIcon />}
+              />
+            </Link>
+          </Grid>
         </Grid>
 
-        <Grid item xs={4}>
-          <Link to="" className="link">
-            <SaleCard
-              title="Total Sale"
-              value={productLength}
-              icon={<MonetizationOnIcon />}
-            />
-          </Link>
-        </Grid>
-
-        <Grid item xs={4}>
-          <Link to="" className="link">
-            <OutlinedCard
-              title="Total Order"
-              value={orderLength}
-              icon={<ShoppingBagIcon />}
-            />
-          </Link>
-        </Grid>
-
-        <Grid item xs={4}>
-          <Link to="review-list" className="link">
-            <OutlinedCard
-              title="Total Review"
-              value={reviews.result}
-              icon={<ReviewsIcon />}
-            />
-          </Link>
-        </Grid>
       </Grid>
     </>
   );

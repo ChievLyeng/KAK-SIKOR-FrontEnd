@@ -53,14 +53,14 @@ const columns = [
   },
 ];
 
-export default function ProductTable({orders}) {
-  // const dispatch = useDispatch();
-  // const orders = useSelector((state) => state.orders?.data?.orders);
+export default function ProductTable() {
+  const dispatch = useDispatch();
+  const orders = useSelector((state) => state.orders?.data?.orders);
 
-  // useEffect(() => {
-  //   dispatch(fetchProducts());
-  //   dispatch(fetchOrder());
-  // }, [dispatch]);
+  useEffect(() => {
+    dispatch(fetchProducts());
+    dispatch(fetchOrder());
+  }, [dispatch]);
 
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -74,6 +74,8 @@ export default function ProductTable({orders}) {
     setPage(0);
   };
 
+  console.log(orders)
+
   return (
     <>
       <Paper
@@ -85,7 +87,6 @@ export default function ProductTable({orders}) {
         }}
       >
         <h1>Recent Order </h1>
-        <br />
         <TableContainer sx={{ maxHeight: 440 }}>
           <Table stickyHeader aria-label="sticky table">
             <TableHead>
@@ -107,14 +108,14 @@ export default function ProductTable({orders}) {
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((order, index) => (
                     <TableRow hover role="checkbox" tabIndex={-1} key={index}>
-                      <TableCell align="left">{}</TableCell>
+                      <TableCell align="left">{2}</TableCell>
                       <TableCell align="left">{`${order.orderBy.firstName} ${order.orderBy.lastName}`}</TableCell>
-                      <TableCell>{ order.products.length >= 2 ? `(${order.products.length}) items`: `(${order.products.length}) item`} </TableCell>
-                      <TableCell align="left">{}</TableCell>
+                      <TableCell align="left">{ order.products.length >= 2 ? `(${order.products.length}) items`: `(${order.products.length}) item`} </TableCell>
+                      <TableCell align="left">{2}</TableCell>
                       <TableCell align="left">{order.quantity}</TableCell>
-                      <TableCell>{order.status}</TableCell>
-                      <TableCell>{new Date(order.createdAt).toLocaleDateString()}</TableCell>
-                      <TableCell>
+                      <TableCell align="left">{order.status}</TableCell>
+                      <TableCell align="left">{new Date(order.createdAt).toLocaleDateString()}</TableCell>
+                      <TableCell align="left">
                         <div className="action-icon">
                           <i className="fa-regular fa-eye"></i>
                           <i className="fa-solid fa-pen-to-square"></i>
@@ -127,7 +128,7 @@ export default function ProductTable({orders}) {
         </TableContainer>
         <TablePagination
           rowsPerPageOptions={[5, 10, 25, 100]}
-          count={orders && orders.map((order) => {})}
+          count={orders?.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}

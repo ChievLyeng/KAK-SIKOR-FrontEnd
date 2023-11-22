@@ -83,6 +83,8 @@ export default function ProductTable() {
     }
   };
 
+  console.log(productData);
+
   return (
     <Paper
       sx={{

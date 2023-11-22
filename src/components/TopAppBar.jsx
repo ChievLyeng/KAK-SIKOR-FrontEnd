@@ -16,6 +16,7 @@ import AssignmentIcon from "@mui/icons-material/Assignment";
 import PeopleIcon from "@mui/icons-material/People";
 import RateReviewIcon from "@mui/icons-material/RateReview";
 import AddIcon from "@mui/icons-material/Add";
+import PermIdentityIcon from '@mui/icons-material/PermIdentity';
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { Link } from 'react-router-dom';
 import '../style/Dashboard.css'
@@ -35,7 +36,7 @@ export default function TopAppBar() {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="fixed" sx={{ backgroundColor: "white" }}>
-        <Toolbar>
+        <Toolbar >
           <IconButton
             size="large"
             edge="start"
@@ -56,8 +57,18 @@ export default function TopAppBar() {
               KAKSIKOR
             </Typography>
           </Link>
+          
+          <Link to="/myaccount">
+            <IconButton>
+              <PermIdentityIcon sx={{color:"black"}} />
+            </IconButton>
+          </Link>
+
+          
 
         </Toolbar>
+
+          
       </AppBar>
 
       <Drawer
@@ -155,6 +166,7 @@ export default function TopAppBar() {
         </Box>
       </Drawer>
       {/* Content goes here */}
+      
     </Box>
   );
 }

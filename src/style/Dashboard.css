@@ -11,29 +11,13 @@
   position: relative;
 }
 
-.customTypographyTitle {
-  font-size: 24px;
-  font-weight: bold;
-  color: #000000;
-}
-
 .MuiTypography-root.customTypography {
-  font-size: 24px;
+  font-size: 48px;
   font-weight: bold;
   color: #82B440;
-  /* margin-bottom: 30px; */
-  height: 60px;
+  /* height: 60px; */
   margin-left: 2px;
 }
-
-/* salecard */
-/* .MuiTypography-root.saleTypography {
-  font-size: 24px;
-  font-weight: bold;
-  color: #82B440;
-  margin-bottom: 120px;
-  margin-left: 2px;
-} */
 
 .MuiTypography-root.TypographyTittle {
   font-size: 24px ;
@@ -69,7 +53,7 @@
 }
 
 .MuiGrid-root.suumary-container{
-  margin-top: 24px ;
+  margin-top: 0px ;
 }
 
 /* contianer */

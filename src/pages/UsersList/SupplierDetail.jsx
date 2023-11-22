@@ -17,7 +17,6 @@ import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 import MyLocationIcon from "@mui/icons-material/MyLocation";
 import AgricultureIcon from "@mui/icons-material/Agriculture";
 import OfflinePinIcon from "@mui/icons-material/OfflinePin";
-import ProductTable from "../../common-component/ProductTable";
 import '../../style/SupplierDetail.css'
 
 function SupplierDetail() {

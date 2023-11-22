@@ -12,7 +12,7 @@
     padding: 16px;
     margin-top: 24px;
     height: 320px;
-    border-radius: 10px;
+    border-radius: 5px;
 }
 
 .total-info-box{
@@ -57,6 +57,16 @@
 
 .communication-icon{
     color: #82B440;
+}
+
+.sale-card{
+    height: 330px;
+}
+
+.MuiTypography-root.saleTypography{
+    color: #82B440;
+    font-size: 48px;
+    font-weight: bold;
 }
 
 

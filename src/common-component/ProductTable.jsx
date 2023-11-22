@@ -16,7 +16,7 @@ const columns = [
   { id: 'additionalColumn', label: 'Additional Column', minWidth: 100 },
   { id: 'quantity', label: 'Quantity', minWidth: 100 },
   { id: 'status', label: 'Status', minWidth: 100 },
-  { id: 'createdAt', label: 'Created At', minWidth: 150 },
+  { id: 'createdAt', label: 'CreatedAt', minWidth: 150 },
   { id: 'actions', label: 'Actions', minWidth: 100 },
 ];
 

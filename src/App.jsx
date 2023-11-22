@@ -9,6 +9,8 @@ import ReviewList from "./pages/ReviewList/ReviewList";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import SupplierDetail from "./pages/UsersList/SupplierDetail";
 import UpdateProduct from "./pages/ProductList/UpdateProduct";
+import MyAccount from "./pages/MyAccount/MyAccount";
+
 
 function App() {
   return (
@@ -16,6 +18,7 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<Dashboard />} />
+          <Route path="/myaccount" element={<MyAccount />} />
           <Route path="/productsList" element={<ProductList />} />
           <Route path="/usersList" element={<UsersList />} />
           <Route path="/create-product" element={<CreateProduct />} />

@@ -7,14 +7,14 @@ import Typography from "@mui/material/Typography";
 const SaleCard = ({ title, value, icon }) => {
   return (
     <Box className="outside-box">
-      <Card variant="outlined">
+      <Card variant="outlined" className="sale-card">
         <CardContent className="MuiCardContent-root">
           <Typography
-            className="MuiTypography-root TypographyTittle" gutterBottom>
+            className="TypographyTittle" gutterBottom>
             {title}
           </Typography>
 
-          <Typography variant="h5" component="div" className="MuiTypography-root saleTypography">
+          <Typography variant="h5" component="div" className="saleTypography">
             {value}
           </Typography>
 
