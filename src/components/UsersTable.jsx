@@ -9,8 +9,14 @@ import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchProducts, fetchUser } from "../store";
-import { FormControl, InputLabel, Select, MenuItem } from "@mui/material";
+import { fetchProducts, fetchUser, deleteUser } from "../store";
+import {
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  TextField,
+} from "@mui/material";
 
 const columns = [
   {
@@ -62,9 +68,12 @@ const UsersTable = () => {
     dispatch(fetchProducts());
   }, [dispatch]);
 
+  console.log(usersData);
+
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [selectedRole, setSelectedRole] = useState(""); // State to store selected role
+  const [selectedRole, setSelectedRole] = useState("");
+  const [searchName, setSearchName] = useState("");
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -76,18 +85,36 @@ const UsersTable = () => {
   };
 
   const handleRoleChange = (event) => {
-    setSelectedRole(event.target.value); // Update selected role
-    setPage(0); // Reset page when role changes
+    setSelectedRole(event.target.value);
+    setPage(0);
+  };
+
+  const handleSearch = (event) => {
+    setSearchName(event.target.value);
+    setPage(0);
   };
 
   const filteredUsers = (usersData || []).filter((user) =>
     selectedRole ? user.role === selectedRole : true
   );
 
-  const handleView = () => {
-    console.log("Clicked!")
-  }
+  const filteredUsersByName = (filteredUsers || []).filter((user) => {
+    const fullName = `${user.firstName} ${user.lastName}`.toLowerCase();
+    const formattedSearch = searchName.toLowerCase().trim();
+    return fullName.includes(formattedSearch);
+  });
 
+  const handleDeleteUser = (userId) => {
+    if (window.confirm("Are you sure you want to delete this user?")) {
+      dispatch(deleteUser(userId)).then(() => {
+        dispatch(fetchUser());
+      });
+    }
+  };
+
+  useEffect(() => {
+    dispatch(fetchUser());
+  }, [dispatch]);
 
   return (
     <Paper
@@ -95,46 +122,34 @@ const UsersTable = () => {
         width: "85%",
         overflow: "hidden",
         margin: "auto",
-        // marginLeft: "auto",
-        // marginRight: "0",
-        marginTop: 24,
+        marginTop: 20,
       }}
     >
-      <h1 className="users-header">User List :</h1>
+      <TextField
+        label="Search by Name"
+        variant="outlined"
+        value={searchName}
+        onChange={handleSearch}
+        sx={{ marginTop: 2, marginBottom: 7, width: 250, marginLeft: 1 }}
+      />
+      <h1 className="users-header">User List </h1>
       <FormControl sx={{ m: 1, minWidth: 150 }}>
-        <InputLabel
-          id="demo-simple-select-label"
-          shrink={selectedRole !== ""}
-          sx={{
-            backgroundColor: "white",
-            paddingTop: "5px",
-            paddingRight: "5px",
-            borderRadius: "4px",
-          }}
-        >
-          Select Role
-        </InputLabel>
+        <InputLabel id="role-select-label">Filter by Role</InputLabel>
         <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select-label"
+          labelId="role-select-label"
+          id="role-select"
           value={selectedRole}
+          label="Filter by Role"
           onChange={handleRoleChange}
-          sx={{
-            paddingTop: "6px",
-            border: "1px solid #ced4da",
-            borderRadius: "4px",
-            "&:focus": {
-              borderColor: "#4a90e2",
-              boxShadow: "0 0 0 0.2rem rgba(74, 144, 226, 0.25)",
-            },
-          }}
         >
-          <MenuItem value="">All</MenuItem>
-          <MenuItem value="user">User</MenuItem>
+          <MenuItem value="">
+            <em>All</em>
+          </MenuItem>
           <MenuItem value="supplier">Supplier</MenuItem>
+          <MenuItem value="user">User</MenuItem>
+          {/* Add more roles as needed */}
         </Select>
       </FormControl>
-
       <TableContainer>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
@@ -151,7 +166,7 @@ const UsersTable = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {filteredUsers
+            {filteredUsersByName
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((user, index) => (
                 <TableRow hover role="checkbox" tabIndex={-1} key={index}>
@@ -167,14 +182,14 @@ const UsersTable = () => {
                     {new Date(user.createdAt).toLocaleDateString()}
                   </TableCell>
                   <TableCell>
-                        <div className="action-icon">
-                          <Link to={`/supplier/${user._id}`}>
-                            <i className="fa-regular fa-eye"></i>
-                          </Link>
-                          <Link>
-                            <i className="fa-solid fa-pen-to-square"></i>
-                          </Link>
-                        </div>
+                    <div className="action-icon">
+                      <Link to={`/supplier/${user._id}`}>
+                        <i className="fa-regular fa-eye"></i>
+                      </Link>
+                      <Link onClick={() => handleDeleteUser(user._id)}>
+                        <i className="fa-solid fa-trash"></i>
+                      </Link>
+                    </div>
                   </TableCell>
                 </TableRow>
               ))}
@@ -184,7 +199,7 @@ const UsersTable = () => {
       <TablePagination
         rowsPerPageOptions={[5, 10, 25, 100]}
         component="div"
-        count={filteredUsers ? filteredUsers.length : 0}
+        count={filteredUsersByName ? filteredUsersByName.length : 0}
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={handleChangePage}

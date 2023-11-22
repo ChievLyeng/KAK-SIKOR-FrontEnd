@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchUser } from "../thunks/fetchAPI";
-import { fetchSupplierById } from "../thunks/fetchAPI";
+import { fetchUser, fetchSupplierById, deleteUser } from "../thunks/fetchAPI";
 
 const userSlice = createSlice({
   name: "user",
@@ -24,19 +23,30 @@ const userSlice = createSlice({
         state.isLoading = false;
         state.error = action.error.message;
       })
-      .addCase(fetchSupplierById.pending, (state,action) => {
+      .addCase(fetchSupplierById.pending, (state, action) => {
         state.isLoading = true;
         state.error = null;
       })
-      .addCase(fetchSupplierById.fulfilled, (state,action) => {
+      .addCase(fetchSupplierById.fulfilled, (state, action) => {
         state.isLoading = false;
         state.supplier = action.payload;
       })
-      .addCase(fetchSupplierById.rejected, (state,action) => {
+      .addCase(fetchSupplierById.rejected, (state, action) => {
         state.isLoading = false;
-        state.error = action.error.message
+        state.error = action.error.message;
       })
-     
+      .addCase(deleteUser.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(deleteUser.fulfilled, (state, action) => {
+        state.isLoading = false;
+        // Update the state after successful deletion if needed
+      })
+      .addCase(deleteUser.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message;
+      });
   },
 });
 

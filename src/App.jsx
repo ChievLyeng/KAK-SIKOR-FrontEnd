@@ -8,6 +8,7 @@ import CreateProduct from "./pages/ProductList/CreateProduct";
 import ReviewList from "./pages/ReviewList/ReviewList";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import SupplierDetail from "./pages/UsersList/SupplierDetail";
+import UpdateProduct from "./pages/ProductList/UpdateProduct";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path="/create-product" element={<CreateProduct />} />
           <Route path={`/supplier/:id`} element={<SupplierDetail />} />
           <Route path="/review-list" element={<ReviewList />} />
+          <Route path="/update-product/:id" element={<UpdateProduct />} />
         </Routes>
       </Router>
     </Provider>
