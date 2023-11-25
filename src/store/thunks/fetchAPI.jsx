@@ -19,8 +19,29 @@ export const GET_SINGLE_PRODUCT = (id) =>
 export const DELETE_PRODUCT = (id) =>
   `http://localhost:3000/products/delete-product/${id}`;
 export const DELETE_USER = (id) => `http://localhost:3000/users/delete/${id}`;
+const LOGIN_USER = `http://127.0.0.1:3001/users/login`
 
 // Function
+export const loginUser =  createAsyncThunk(
+  'user/loginUser',
+  async(userCredential) => {
+      try{
+        // axios.defaults.withCredentials = true; // stroe cookie
+        const request = await axios.post(LOGIN_USER,userCredential)
+        const response = await request.data.data;
+
+        
+
+      // save to local storage
+      localStorage.setItem('user',JSON.stringify(response))
+
+      console.log(response)
+      return response
+      }catch(error){
+        console.log(error)
+      }
+  }
+);
 
 export const fetchProducts = createAsyncThunk("product/fetch", async () => {
   const response = await axios.get(GET_ALL_PRODUCT);
@@ -143,3 +164,5 @@ export const deleteUser = createAsyncThunk("users/deleteUser", async (id) => {
     }
   }
 });
+
+
