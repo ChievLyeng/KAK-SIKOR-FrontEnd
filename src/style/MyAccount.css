@@ -1,5 +1,89 @@
-.name{
+.MuiGrid-root.container-all-grid{
+    margin-top: 24px;
+}
+
+.MuiGrid-root.profile-grid{
+   height: 420px;
+   border-radius: 5px;
+    border: 1px solid black ;        
+}
+
+.MuiBox-root.profile-box{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 24px;
+}
+
+.MuiTypography-root.profile-title{
+    font-weight: bold;
+}
+.MuiTypography-root.user-detail-title{
+    margin: auto;
+    font-weight: bold;
+    padding-top: 16px;
+    padding-left: 16px;
+}
+
+.name-role-contianer{
+    text-align: center;
+    padding-bottom: 16px;
+}
+
+.MuiButton-contained.change-photo-btn{
+    background-color: #82B440;
+}
+
+.MuiButton-contained.change-photo-btn:hover{
+    background-color: #87ca30;
+}
+
+.MuiGrid-root.user-detail-grid{
+    border-radius: 5px;
+    border: 1px solid #82B440;
+}
+
+.container-textfield{
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
+    gap: 16px;
+}
+
+.info-textfield label{
+    display: flex;
+    margin-bottom: 8px;
+}
+
+.two-textfield-container{
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-top: 24px;
+}
+
+.one-textfield-container{
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-top: 24px;
+}
+
+.textfield-label{
+    font-size: 16px;
+    font-weight: bold;
+    display: block;
+    margin-bottom: 8px;
+}
+
+.MuiButton-contained.update-btn{
+    background-color: #82B440;
+    margin-left: 16px;
+    width: 40%;
+    margin-top: 24px;
+    margin-bottom: 24px;
+}
+
+.MuiButton-contained.update-btn:hover{
+    background-color: #87ca30;
 }

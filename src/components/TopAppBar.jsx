@@ -48,7 +48,7 @@ export default function TopAppBar() {
             <MenuIcon />
           </IconButton>
 
-          <Link to="/" className="link">
+          <Link to="/dashboard" className="link">
             <Typography
               variant="h6"
               component="div"
@@ -61,6 +61,12 @@ export default function TopAppBar() {
           <Link to="/myaccount">
             <IconButton>
               <PermIdentityIcon sx={{color:"black"}} />
+            </IconButton>
+          </Link>
+
+          <Link to="/">
+            <IconButton>
+              Login
             </IconButton>
           </Link>
 
