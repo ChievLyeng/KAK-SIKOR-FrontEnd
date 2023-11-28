@@ -8,6 +8,7 @@ export const GET_ALL_REVIEW = "http://localhost:3000/reviews";
 export const ADD_PRODUCT = "http://localhost:3000/products/create-product";
 export const GET_ALL_USER = "http://localhost:3000/users/users";
 export const GET_ALL_ORDER = "http://localhost:3000/orders/";
+export const LOGIN_USER = `http://127.0.0.1:3001/users/login`
 export const GET_ALL_CATEGORIES =
   "http://localhost:3000/category/get-all-categories";
 export const GET_SUPPPLIER_By_Id = (id) =>
@@ -17,9 +18,10 @@ export const UPDATE_PRODUCT = (id) =>
 export const GET_SINGLE_PRODUCT = (id) =>
   `http://localhost:3000/products/get-product/${id}`;
 export const DELETE_PRODUCT = (id) =>
-  `http://localhost:3000/products/delete-product/${id}`;
+`http://localhost:3000/products/delete-product/${id}`;
 export const DELETE_USER = (id) => `http://localhost:3000/users/delete/${id}`;
-const LOGIN_USER = `http://127.0.0.1:3001/users/login`
+export const UPDATE_USER = (id) => `http://localhost:3001/users/update/${id}`;
+
 
 // Function
 export const loginUser =  createAsyncThunk(
@@ -29,7 +31,7 @@ export const loginUser =  createAsyncThunk(
         // axios.defaults.withCredentials = true; // stroe cookie
         const request = await axios.post(LOGIN_USER,userCredential)
         const response = await request.data.data;
-
+        console.log("login respone :",response.data)
         
 
       // save to local storage
@@ -113,6 +115,40 @@ export const updateProductById = createAsyncThunk(
     }
   }
 );
+
+export const updateUserById = createAsyncThunk(
+  'user/updateProfile',
+  async ({ userId, firstName, lastName, phone, gender,token }) => {
+    try {
+      const response = await axios.post(UPDATE_USER(userId), {
+        firstName,
+        lastName,
+        phoneNumber: phone,
+        gender,
+      },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+      return response.data;
+    } catch (error) {
+      return error.response.data;
+    }
+  }
+);
+
+// export const updateUserById = createAsyncThunk(
+//   "user/updateuser",
+//   async ({ id }) => {
+//     try {
+//       const response = await axios.post(UPDATE_USER(id));
+//       return response.data;
+//     } catch (error) {
+//       return error
+//     }
+//   }
+// )
 
 export const getSingleProduct = createAsyncThunk(
   "products/getProductById",

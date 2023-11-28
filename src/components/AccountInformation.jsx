@@ -11,7 +11,9 @@ import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { styled } from "@mui/material/styles";
+import { updateUserById } from "../store";
 import "../style/MyAccount.css";
+import { CleaningServices } from "@mui/icons-material";
 
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
@@ -28,38 +30,75 @@ const VisuallyHiddenInput = styled("input")({
 const genders = ["Male", "Female"];
 
 const AccountInformation = () => {
-  const [user, setUser] = useState();
   const [selectedGender, setSelectedGender] = useState('Male');
   const [firstName, setFirstName] = useState('')
-  const [lastName, setlastName] = useState('')
+  const [lastName, setLastName] = useState('')
   const [phone, setPhone] = useState('')
-  const [email, setEmail] = useState()
-  const [password, setPassword] = useState()
-  const [confirmpassword,setConfirmPassword] = useState()
-  
-
-  const handleGenderChange = (event) => {
-    setSelectedGender(event.target.value);
-  };
-
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [confirmpassword, setConfirmPassword] = useState('')
+  const [useraccount, setUseraccount] = useState();
+  const userId = useraccount?.user?._id || ''
+  const dispatch = useDispatch()
 
   const getUser = () => {
     const data = localStorage.getItem("user");
-    setUser(JSON.parse(data));
+    setUseraccount(JSON.parse(data));
+    // console.log(JSON.parse(data));
   };
-  console.log()
 
   useEffect(() => {
     getUser();
     
   }, []);
 
-  const useraccount = user?.user || null
+  useEffect(() => {
+    
+    setFirstName(useraccount?.user?.firstName || '');
+    setLastName(useraccount?.user?.lastName || '');
+    setEmail(useraccount?.user?.email || '')
+    setPhone(useraccount?.user?.phoneNumber || '')
+    // setPassword(useraccount?.user?.password || '')
+    // setConfirmPassword(useraccount?.user?.confirmpassword || '')
+   
 
-  console.log(useraccount)
+    
+  }, [useraccount]);
+  
+  // const userLogin = useSelector((state) => state.auth?.user?.user);
+  // const useraccount = userLogin || null
+  // console.log("userlogin",userLogin)
+
+  const handleGenderChange = (event) => {
+    setSelectedGender(event.target.value);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    console.log('update click!')
+    try {
+      const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NjA1MDgzN2VlZjhmNzlhZjdmODQ1NyIsImlhdCI6MTDNEpUTHQoQUJMHLrErGJyHg89uy71MyuH4fQ.G3KYU9UPPu592xvJ3ihb5ywBVSFzJUeI8Jklhd3xNB4";
+      await dispatch(
+        updateUserById({
+          userId,
+          firstName,
+          lastName,
+          phone,
+          gender: selectedGender,
+          token
+        })
+      );
+      // Optionally, you can dispatch an action to update local state if needed
+    } catch (error) {
+      // Handle error
+      console.error('Error updating profile:', error);
+    }
+  }
+
 
   return (
     <>
+      <form onSubmit={handleSubmit}>
       <Grid container columns={16} gap={10} className="container-all-grid">
         {/* profile */}
         <Grid item xs={4} className="profile-grid">
@@ -84,10 +123,10 @@ const AccountInformation = () => {
 
             <div className="name-role-contianer">
               <Typography variant="h5" className="profile-title">
-                {`${useraccount?.firstName} ${useraccount?.lastName}`}
+                {`${useraccount?.user?.firstName} ${useraccount?.user?.lastName}`}
               </Typography>
 
-              <Typography className="profile-title"> {useraccount?.role} </Typography>
+              <Typography className="profile-title"> {useraccount?.user?.role} </Typography>
             </div>
           </Box>
         </Grid>
@@ -106,27 +145,47 @@ const AccountInformation = () => {
             <Grid item xs={6}>
               <Box className="two-textfield-container">
                 <label className="textfield-label"> First Name</label>
-                <TextField fullWidth id="fullWidth" />
+                <TextField
+                  fullWidth
+                  id="fullWidth"
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
+                
+                />
               </Box>
             </Grid>
             <Grid item xs={6}>
               <Box className="two-textfield-container">
                 <label className="textfield-label"> Last Name</label>
-                <TextField fullWidth id="fullWidth" />
+                <TextField
+                  fullWidth
+                  id="fullWidth"
+                  value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
+                />
               </Box>
             </Grid>
 
             <Grid item xs={16}>
               <Box className="one-textfield-container">
                 <label className="textfield-label">Email</label>
-                <TextField fullWidth id="fullWidth" />
+                <TextField
+                  fullWidth
+                  id="fullWidth"
+                  value={email}
+                />
               </Box>
             </Grid>
 
             <Grid item xs={6}>
               <Box className="two-textfield-container">
                 <label className="textfield-label"> Phone Number </label>
-                <TextField fullWidth id="fullWidth" />
+                <TextField
+                  fullWidth
+                  id="fullWidth"
+                  value={`0${phone}`}
+                  onChange={(e) => setPhone(e.target.value.replace(/^0/, ''))}
+                />
               </Box>
             </Grid>
             <Grid item xs={6}>
@@ -155,22 +214,32 @@ const AccountInformation = () => {
             <Grid item xs={12}>
               <Box className="one-textfield-container">
                 <label className="textfield-label"> Password </label>
-                <TextField fullWidth id="fullWidth" />
+                <TextField
+                  fullWidth
+                  id="fullWidth"
+                  
+                />
               </Box>
             </Grid>
             <Grid item xs={12}>
               <Box className="one-textfield-container">
                 <label className="textfield-label"> Confirm Password </label>
-                <TextField fullWidth id="fullWidth" />
+                <TextField
+                  fullWidth
+                  id="fullWidth"
+                  
+                />
               </Box>
             </Grid>
           </Grid>
 
-          <Button variant="contained" className="update-btn">
+          <Button type="submit" variant="contained" className="update-btn">
             Update
           </Button>
         </Grid>
       </Grid>
+
+      </form>
     </>
   );
 };
