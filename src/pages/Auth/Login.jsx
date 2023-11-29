@@ -56,9 +56,8 @@ export default function Login() {
       <Container maxWidth="md" className="login-container">
 
         <Box className="login-box">
-
           <div>
-            <Typography variant="h3" component="div" className="login-title" sx={{textAlign:'center'}}>
+            <Typography variant="h3" component="div" className="login-title" >
               LOGIN
           </Typography>
             <Typography variant="h5" component="div" >
