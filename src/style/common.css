@@ -3,6 +3,11 @@
   margin: 100px auto;
 }
 
+.product-photo-container {
+  display: flex;
+  gap: 5px;
+}
+
 @media (max-width: 600px) {
   .create-form {
     width: 90%;

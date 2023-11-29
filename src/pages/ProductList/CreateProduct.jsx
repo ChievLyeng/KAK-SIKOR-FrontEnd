@@ -8,7 +8,7 @@ import {
   Avatar,
   MenuItem,
 } from "@mui/material";
-import { addProduct, fetchCategories } from "../../store";
+import { addProduct, fetchCategories, createCategory } from "../../store";
 import TopAppBar from "../../components/TopAppBar";
 import "../../style/common.css";
 
@@ -29,13 +29,36 @@ const CreateProduct = () => {
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [errors, setErrors] = useState({});
   const dispatch = useDispatch();
+  const { unwrapResult } = "@reduxjs/toolkit";
   const isAdding = useSelector((state) => state.products.isAdding);
   const addError = useSelector((state) => state.products.addError);
+  const [showNewCategoryForm, setShowNewCategoryForm] = useState(false);
+  const [newCategoryName, setNewCategoryName] = useState("");
   const categoriesData = useSelector(
     (state) => state.categories.data.categories
   );
 
-  console.log(categoriesData);
+  const handleCreateCategory = () => {
+    setShowNewCategoryForm(!showNewCategoryForm);
+  };
+
+  const handleSubmitNewCategory = async (e) => {
+    e.preventDefault();
+
+    if (newCategoryName.trim() === "") {
+      setOpenSnackbar(true);
+      return;
+    }
+
+    try {
+      await dispatch(createCategory(newCategoryName));
+      setNewCategoryName("");
+      setShowNewCategoryForm(false);
+      dispatch(fetchCategories());
+    } catch (error) {
+      console.error("Error creating category:", error);
+    }
+  };
 
   useEffect(() => {
     dispatch(fetchCategories());
@@ -75,7 +98,7 @@ const CreateProduct = () => {
         }
       }
       console.log(formData);
-      dispatch(addProduct(formData)); // Send formData to backend
+      dispatch(addProduct(formData));
       setProductData(initialProductData);
       setErrors({});
     }
@@ -123,28 +146,58 @@ const CreateProduct = () => {
             error={errors.price}
             helperText={errors.price && "Price is required"}
           />
-          <TextField
-            label="Category"
-            name="category"
-            value={productData.category}
-            onChange={handleInputChange}
-            fullWidth
-            margin="normal"
-            error={errors.category}
-            helperText={errors.category && "Category is required"}
-            select
-          >
-            {categoriesData && categoriesData.length > 0 ? (
-              categoriesData.map((category) => (
-                <MenuItem key={category._id} value={category._id}>
-                  {category.name}
-                </MenuItem>
-              ))
-            ) : (
-              <MenuItem value="">No categories available</MenuItem>
-            )}
-          </TextField>
+          <div>
+            <div>
+              <TextField
+                label="Category"
+                name="category"
+                value={productData.category}
+                onChange={handleInputChange}
+                fullWidth
+                margin="normal"
+                error={errors.category}
+                helperText={errors.category && "Category is required"}
+                select
+              >
+                {categoriesData && categoriesData.length > 0 ? (
+                  categoriesData.map((category) => (
+                    <MenuItem key={category._id} value={category._id}>
+                      {category.name}
+                    </MenuItem>
+                  ))
+                ) : (
+                  <MenuItem value="">No categories available</MenuItem>
+                )}
+              </TextField>
+            </div>
+            <div>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={handleCreateCategory}
+              >
+                CREATE CATEGORY
+              </Button>
 
+              {/* New category form */}
+              {showNewCategoryForm && (
+                <div>
+                  <form onSubmit={handleSubmitNewCategory}>
+                    <TextField
+                      label="New Category Name"
+                      value={newCategoryName}
+                      onChange={(e) => setNewCategoryName(e.target.value)}
+                      fullWidth
+                      margin="normal"
+                    />
+                    <Button type="submit" variant="contained" color="primary">
+                      Submit New Category
+                    </Button>
+                  </form>
+                </div>
+              )}
+            </div>
+          </div>
           <TextField
             label="Quantity"
             name="quantity"
@@ -211,9 +264,9 @@ const CreateProduct = () => {
                   alt={`Product Photo ${index + 1}`}
                   src={URL.createObjectURL(photo)}
                   sx={{
-                    width: 100,
-                    height: 100,
-                    borderRadius: "0px",
+                    width: 250,
+                    height: 250,
+                    borderRadius: "3px",
                     marginTop: "18px",
                   }}
                 />

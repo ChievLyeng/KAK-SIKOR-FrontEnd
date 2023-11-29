@@ -1,7 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-
 // API
 export const GET_ALL_PRODUCT =
   "http://localhost:3000/products/get-all-products";
@@ -9,7 +8,7 @@ export const GET_ALL_REVIEW = "http://localhost:3000/reviews";
 export const ADD_PRODUCT = "http://localhost:3000/products/create-product";
 export const GET_ALL_USER = "http://localhost:3000/users/users";
 export const GET_ALL_ORDER = "http://localhost:3000/orders/";
-export const LOGIN_USER = `http://127.0.0.1:3001/users/login`
+export const LOGIN_USER = `http://127.0.0.1:3001/users/login`;
 export const GET_ALL_CATEGORIES =
   "http://localhost:3000/category/get-all-categories";
 export const GET_SUPPPLIER_By_Id = (id) =>
@@ -19,31 +18,48 @@ export const UPDATE_PRODUCT = (id) =>
 export const GET_SINGLE_PRODUCT = (id) =>
   `http://localhost:3000/products/get-product/${id}`;
 export const DELETE_PRODUCT = (id) =>
-`http://localhost:3000/products/delete-product/${id}`;
+  `http://localhost:3000/products/delete-product/${id}`;
 export const GET_USER = (id) => `http://localhost:3001/users/${id}`;
 export const DELETE_USER = (id) => `http://localhost:3000/users/delete/${id}`;
 export const UPDATE_USER = (id) => `http://localhost:3001/users/update/${id}`;
-
-
+export const CREATE_CATEGORY = "http://localhost:3000/category/create-category";
 // Function
-export const loginUser =  createAsyncThunk(
-  'user/loginUser',
-  async(userCredential) => {
-      try{
-        
-        const request = await axios.post(LOGIN_USER,userCredential,{ withCredentials: true })
-        const response = await request.data;
-        console.log("login respone :",response.data)
+export const loginUser = createAsyncThunk(
+  "user/loginUser",
+  async (userCredential) => {
+    try {
+      const request = await axios.post(LOGIN_USER, userCredential, {
+        withCredentials: true,
+      });
+      const response = await request.data;
+      console.log("login respone :", response.data);
 
       // save to local storage
-      localStorage.setItem('user',JSON.stringify(response.data))
-      localStorage.setItem('token',JSON.stringify(response.token))
+      localStorage.setItem("user", JSON.stringify(response.data));
+      localStorage.setItem("token", JSON.stringify(response.token));
 
-      console.log("response :",response)
-      return response
-      }catch(error){
-        console.log(error)
-      }
+      console.log("response :", response);
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
+
+export const createCategory = createAsyncThunk(
+  "categories/create",
+  async (categoryName) => {
+    console.log("Sending data to server:", categoryName);
+    try {
+      const response = await axios.post(CREATE_CATEGORY, {
+        name: categoryName,
+      });
+      console.log("Response from server:", response.data);
+      return response.data;
+    } catch (error) {
+      console.error("Error from server:", error.response.data);
+      throw error.response.data;
+    }
   }
 );
 
@@ -59,20 +75,20 @@ export const fetchReview = createAsyncThunk("reviews/fetch", async () => {
   return response.data;
 });
 
-export const fetchUserById = createAsyncThunk('user/fetch',async (userId) => {
-  try{
-    const response = await axios.get(GET_USER(userId))
+export const fetchUserById = createAsyncThunk("user/fetch", async (userId) => {
+  try {
+    const response = await axios.get(GET_USER(userId));
     return response.data;
-  }catch(error){
+  } catch (error) {
     return error.response.data;
   }
-})
+});
 
 export const fetchUser = createAsyncThunk("users/fetch", async () => {
-  try{
+  try {
     const response = await axios.get(GET_ALL_USER);
     return response.data;
-  }catch(error){
+  } catch (error) {
     return error.response.data;
   }
 });
@@ -131,20 +147,23 @@ export const updateProductById = createAsyncThunk(
 );
 
 export const updateUserById = createAsyncThunk(
-  'user/updateProfile',
-  async ({ userId, firstName, lastName, phone, gender,token }) => {
+  "user/updateProfile",
+  async ({ userId, firstName, lastName, phone, gender, token }) => {
     try {
-      const response = await axios.post(UPDATE_USER(userId), {
-        firstName,
-        lastName,
-        phoneNumber: phone,
-        gender,
-      },
+      const response = await axios.post(
+        UPDATE_USER(userId),
+        {
+          firstName,
+          lastName,
+          phoneNumber: phone,
+          gender,
+        },
         {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        });
+        }
+      );
       return response.data;
     } catch (error) {
       return error.response.data;
@@ -214,7 +233,3 @@ export const deleteUser = createAsyncThunk("users/deleteUser", async (id) => {
     }
   }
 });
-
-
-
-

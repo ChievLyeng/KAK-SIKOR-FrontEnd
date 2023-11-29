@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchCategories } from "../thunks/fetchAPI"; // Assuming fetchCategories is an async thunk for category fetching
+import { fetchCategories, createCategory } from "../thunks/fetchAPI";
 
 const categoriesSlice = createSlice({
   name: "categories",
@@ -7,6 +7,9 @@ const categoriesSlice = createSlice({
     data: [],
     isLoading: false,
     error: null,
+  },
+  reducers: {
+    // ...your other reducers...
   },
   extraReducers(builder) {
     builder
@@ -19,6 +22,18 @@ const categoriesSlice = createSlice({
         state.data = action.payload;
       })
       .addCase(fetchCategories.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message;
+      })
+      .addCase(createCategory.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(createCategory.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.data.push(action.payload); // Push the created category to the existing data array
+      })
+      .addCase(createCategory.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.error.message;
       });
