@@ -9,7 +9,7 @@ const MyAccount = () => {
 
   return (
     <>
-      <Container maxWidth="xl" className="MuiContainer-maxWidthMd">
+      <Container maxWidth="xl" className="user-profile-container">
         <TopAppBar />
         <Header title="My Account" />
         <AccountInformation />

@@ -1,3 +1,9 @@
+/* contianer */
+.MuiContainer-maxWidthXl.user-profile-container{
+    margin-top: 100px ;
+    margin-bottom: 100px;
+  }
+
 .MuiGrid-root.container-all-grid{
     margin-top: 24px;
 }
@@ -20,6 +26,7 @@
 .MuiTypography-root.profile-title{
     font-weight: bold;
 }
+
 .MuiTypography-root.user-detail-title{
     margin: auto;
     font-weight: bold;

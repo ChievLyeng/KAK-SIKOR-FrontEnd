@@ -40,7 +40,7 @@ function SupplierDetail() {
 
   return (
     <>
-      <Container maxWidth="xl" className="MuiContainer-maxWidthMd">
+      <Container maxWidth="xl" className="supplier-detail-container">
         <TopAppBar />
         <Header title="Supplier" />
 

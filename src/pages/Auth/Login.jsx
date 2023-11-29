@@ -56,7 +56,7 @@ export default function Login() {
       <Container maxWidth="md" className="login-container">
 
         <Box className="login-box">
-          <div>
+          <div >
             <Typography variant="h3" component="div" className="login-title" >
               LOGIN
           </Typography>
