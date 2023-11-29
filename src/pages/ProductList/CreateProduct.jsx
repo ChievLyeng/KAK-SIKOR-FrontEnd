@@ -22,7 +22,7 @@ const CreateProduct = () => {
     Nutrition_Fact: "",
     Origin: "",
     Supplier: "",
-    photo: null,
+    photos: [],
   };
 
   const [productData, setProductData] = useState(initialProductData);
@@ -43,55 +43,39 @@ const CreateProduct = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-
-    if (name === "category") {
-      const selectedCategory = categoriesData.find(
-        (category) => category._id === value // Ensure proper comparison here
-      );
-
-      setProductData({
-        ...productData,
-        [name]: selectedCategory ? selectedCategory._id : "",
-      });
-
-      // Update errors for the category field
-      setErrors({
-        ...errors,
-        [name]: value === "" ? true : false,
-      });
-    } else {
-      setProductData({ ...productData, [name]: value });
-
-      // Update errors for other fields
-      setErrors({
-        ...errors,
-        [name]: value === "" ? true : false,
-      });
-    }
+    setProductData({ ...productData, [name]: value });
+    setErrors({ ...errors, [name]: value === "" });
   };
 
   const handlePhotoChange = (e) => {
-    setProductData({ ...productData, photo: e.target.files[0] });
+    setProductData({ ...productData, photos: [...e.target.files] });
   };
 
   const handleSubmit = () => {
-    const formData = new FormData();
-    for (let key in productData) {
-      formData.append(key, productData[key]);
-    }
-
     const fieldErrors = {};
     for (let key in productData) {
-      if (productData[key] === "" && key !== "photo") {
+      if (productData[key] === "" && key !== "photos") {
         fieldErrors[key] = true;
       }
+    }
+
+    if (productData.photos.length === 0) {
+      fieldErrors.photos = true;
     }
 
     if (Object.keys(fieldErrors).length > 0) {
       setErrors(fieldErrors);
     } else {
-      dispatch(addProduct(formData));
-      dispatch(fetchCategories(formData));
+      const formData = new FormData();
+      for (let key in productData) {
+        if (key === "photos") {
+          productData[key].forEach((file) => formData.append("photos", file));
+        } else {
+          formData.append(key, productData[key]);
+        }
+      }
+      console.log(formData);
+      dispatch(addProduct(formData)); // Send formData to backend
       setProductData(initialProductData);
       setErrors({});
     }
@@ -208,29 +192,34 @@ const CreateProduct = () => {
             onChange={handlePhotoChange}
             style={{ display: "none" }}
             id="photo-upload"
+            multiple // Allow multiple file selection
           />
 
           <div className="photo-upload-container">
             <label htmlFor="photo-upload" className="photo-upload-label">
               <Button variant="contained" component="span">
-                {productData.photo ? productData.photo.name : "Upload Photo"}
+                Upload Photos
               </Button>
             </label>
           </div>
           <div className="product-photo-container">
-            {productData.photo && (
-              <Avatar
-                alt="Product Photo"
-                src={URL.createObjectURL(productData.photo)}
-                sx={{
-                  width: 300,
-                  height: 300,
-                  borderRadius: "0px",
-                  marginTop: "18px",
-                }}
-              />
-            )}
+            {productData.photos &&
+              productData.photos.length > 0 &&
+              productData.photos.map((photo, index) => (
+                <Avatar
+                  key={index}
+                  alt={`Product Photo ${index + 1}`}
+                  src={URL.createObjectURL(photo)}
+                  sx={{
+                    width: 100,
+                    height: 100,
+                    borderRadius: "0px",
+                    marginTop: "18px",
+                  }}
+                />
+              ))}
           </div>
+
           <br />
           <Button
             variant="contained"

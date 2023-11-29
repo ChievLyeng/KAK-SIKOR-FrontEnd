@@ -11,14 +11,14 @@ import SupplierDetail from "./pages/UsersList/SupplierDetail";
 import UpdateProduct from "./pages/ProductList/UpdateProduct";
 import MyAccount from "./pages/MyAccount/MyAccount";
 import Login from "./pages/Auth/Login";
-
+import ProductDetail from "./pages/ProductList/ProductDetail";
 
 function App() {
   return (
     <Provider store={store}>
       <Router>
         <Routes>
-        <Route path="/" element={<Login />} />
+          <Route path="/" element={<Login />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/myaccount" element={<MyAccount />} />
           <Route path="/productsList" element={<ProductList />} />
@@ -27,6 +27,7 @@ function App() {
           <Route path={`/supplier/:id`} element={<SupplierDetail />} />
           <Route path="/review-list" element={<ReviewList />} />
           <Route path="/update-product/:id" element={<UpdateProduct />} />
+          <Route path="/product-detail/:id" element={<ProductDetail />} />
         </Routes>
       </Router>
     </Provider>

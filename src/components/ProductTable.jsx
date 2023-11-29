@@ -11,39 +11,49 @@ import "../style/ProductTable.css";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProducts, deleteProduct } from "../store";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { Login } from "@mui/icons-material";
 
 const columns = [
   {
-    id: "ID",
-    label: "ID",
-    minWidth: 170,
+    id: "Image",
+    label: "Image",
+    minWidth: 50,
     align: "left",
   },
   {
-    id: "Product",
-    label: "Product",
-    minWidth: 170,
+    id: "ID",
+    label: "ID",
+    minWidth: 100,
     align: "left",
   },
+
+  {
+    id: "Product",
+    label: "Product",
+    minWidth: 50,
+    align: "left",
+  },
+
   { id: "Category", label: "Category", minWidth: 100 },
   {
     id: "Price",
     label: "Price",
-    minWidth: 170,
+    minWidth: 50,
     align: "left",
   },
 
   {
     id: "Quantity",
     label: "Quantity",
-    minWidth: 170,
+    minWidth: 60,
     align: "left",
   },
-  { id: "Supplier", label: "Supplier", minWidth: 170 },
+  { id: "Supplier", label: "Supplier", minWidth: 140 },
   {
     id: "Action",
     label: "Action",
-    minWidth: 170,
+    minWidth: 50,
     align: "left",
   },
 ];
@@ -61,6 +71,8 @@ export default function ProductTable() {
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
+
+  console.log("Product Data : ", productData);
 
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(+event.target.value);
@@ -82,8 +94,6 @@ export default function ProductTable() {
         });
     }
   };
-
-  console.log(productData);
 
   return (
     <Paper
@@ -117,6 +127,14 @@ export default function ProductTable() {
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((product, index) => (
                   <TableRow hover role="checkbox" tabIndex={-1} key={index}>
+                    <TableCell align="left">
+                      <img
+                        className="product-img"
+                        src={product.photos[0].url}
+                        alt={`Product ${product._id}`}
+                        style={{ width: "50px", height: "50px" }}
+                      />
+                    </TableCell>
                     <TableCell align="left">{product._id}</TableCell>
                     <TableCell align="left">{product.name}</TableCell>
                     <TableCell>{product.category.name}</TableCell>
@@ -125,7 +143,7 @@ export default function ProductTable() {
                     <TableCell>{product.Supplier.email}</TableCell>
                     <TableCell>
                       <div className="action-icon">
-                        <Link>
+                        <Link to={`/product-detail/${product._id}`}>
                           <i className="fa-regular fa-eye"></i>
                         </Link>
                         <Link to={`/update-product/${product._id}`}>

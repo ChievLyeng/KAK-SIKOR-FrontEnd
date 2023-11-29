@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 import {
@@ -28,9 +28,10 @@ const UpdateProduct = () => {
     quantity: "",
     Nutrition_Fact: "",
     Origin: "",
-    Supplier: "", // Assuming Supplier is a string initially
-    photo: null,
+    Supplier: "",
+    photos: [], // To store multiple photos
   };
+
   const params = useParams();
   const [productData, setProductData] = useState(initialProductData);
   const [openSnackbar, setOpenSnackbar] = useState(false);
@@ -41,96 +42,94 @@ const UpdateProduct = () => {
   const categoriesData = useSelector(
     (state) => state.categories.data.categories
   );
+  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
   const singleData = useSelector((state) => state.products.singleProduct);
+  const [photoPreviews, setPhotoPreviews] = useState([]);
 
   useEffect(() => {
     dispatch(getSingleProduct(params.id));
-    dispatch(updateProductById(params.id));
     dispatch(fetchCategories());
   }, [dispatch, params.id]);
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-
-    // If the name is 'Supplier', update only the '_id' of the Supplier object
-    if (name === "Supplier") {
-      setProductData({
-        ...productData,
-        Supplier: { _id: value }, // Assuming the Supplier object contains only the _id property
-      });
-    } else {
-      setProductData({ ...productData, [name]: value });
-    }
-    setErrors({ ...errors, [name]: value === "" });
-  };
-
-  const handlePhotoChange = (e) => {
-    setProductData({ ...productData, photo: e.target.files[0] });
-  };
-
   useEffect(() => {
     if (singleData && singleData.product) {
+      const { product } = singleData;
       setProductData({
-        ...singleData.product,
-        photo: null,
+        ...product,
+        category: product.category._id,
+        Supplier: product.Supplier ? product.Supplier._id : "",
+        photos: [],
       });
     }
   }, [singleData]);
 
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setProductData({ ...productData, [name]: value });
+  };
+
+  const handlePhotoChange = (e) => {
+    const selectedPhotos = Array.from(e.target.files);
+    setProductData({ ...productData, photos: selectedPhotos });
+
+    const previews = selectedPhotos.map((photo) => URL.createObjectURL(photo));
+    setPhotoPreviews(previews);
+  };
+
+  const handleCloseSnackbar = () => {
+    setOpenSnackbar(false);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
 
     const formData = new FormData();
+    formData.append("name", productData.name);
+    formData.append("description", productData.description);
+    formData.append("price", productData.price);
+    formData.append("category", productData.category);
+    formData.append("quantity", productData.quantity);
+    formData.append("Nutrition_Fact", productData.Nutrition_Fact);
+    formData.append("Origin", productData.Origin);
+    formData.append("Supplier", productData.Supplier);
 
-    // Append other fields except for the photo
-    for (let key in productData) {
-      if (key !== "photo") {
-        // Ensure the Supplier field is a string with the _id
-        if (key === "Supplier" && typeof productData[key] === "object") {
-          formData.append(key, productData[key]._id);
-        } else {
-          formData.append(key, productData[key]);
-        }
-      }
-    }
-
-    // Append the photo separately if it exists
-    if (productData.photo) {
-      formData.append("photo", productData.photo);
-    }
+    const photos = productData.photos; // Assuming photos is an array of File objects
+    photos.forEach((photo, index) => {
+      formData.append(`photos`, photo); // Append all photos with the same key
+    });
 
     try {
-      // Make the API call using axios
       const response = await axios.post(
         `http://localhost:3000/products/update-product/${params.id}`,
-        formData
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data", // Set content type to multipart/form-data
+          },
+        }
       );
 
-      console.log("Update Product API Response:", response.data);
-
-      // On success, reset form data and handle snackbar
       setProductData(initialProductData);
       setErrors({});
       setOpenSnackbar(true);
 
-      // Optionally fetch the updated data
       dispatch(getSingleProduct(params.id));
     } catch (error) {
       console.error("Error updating product:", error);
-
-      // Log the detailed error response, if available
       if (error.response) {
         console.error("Detailed Error Response:", error.response.data);
       }
-
-      // Handle error scenarios as needed
+      // Handle error scenario
+    } finally {
+      setIsLoading(false); // Reset loading state whether the update succeeds or fails
+      navigate("/productsList");
     }
   };
 
-  console.log(singleData);
-  const handleCloseSnackbar = () => {
-    setOpenSnackbar(false);
-  };
+  console.log(productData);
+
   return (
     <>
       <TopAppBar />
@@ -225,7 +224,7 @@ const UpdateProduct = () => {
           <TextField
             label="Supplier"
             name="Supplier"
-            value={productData.Supplier ? productData.Supplier._id : ""}
+            value={productData.Supplier}
             onChange={handleInputChange}
             fullWidth
             margin="normal"
@@ -237,6 +236,7 @@ const UpdateProduct = () => {
             type="file"
             accept="image/*"
             onChange={handlePhotoChange}
+            multiple // Allow multiple photo selection
             style={{ display: "none" }}
             id="photo-upload"
           />
@@ -244,32 +244,41 @@ const UpdateProduct = () => {
           <div className="photo-upload-container">
             <label htmlFor="photo-upload" className="photo-upload-label">
               <Button variant="contained" component="span">
-                {productData.photo ? productData.photo.name : "Upload Photo"}
+                {productData.photos.length > 0
+                  ? `${productData.photos.length} Photos Selected`
+                  : "Upload Photos"}
               </Button>
             </label>
           </div>
+
+          {/* Render photo previews */}
           <div className="product-photo-container">
-            {productData.photo && (
+            {photoPreviews.map((preview, index) => (
               <Avatar
-                alt="Product Photo"
-                src={URL.createObjectURL(productData.photo)}
+                key={index}
+                alt={`Product Photo ${index + 1}`}
+                src={preview}
                 sx={{
                   width: 300,
                   height: 300,
                   borderRadius: "0px",
                   marginTop: "18px",
+                  marginRight: "18px",
                 }}
               />
-            )}
+            ))}
           </div>
+
           <br />
           <Button
             variant="contained"
             color="primary"
             onClick={handleSubmit}
-            disabled={isAdding}
+            disabled={isAdding || isLoading}
           >
-            {isAdding ? (
+            {isLoading ? (
+              <CircularProgress size={24} color="inherit" />
+            ) : isAdding ? (
               <CircularProgress size={24} color="inherit" />
             ) : (
               "UPDATE Product"

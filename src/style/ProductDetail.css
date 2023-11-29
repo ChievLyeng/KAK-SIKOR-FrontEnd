@@ -1,0 +1,36 @@
+.container-details {
+  display: flex;
+  gap: 130px;
+  justify-content: centre;
+}
+h2 {
+  margin-bottom: 20px;
+}
+.container-item p {
+  margin-bottom: 20px;
+}
+.container-details {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.container-details > div {
+  margin-right: 20px;
+}
+
+.container-item {
+  flex: 1;
+}
+
+.container-item p {
+  margin-bottom: 10px;
+}
+
+.container-item strong {
+  margin-right: 8px;
+}
