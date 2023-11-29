@@ -33,6 +33,11 @@ export default function TopAppBar() {
     setProductSubMenuOpen(!productSubMenuOpen);
   };
 
+  const handleClick = () => {
+    localStorage.removeItem('token')
+    localStorage.removeItem('user')
+  }
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="fixed" sx={{ backgroundColor: "white" }}>
@@ -64,9 +69,9 @@ export default function TopAppBar() {
             </IconButton>
           </Link>
 
-          <Link to="/">
+          <Link to="/" onClick={handleClick}>
             <IconButton>
-              Login
+              Logout
             </IconButton>
           </Link>
 

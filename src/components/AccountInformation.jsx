@@ -12,6 +12,8 @@ import Button from "@mui/material/Button";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { styled } from "@mui/material/styles";
 import { updateUserById } from "../store";
+import { fetchUserById } from "../store";
+import { logInSuccess } from "../store/slice/authSlice";
 import "../style/MyAccount.css";
 import { CleaningServices } from "@mui/icons-material";
 
@@ -39,18 +41,29 @@ const AccountInformation = () => {
   const [confirmpassword, setConfirmPassword] = useState('')
   const [useraccount, setUseraccount] = useState();
   const userId = useraccount?.user?._id || ''
+  const currentUserId = useraccount?.user?._id
+
   const dispatch = useDispatch()
 
   const getUser = () => {
     const data = localStorage.getItem("user");
+    console.log(JSON.parse(data))
     setUseraccount(JSON.parse(data));
-    // console.log(JSON.parse(data));
   };
+
+  const fetchCurrentUser = () => {
+    dispatch(logInSuccess(fetchUserById(currentUserId)))
+  }
+  
+  
+  console.log("id",currentUserId)
+
 
   useEffect(() => {
     getUser();
+    fetchCurrentUser();
     
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     
@@ -76,8 +89,10 @@ const AccountInformation = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     console.log('update click!')
+    
     try {
-      const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NjA1MDgzN2VlZjhmNzlhZjdmODQ1NyIsImlhdCI6MTDNEpUTHQoQUJMHLrErGJyHg89uy71MyuH4fQ.G3KYU9UPPu592xvJ3ihb5ywBVSFzJUeI8Jklhd3xNB4";
+      const token = JSON.parse(localStorage.getItem('token'));
+      console.log(token)
       await dispatch(
         updateUserById({
           userId,
