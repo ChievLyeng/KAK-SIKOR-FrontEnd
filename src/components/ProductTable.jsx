@@ -100,8 +100,7 @@ export default function ProductTable() {
       sx={{
         width: "85%",
         overflow: "hidden",
-        marginLeft: "auto",
-        marginRight: "0",
+        margin: "auto",
         marginTop: 20,
       }}
     >

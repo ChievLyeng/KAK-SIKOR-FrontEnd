@@ -66,8 +66,7 @@ export default function ReviewTable() {
       sx={{
         width: "80%",
         overflow: "hidden",
-        marginLeft: "auto",
-        marginRight: "0",
+        margin: "auto",
         marginTop: 30,
       }}
     >
@@ -98,7 +97,11 @@ export default function ReviewTable() {
                       {review.userId?.firstName} {review.userId?.lastName}
                     </TableCell>
                     <TableCell align="left">{review.product?.name}</TableCell>
-                    <TableCell align="right">{review.description}</TableCell>
+                    <TableCell align="right">
+                      {review.description.length > 25
+                        ? `${review.description.slice(0, 25)}...`
+                        : review.description}
+                    </TableCell>
                     <TableCell align="right">{review.rating}</TableCell>
                     <TableCell align="right">
                       {new Date(review.createdAt).toLocaleDateString()}
