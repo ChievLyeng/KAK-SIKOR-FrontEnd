@@ -13,7 +13,7 @@ import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { styled } from "@mui/material/styles";
 import { updateUserById } from "../store";
 import { fetchUserById } from "../store";
-import { logInSuccess } from "../store/slice/authSlice";
+
 import "../style/MyAccount.css";
 import { CleaningServices } from "@mui/icons-material";
 
@@ -54,7 +54,7 @@ const AccountInformation = () => {
   const fetchCurrentUser = () => {
     dispatch(logInSuccess(fetchUserById(currentUserId)))
   }
-  
+
   
   console.log("id",currentUserId)
 

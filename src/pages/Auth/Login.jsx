@@ -15,7 +15,6 @@ import { useNavigate } from "react-router-dom";
 import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import { loginUser } from "../../store";
-import { logInSuccess } from "../../store/slice/authSlice";
 import axios from "axios";
 import "../../style/Auth.css";
 
@@ -36,7 +35,6 @@ export default function Login() {
     };
     // console.log("email :",email)
     // console.log("password :",password)
-    dispatch(logInSuccess(loginUser(userCredential)))
     dispatch(loginUser(userCredential)).then((result) => {
       console.log("result payload :",result.payload)
       if (result.payload) {
