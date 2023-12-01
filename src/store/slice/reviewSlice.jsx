@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchReview } from "../thunks/fetchAPI";
+import { fetchReview } from "../thunks/reviewApi";
 
 const reviewSlice = createSlice({
   name: "review",

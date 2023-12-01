@@ -17,4 +17,8 @@ export const store = configureStore({
   },
 });
 
-export * from "./thunks/fetchAPI";
+export * from "./thunks/orderApi";
+export * from "./thunks/productApi";
+export * from "./thunks/reviewApi";
+export * from "./thunks/userApi";
+

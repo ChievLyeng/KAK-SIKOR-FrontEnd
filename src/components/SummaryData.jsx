@@ -34,6 +34,8 @@ function SummaryData() {
   const orderLength = Order ? Order.length : 0;
   const productLength = Products ? Products.length : 0;
 
+  console.log("users",users)
+
   return (
     <>
       {/* Add margin styles and center content */}
@@ -60,7 +62,7 @@ function SummaryData() {
               <Link to="/usersList" className="link">
                 <OutlinedCard
                   title="Total User"
-                  value={users.result}
+                  value={users.result || 0}
                   icon={<PersonOutlineIcon />}
                 />
               </Link>
@@ -80,7 +82,7 @@ function SummaryData() {
               <Link to="/review-list" className="link">
                 <OutlinedCard
                   title="Total Review"
-                  value={reviews.result}
+                  value={reviews.result || 0 }
                   icon={<ReviewsIcon />}
                 />
               </Link>

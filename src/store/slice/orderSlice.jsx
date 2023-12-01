@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchOrder } from "../thunks/fetchAPI";
+import { fetchOrder } from "../thunks/orderApi";
 
 const orderSlice = createSlice({
   name: "order",

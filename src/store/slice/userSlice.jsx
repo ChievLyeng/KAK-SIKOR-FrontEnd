@@ -1,5 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchUser, fetchSupplierById, deleteUser,updateUserById } from "../thunks/fetchAPI";
+import 
+{ 
+  fetchUser, 
+  fetchSupplierById, 
+  deleteUser,
+  updateUserById 
+} from "../thunks/userApi";
 
 const userSlice = createSlice({
   name: "user",

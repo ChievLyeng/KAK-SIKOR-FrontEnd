@@ -5,7 +5,7 @@ import {
   getSingleProduct,
   updateProductById,
   deleteProduct, // Import the deleteProduct thunk
-} from "../thunks/fetchAPI";
+} from "../thunks/productApi";
 
 const productSlice = createSlice({
   name: "product",
