@@ -4,13 +4,13 @@ import axios from "axios";
 const PORT = 3000
 
 // user
-export const GET_ALL_USER = `http://localhost:${PORT}/v1/api`;
-export const LOGIN_USER = `http://127.0.0.1:3001/users/login`;
+export const GET_ALL_USER = `http://localhost:${PORT}/api/v1/users`;
+export const LOGIN_USER = `http://127.0.0.1:3001api/v1/users/login`;
 export const GET_SUPPPLIER_By_Id = (id) =>
-`http://localhost:${PORT}/users/supplier/${id}`;
-export const GET_USER = (id) => `http://localhost:3001/users/${id}`;
-export const DELETE_USER = (id) => `http://localhost:${PORT}users/delete/${id}`;
-export const UPDATE_USER = (id) => `http://localhost:3001/users/update/${id}`;
+`http://localhost:${PORT}api/v1/users/supplier/${id}`;
+export const GET_USER = (id) => `http://localhost:3001/api/v1/users/${id}`;
+export const DELETE_USER = (id) => `http://localhost:${PORT}/api/v1/users/delete/${id}`;
+export const UPDATE_USER = (id) => `http://localhost:3001/api/v1/users/update/${id}`;
 
 export const loginUser = createAsyncThunk(
   "user/loginUser",

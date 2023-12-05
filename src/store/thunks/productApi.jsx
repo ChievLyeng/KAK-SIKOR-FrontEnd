@@ -3,19 +3,21 @@ import axios from "axios";
 
 const PORT = 3000
 
+axios.defaults.withCredentials = true;
+
 // product
 export const GET_ALL_PRODUCT =
-  `http://localhost:${PORT}/v1/api/products`;
-  export const ADD_PRODUCT = `http://localhost:${PORT}/v1/api/products`;
+  `http://localhost:${PORT}/api/v1/products`;
+  export const ADD_PRODUCT = `http://localhost:${PORT}/api/v1/products`;
   export const UPDATE_PRODUCT = (id) =>
-  `http://localhost:${PORT}/v1/api/product/${id}`;
+  `http://localhost:${PORT}/api/v1/products/${id}`;
   export const GET_SINGLE_PRODUCT = (id) =>
-  `http://localhost:${PORT}/v1/api/product/${id}`;
+  `http://localhost:${PORT}/api/v1/products/${id}`;
   export const DELETE_PRODUCT = (id) =>
-  `http://localhost:${PORT}/v1/api/product/${id}`;
+  `http://localhost:${PORT}/api/v1/products/${id}`;
   export const GET_ALL_CATEGORIES =
-  `http://localhost:${PORT}/v1/api/catagories`;
-  export const CREATE_CATEGORY = `http://localhost:${PORT}/v1/api/catagories`;
+  `http://localhost:${PORT}/api/v1/categories`; 
+  export const CREATE_CATEGORY = `http://localhost:${PORT}/api/v1/catagories`;
 
   export const updateProductById = createAsyncThunk(
     "products/updateProduct",

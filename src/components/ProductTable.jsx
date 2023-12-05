@@ -129,7 +129,7 @@ export default function ProductTable() {
                     <TableCell align="left">
                       <img
                         className="product-img"
-                        src={product.photos[0].url}
+                        src={product.photos[0]?.url}
                         alt={`Product ${product._id}`}
                         style={{ width: "50px", height: "50px" }}
                       />
@@ -139,7 +139,7 @@ export default function ProductTable() {
                     <TableCell>{product.category.name}</TableCell>
                     <TableCell align="left">{product.price}</TableCell>
                     <TableCell align="left">{product.quantity}</TableCell>
-                    <TableCell>{product.Supplier.email}</TableCell>
+                    <TableCell>{product.Supplier?.email}</TableCell>
                     <TableCell>
                       <div className="action-icon">
                         <Link to={`/product-detail/${product._id}`}>

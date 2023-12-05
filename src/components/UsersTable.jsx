@@ -97,6 +97,8 @@ const UsersTable = () => {
   const filteredUsers = (usersData || []).filter((user) =>
     selectedRole ? user.role === selectedRole : true
   );
+  console.log("selectRole :",selectedRole)
+  console.log("filterusers :",filteredUsers)
 
   const filteredUsersByName = (filteredUsers || []).filter((user) => {
     const fullName = `${user.firstName} ${user.lastName}`.toLowerCase();
