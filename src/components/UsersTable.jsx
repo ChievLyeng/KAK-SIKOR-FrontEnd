@@ -185,7 +185,7 @@ const UsersTable = () => {
                   </TableCell>
                   <TableCell>
                     <div className="action-icon">
-                      <Link to={`/supplier/${user._id}`}>
+                      <Link to={user.role === 'supplier' ? `/supplier/${user._id}` : `/admin/${user._id}`}>
                         <i className="fa-regular fa-eye"></i>
                       </Link>
                       <Link onClick={() => handleDeleteUser(user._id)}>
