@@ -102,7 +102,7 @@ const UpdateProduct = () => {
 
     try {
       const response = await axios.post(
-        `http://localhost:3000/products/update-product/${params.id}`,
+        `http://localhost:3000/api/v1/products/${params.id}`,
         formData,
         {
           headers: {
