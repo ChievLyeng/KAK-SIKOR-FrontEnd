@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   TextField,
@@ -11,6 +11,10 @@ import {
 import { addProduct, fetchCategories, createCategory } from "../../store";
 import TopAppBar from "../../components/TopAppBar";
 import "../../style/common.css";
+import "../../style/CreateProduct.css";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
+import DOMPurify from "dompurify";
 
 const CreateProduct = () => {
   const initialProductData = {
@@ -29,7 +33,6 @@ const CreateProduct = () => {
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [errors, setErrors] = useState({});
   const dispatch = useDispatch();
-  const { unwrapResult } = "@reduxjs/toolkit";
   const isAdding = useSelector((state) => state.products.isAdding);
   const addError = useSelector((state) => state.products.addError);
   const [showNewCategoryForm, setShowNewCategoryForm] = useState(false);
@@ -104,6 +107,13 @@ const CreateProduct = () => {
     }
   };
 
+  const handleQuillChange = (content, _, source, editor) => {
+    if (source === "user") {
+      const plainText = editor.getText().trim();
+      setProductData({ ...productData, description: plainText });
+    }
+  };
+
   const handleCloseSnackbar = () => {
     setOpenSnackbar(false);
   };
@@ -112,40 +122,148 @@ const CreateProduct = () => {
     <>
       <TopAppBar />
       <div className="create-form">
-        <form onSubmit={(e) => e.preventDefault()}>
-          <TextField
-            label="Name"
-            name="name"
-            value={productData.name}
-            onChange={handleInputChange}
-            fullWidth
-            margin="normal"
-            error={errors.name}
-            helperText={errors.name && "Name is required"}
-          />
-          <TextField
-            label="Description"
-            name="description"
-            value={productData.description}
-            onChange={handleInputChange}
-            fullWidth
-            margin="normal"
-            multiline
-            rows={4}
-            error={errors.description}
-            helperText={errors.description && "Description is required"}
-          />
-          <TextField
-            label="Price"
-            name="price"
-            value={productData.price}
-            onChange={handleInputChange}
-            type="number"
-            fullWidth
-            margin="normal"
-            error={errors.price}
-            helperText={errors.price && "Price is required"}
-          />
+        <form onSubmit={(e) => e.preventDefault()} className="create-container">
+          <div>
+            {" "}
+            <TextField
+              label="Name"
+              name="name"
+              value={productData.name}
+              onChange={handleInputChange}
+              fullWidth
+              margin="normal"
+              error={errors.name}
+              helperText={errors.name && "Name is required"}
+            />
+            <ReactQuill
+              value={productData.description}
+              onChange={handleQuillChange}
+              modules={{
+                toolbar: [
+                  [{ header: "1" }, { header: "2" }, { font: [] }],
+                  [{ size: [] }],
+                  ["bold", "italic", "underline", "strike", "blockquote"],
+                  [{ list: "ordered" }, { list: "bullet" }],
+                  ["link", "image", "video"],
+                  ["clean"],
+                ],
+              }}
+              formats={[
+                "header",
+                "font",
+                "size",
+                "bold",
+                "italic",
+                "underline",
+                "strike",
+                "blockquote",
+                "list",
+                "bullet",
+                "link",
+                "image",
+                "video",
+              ]}
+              placeholder="Enter description here..."
+            />
+            <TextField
+              label="Price"
+              name="price"
+              value={productData.price}
+              onChange={handleInputChange}
+              type="number"
+              fullWidth
+              margin="normal"
+              error={errors.price}
+              helperText={errors.price && "Price is required"}
+            />
+            <div></div>
+            <TextField
+              label="Quantity"
+              name="quantity"
+              value={productData.quantity}
+              onChange={handleInputChange}
+              type="number"
+              fullWidth
+              margin="normal"
+              error={errors.quantity}
+              helperText={errors.quantity && "Quantity is required"}
+            />
+            <TextField
+              label="Nutrition Fact"
+              name="Nutrition_Fact"
+              value={productData.Nutrition_Fact}
+              onChange={handleInputChange}
+              fullWidth
+              margin="normal"
+              error={errors.Nutrition_Fact}
+              helperText={errors.Nutrition_Fact && "Nutrition Fact is required"}
+            />
+            <TextField
+              label="Origin"
+              name="Origin"
+              value={productData.Origin}
+              onChange={handleInputChange}
+              fullWidth
+              margin="normal"
+              error={errors.Origin}
+              helperText={errors.Origin && "Origin is required"}
+            />
+            <TextField
+              label="Supplier"
+              name="Supplier"
+              value={productData.Supplier}
+              onChange={handleInputChange}
+              fullWidth
+              margin="normal"
+              error={errors.Supplier}
+              helperText={errors.Supplier && "Supplier is required"}
+            />
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handlePhotoChange}
+              style={{ display: "none" }}
+              id="photo-upload"
+              multiple // Allow multiple file selection
+            />
+            <div className="photo-upload-container">
+              <label htmlFor="photo-upload" className="photo-upload-label">
+                <Button variant="contained" component="span">
+                  Upload Photos
+                </Button>
+              </label>
+            </div>
+            <div className="product-photo-container">
+              {productData.photos &&
+                productData.photos.length > 0 &&
+                productData.photos.map((photo, index) => (
+                  <Avatar
+                    key={index}
+                    alt={`Product Photo ${index + 1}`}
+                    src={URL.createObjectURL(photo)}
+                    sx={{
+                      width: 250,
+                      height: 250,
+                      borderRadius: "3px",
+                      marginTop: "18px",
+                    }}
+                  />
+                ))}
+            </div>
+            <br />
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleSubmit}
+              disabled={isAdding}
+            >
+              {isAdding ? (
+                <CircularProgress size={24} color="inherit" />
+              ) : (
+                "Add Product"
+              )}
+            </Button>
+          </div>
           <div>
             <div>
               <TextField
@@ -198,94 +316,6 @@ const CreateProduct = () => {
               )}
             </div>
           </div>
-          <TextField
-            label="Quantity"
-            name="quantity"
-            value={productData.quantity}
-            onChange={handleInputChange}
-            type="number"
-            fullWidth
-            margin="normal"
-            error={errors.quantity}
-            helperText={errors.quantity && "Quantity is required"}
-          />
-          <TextField
-            label="Nutrition Fact"
-            name="Nutrition_Fact"
-            value={productData.Nutrition_Fact}
-            onChange={handleInputChange}
-            fullWidth
-            margin="normal"
-            error={errors.Nutrition_Fact}
-            helperText={errors.Nutrition_Fact && "Nutrition Fact is required"}
-          />
-          <TextField
-            label="Origin"
-            name="Origin"
-            value={productData.Origin}
-            onChange={handleInputChange}
-            fullWidth
-            margin="normal"
-            error={errors.Origin}
-            helperText={errors.Origin && "Origin is required"}
-          />
-          <TextField
-            label="Supplier"
-            name="Supplier"
-            value={productData.Supplier}
-            onChange={handleInputChange}
-            fullWidth
-            margin="normal"
-            error={errors.Supplier}
-            helperText={errors.Supplier && "Supplier is required"}
-          />
-          <input
-            type="file"
-            accept="image/*"
-            onChange={handlePhotoChange}
-            style={{ display: "none" }}
-            id="photo-upload"
-            multiple // Allow multiple file selection
-          />
-
-          <div className="photo-upload-container">
-            <label htmlFor="photo-upload" className="photo-upload-label">
-              <Button variant="contained" component="span">
-                Upload Photos
-              </Button>
-            </label>
-          </div>
-          <div className="product-photo-container">
-            {productData.photos &&
-              productData.photos.length > 0 &&
-              productData.photos.map((photo, index) => (
-                <Avatar
-                  key={index}
-                  alt={`Product Photo ${index + 1}`}
-                  src={URL.createObjectURL(photo)}
-                  sx={{
-                    width: 250,
-                    height: 250,
-                    borderRadius: "3px",
-                    marginTop: "18px",
-                  }}
-                />
-              ))}
-          </div>
-
-          <br />
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={handleSubmit}
-            disabled={isAdding}
-          >
-            {isAdding ? (
-              <CircularProgress size={24} color="inherit" />
-            ) : (
-              "Add Product"
-            )}
-          </Button>
         </form>
         <Snackbar
           open={addError !== null && openSnackbar}
