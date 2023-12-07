@@ -1,9 +1,19 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getSingleProduct } from "../../store";
+import { getSingleProduct, getReviewById } from "../../store";
 import { useParams } from "react-router-dom";
 import { Modal, Box } from "@mui/material";
-import { Container, ImageList, ImageListItem } from "@mui/material";
+import formatDistanceToNow from 'date-fns/formatDistanceToNow'
+import {
+  Container,
+  ImageList,
+  ImageListItem,
+  makeStyles,
+  Card,
+  CardContent,
+  Typography,
+  Rating,
+} from "@mui/material";
 import Header from "../../common-component/Header";
 import TopAppBar from "../../components/TopAppBar";
 import "../../style/ProductDetail.css";
@@ -20,15 +30,19 @@ function ProductDetail() {
     Supplier: "",
     photos: [],
   };
+
   const dispatch = useDispatch();
   const params = useParams();
   const [productData, setProductData] = useState(initialProduct);
-  const [selectedImage, setSelectedImage] = useState(null);
+  const [reviewData, setReviewData] = useState([]);
 
+  const [selectedImage, setSelectedImage] = useState(null);
   const product = useSelector((state) => state.products.singleProduct);
+  const review = useSelector((state) => state.reviews);
 
   useEffect(() => {
     dispatch(getSingleProduct(params.id));
+    dispatch(getReviewById(params.id));
   }, [dispatch, params.id]);
 
   useEffect(() => {
@@ -39,6 +53,13 @@ function ProductDetail() {
       });
     }
   }, [product]);
+
+  useEffect(() => {
+    if (review.data && review.data.data) {
+      // Assuming your reviews are an array, adjust accordingly if needed
+      setReviewData(review);
+    }
+  }, [review]);
 
   const handleImageClick = (photo) => {
     setSelectedImage(photo.url);
@@ -114,12 +135,53 @@ function ProductDetail() {
               {new Date(productData.updatedAt).toLocaleString()}
             </p>
             <p>
-              <strong>Review</strong> ~ 3
+              <strong>Review</strong> ~ {reviewData?.data?.data?.reviews.length}
             </p>
             <p>
               <strong>Description</strong> ~ {productData.description}
             </p>
           </div>
+        </div>
+        <div className="container-item">
+          <h2>{reviewData?.data?.data?.averageRating}</h2>
+        </div>
+        <div>
+          <h1>Customer Reviews</h1>
+          {reviewData?.data?.data?.reviews.map((review, index) => (
+            <Card key={index} className="review-card">
+              <CardContent>
+                <Typography
+                  variant="h5"
+                  component="div"
+                  gutterBottom
+                  className="profile-user"
+                >
+                  <div>
+                    <img
+                      src="https://images.rawpixel.com/image_png_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIzLTA4L3Jhd3BpeGVsX29mZmljZV8xMl9waG90b19vZl9nb2xkZW5fcmV0cmlldmVyX3B1cHB5X2p1bXBpbmdfaXNvbF83MTM2NGE2OS1kZTM0LTQzMWEtYWRkZS04ZTdmZWQ0ZGFiOTIucG5n.png"
+                      alt=""
+                      className="img-review"
+                    />
+                  </div>
+                  <div className="star">
+                    <p className="username">
+                      {review.userId?.firstName} {review.userId?.lastName}
+                    </p >
+                    <p className="date">{formatDistanceToNow(new Date(review.createdAt), { addSuffix: true })}</p>
+                  </div>
+                </Typography>
+                <Rating
+                  name="read-only"
+                  value={review.rating} // Use review.rating instead of reviewData?.data?.data?.reviews[0]?.rating
+                  readOnly
+                />
+
+                <Typography variant="body1" color="textSecondary">
+                  Description: {review.description}
+                </Typography>
+              </CardContent>
+            </Card>
+          ))}
         </div>
       </Container>
       <Modal
