@@ -3,17 +3,27 @@ import { useDispatch, useSelector } from "react-redux";
 import { getSingleProduct, getReviewById } from "../../store";
 import { useParams } from "react-router-dom";
 import { Modal, Box } from "@mui/material";
-import formatDistanceToNow from 'date-fns/formatDistanceToNow'
+import formatDistanceToNow from "date-fns/formatDistanceToNow";
 import {
   Container,
   ImageList,
   ImageListItem,
-  makeStyles,
   Card,
   CardContent,
   Typography,
   Rating,
+  Divider,
 } from "@mui/material";
+import {
+  AccountCircle,
+  Category,
+  MonetizationOn,
+  Room,
+  AccessTime,
+  Description,
+  Update,
+  RateReview,
+} from "@mui/icons-material";
 import Header from "../../common-component/Header";
 import TopAppBar from "../../components/TopAppBar";
 import "../../style/ProductDetail.css";
@@ -71,7 +81,7 @@ function ProductDetail() {
 
   return (
     <>
-      <Container maxWidth="xl" className="MuiContainer-maxWidthMd">
+      <Container maxWidth="xl" className="product-detail-container">
         <TopAppBar />
         <Header title="Product Detail" />
       </Container>
@@ -90,10 +100,15 @@ function ProductDetail() {
             </div>
             <div>
               {/* Show the image gallery */}
-              <ImageList sx={{ width: 500 }} cols={4} rowHeight={164}>
+              <ImageList
+                sx={{ width: 500, height: 250 }}
+                cols={4}
+                rowHeight={164}
+              >
                 {productData.photos.map((photo, index) => (
                   <ImageListItem
                     key={index}
+                    className="img-gallery"
                     onClick={() => handleImageClick(photo)}
                   >
                     <img
@@ -107,40 +122,103 @@ function ProductDetail() {
             </div>
           </div>
           <div className="container-item">
-            <p>
-              <strong>Supplier</strong> ~ {productData.Supplier.firstName}{" "}
-              {productData.Supplier.lastName}
-            </p>
-            <p>
-              <strong>Name</strong> ~ {productData.name}
-            </p>
-            <p>
-              <strong>Category</strong> ~ {productData.category.name}
-            </p>
-            <p>
-              <strong>Price</strong> ~ {productData.price}$
-            </p>
-            <p>
-              <strong>Origin</strong> ~ {productData.Origin}
-            </p>
-            <p>
-              <strong>Nutrition Fact</strong> ~ {productData.Nutrition_Fact}
-            </p>
-            <p>
-              <strong>Created At</strong> ~{" "}
-              {new Date(productData.createdAt).toLocaleString()}
-            </p>
-            <p>
-              <strong>Update At</strong> ~{" "}
-              {new Date(productData.updatedAt).toLocaleString()}
-            </p>
-            <p>
-              <strong>Review</strong> ~ {reviewData?.data?.data?.reviews.length}
-            </p>
-            <p>
-              <strong>Description</strong> ~ {productData.description}
-            </p>
+            <Box sx={{ marginBottom: 2 }}>
+              <Typography
+                variant="subtitle1"
+                display="flex"
+                alignItems="center"
+              >
+                <AccountCircle sx={{ fontSize: 24, marginRight: 1 }} />
+                Supplier: {productData.Supplier.firstName}{" "}
+                {productData.Supplier.lastName}
+              </Typography>
+              <Divider />
+            </Box>
+
+            <Box sx={{ marginBottom: 2 }}>
+              <Typography
+                variant="subtitle1"
+                display="flex"
+                alignItems="center"
+              >
+                <Category sx={{ fontSize: 24, marginRight: 1 }} />
+                Category: {productData.category.name}
+              </Typography>
+              <Divider />
+            </Box>
+
+            <Box sx={{ marginBottom: 2 }}>
+              <Typography
+                variant="subtitle1"
+                display="flex"
+                alignItems="center"
+              >
+                <MonetizationOn sx={{ fontSize: 24, marginRight: 1 }} />
+                Price: {productData.price}$
+              </Typography>
+              <Divider />
+            </Box>
+
+            <Box sx={{ marginBottom: 2 }}>
+              <Typography
+                variant="subtitle1"
+                display="flex"
+                alignItems="center"
+              >
+                <Room sx={{ fontSize: 24, marginRight: 1 }} />
+                Origin: {productData.Origin}
+              </Typography>
+              <Divider />
+            </Box>
+
+            <Box sx={{ marginBottom: 2 }}>
+              <Typography
+                variant="subtitle1"
+                display="flex"
+                alignItems="center"
+              >
+                <Description sx={{ fontSize: 24, marginRight: 1 }} />
+                Description: {productData.description}
+              </Typography>
+              <Divider />
+            </Box>
+
+            <Box sx={{ marginBottom: 2 }}>
+              <Typography
+                variant="subtitle1"
+                display="flex"
+                alignItems="center"
+              >
+                <AccessTime sx={{ fontSize: 24, marginRight: 1 }} />
+                Created At: {new Date(productData.createdAt).toLocaleString()}
+              </Typography>
+              <Divider />
+            </Box>
+
+            <Box sx={{ marginBottom: 2 }}>
+              <Typography
+                variant="subtitle1"
+                display="flex"
+                alignItems="center"
+              >
+                <Update sx={{ fontSize: 24, marginRight: 1 }} />
+                Updated At: {new Date(productData.updatedAt).toLocaleString()}
+              </Typography>
+              <Divider />
+            </Box>
+
+            <Box sx={{ marginBottom: 2 }}>
+              <Typography
+                variant="subtitle1"
+                display="flex"
+                alignItems="center"
+              >
+                <RateReview sx={{ fontSize: 24, marginRight: 1 }} />
+                Reviews: {reviewData?.data?.data?.reviews.length}
+              </Typography>
+            </Box>
           </div>
+          ;
         </div>
         <div className="container-item">
           <h2>{reviewData?.data?.data?.averageRating}</h2>
@@ -166,8 +244,12 @@ function ProductDetail() {
                   <div className="star">
                     <p className="username">
                       {review.userId?.firstName} {review.userId?.lastName}
-                    </p >
-                    <p className="date">{formatDistanceToNow(new Date(review.createdAt), { addSuffix: true })}</p>
+                    </p>
+                    <p className="date">
+                      {formatDistanceToNow(new Date(review.createdAt), {
+                        addSuffix: true,
+                      })}
+                    </p>
                   </div>
                 </Typography>
                 <Rating

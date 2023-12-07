@@ -19,8 +19,8 @@ h2 {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.container-details > div {
-  margin-right: 20px;
+.img-gallery {
+  height: 50px;
 }
 
 .container-item {
@@ -33,4 +33,10 @@ h2 {
 
 .container-item strong {
   margin-right: 8px;
+}
+
+/* contianer */
+.MuiContainer-maxWidthXl.product-detail-container {
+  margin-top: 100px;
+  margin-bottom: 24px;
 }
