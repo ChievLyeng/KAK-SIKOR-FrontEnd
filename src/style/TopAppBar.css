@@ -1,0 +1,13 @@
+.custom-appbar {
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.ml-auto {
+  display: none;
+}
+
+.show {
+  display: flex;
+  flex-direction: column;
+}

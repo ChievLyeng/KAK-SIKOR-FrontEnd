@@ -1,0 +1,9 @@
+.image-detail {
+  width: 361px;
+  height: 552px;
+}
+
+.product-detail {
+  display: flex;
+  flex-direction: column;
+}
