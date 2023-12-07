@@ -12,9 +12,8 @@ import { addProduct, fetchCategories, createCategory } from "../../store";
 import TopAppBar from "../../components/TopAppBar";
 import "../../style/common.css";
 import "../../style/CreateProduct.css";
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css";
-import DOMPurify from "dompurify";
+import CancelIcon from "@mui/icons-material/Cancel";
+import { IconButton } from "@mui/material";
 
 const CreateProduct = () => {
   const initialProductData = {
@@ -74,7 +73,8 @@ const CreateProduct = () => {
   };
 
   const handlePhotoChange = (e) => {
-    setProductData({ ...productData, photos: [...e.target.files] });
+    const newPhotos = [...productData.photos, ...e.target.files];
+    setProductData({ ...productData, photos: newPhotos });
   };
 
   const handleSubmit = () => {
@@ -106,12 +106,11 @@ const CreateProduct = () => {
       setErrors({});
     }
   };
-
-  const handleQuillChange = (content, _, source, editor) => {
-    if (source === "user") {
-      const plainText = editor.getText().trim();
-      setProductData({ ...productData, description: plainText });
-    }
+  const handleCancelPhoto = (indexToRemove) => {
+    const updatedPhotos = productData.photos.filter(
+      (_, index) => index !== indexToRemove
+    );
+    setProductData({ ...productData, photos: updatedPhotos });
   };
 
   const handleCloseSnackbar = () => {
@@ -135,35 +134,17 @@ const CreateProduct = () => {
               error={errors.name}
               helperText={errors.name && "Name is required"}
             />
-            <ReactQuill
+            <TextField
+              label="Description"
+              name="description"
               value={productData.description}
-              onChange={handleQuillChange}
-              modules={{
-                toolbar: [
-                  [{ header: "1" }, { header: "2" }, { font: [] }],
-                  [{ size: [] }],
-                  ["bold", "italic", "underline", "strike", "blockquote"],
-                  [{ list: "ordered" }, { list: "bullet" }],
-                  ["link", "image", "video"],
-                  ["clean"],
-                ],
-              }}
-              formats={[
-                "header",
-                "font",
-                "size",
-                "bold",
-                "italic",
-                "underline",
-                "strike",
-                "blockquote",
-                "list",
-                "bullet",
-                "link",
-                "image",
-                "video",
-              ]}
-              placeholder="Enter description here..."
+              onChange={handleInputChange}
+              fullWidth
+              margin="normal"
+              multiline
+              rows={4}
+              error={errors.description}
+              helperText={errors.description && "Description is required"}
             />
             <TextField
               label="Price"
@@ -228,7 +209,13 @@ const CreateProduct = () => {
             />
             <div className="photo-upload-container">
               <label htmlFor="photo-upload" className="photo-upload-label">
-                <Button variant="contained" component="span">
+                <Button
+                  variant="contained"
+                  component="span"
+                  sx={{
+                    backgroundColor: "#82B440",
+                  }}
+                >
                   Upload Photos
                 </Button>
               </label>
@@ -237,17 +224,33 @@ const CreateProduct = () => {
               {productData.photos &&
                 productData.photos.length > 0 &&
                 productData.photos.map((photo, index) => (
-                  <Avatar
+                  <div
                     key={index}
-                    alt={`Product Photo ${index + 1}`}
-                    src={URL.createObjectURL(photo)}
-                    sx={{
-                      width: 250,
-                      height: 250,
-                      borderRadius: "3px",
-                      marginTop: "18px",
-                    }}
-                  />
+                    className="avatar-wrapper"
+                    style={{ position: "relative" }}
+                  >
+                    <Avatar
+                      alt={`Product Photo ${index + 1}`}
+                      src={URL.createObjectURL(photo)}
+                      sx={{
+                        width: 250,
+                        height: 250,
+                        borderRadius: "3px",
+                        marginTop: "18px",
+                      }}
+                    />
+                    <IconButton
+                      onClick={() => handleCancelPhoto(index)}
+                      sx={{
+                        position: "absolute",
+                        top: "8px",
+                        right: "-5px",
+                        backgroundColor: "#fff",
+                      }}
+                    >
+                      <CancelIcon />
+                    </IconButton>
+                  </div>
                 ))}
             </div>
             <br />
@@ -256,6 +259,9 @@ const CreateProduct = () => {
               color="primary"
               onClick={handleSubmit}
               disabled={isAdding}
+              sx={{
+                backgroundColor: "#82B440",
+              }}
             >
               {isAdding ? (
                 <CircularProgress size={24} color="inherit" />
@@ -293,6 +299,9 @@ const CreateProduct = () => {
                 variant="contained"
                 color="primary"
                 onClick={handleCreateCategory}
+                sx={{
+                  backgroundColor: "#82B440",
+                }}
               >
                 CREATE CATEGORY
               </Button>
