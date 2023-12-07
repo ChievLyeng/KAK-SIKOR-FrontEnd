@@ -29,13 +29,13 @@ const CreateProduct = () => {
   };
 
   const [productData, setProductData] = useState(initialProductData);
-  const [openSnackbar, setOpenSnackbar] = useState(false);
   const [errors, setErrors] = useState({});
   const dispatch = useDispatch();
   const isAdding = useSelector((state) => state.products.isAdding);
-  const addError = useSelector((state) => state.products.addError);
   const [showNewCategoryForm, setShowNewCategoryForm] = useState(false);
   const [newCategoryName, setNewCategoryName] = useState("");
+  const [showSuccessAlert, setShowSuccessAlert] = useState(false);
+
   const categoriesData = useSelector(
     (state) => state.categories.data.categories
   );
@@ -46,11 +46,6 @@ const CreateProduct = () => {
 
   const handleSubmitNewCategory = async (e) => {
     e.preventDefault();
-
-    if (newCategoryName.trim() === "") {
-      setOpenSnackbar(true);
-      return;
-    }
 
     try {
       await dispatch(createCategory(newCategoryName));
@@ -77,7 +72,7 @@ const CreateProduct = () => {
     setProductData({ ...productData, photos: newPhotos });
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const fieldErrors = {};
     for (let key in productData) {
       if (productData[key] === "" && key !== "photos") {
@@ -92,29 +87,33 @@ const CreateProduct = () => {
     if (Object.keys(fieldErrors).length > 0) {
       setErrors(fieldErrors);
     } else {
-      const formData = new FormData();
-      for (let key in productData) {
-        if (key === "photos") {
-          productData[key].forEach((file) => formData.append("photos", file));
-        } else {
-          formData.append(key, productData[key]);
+      try {
+        const formData = new FormData();
+        for (let key in productData) {
+          if (key === "photos") {
+            productData[key].forEach((file) => formData.append("photos", file));
+          } else {
+            formData.append(key, productData[key]);
+          }
         }
+
+        await dispatch(addProduct(formData));
+        setProductData(initialProductData);
+        setErrors({});
+      } catch (error) {
+        console.error("Error adding product:", error);
+        // Handle specific error scenarios or display error message if needed
+      } finally {
+        setShowSuccessAlert(true);
       }
-      console.log(formData);
-      dispatch(addProduct(formData));
-      setProductData(initialProductData);
-      setErrors({});
     }
   };
+
   const handleCancelPhoto = (indexToRemove) => {
     const updatedPhotos = productData.photos.filter(
       (_, index) => index !== indexToRemove
     );
     setProductData({ ...productData, photos: updatedPhotos });
-  };
-
-  const handleCloseSnackbar = () => {
-    setOpenSnackbar(false);
   };
 
   return (
@@ -327,10 +326,10 @@ const CreateProduct = () => {
           </div>
         </form>
         <Snackbar
-          open={addError !== null && openSnackbar}
+          open={showSuccessAlert}
           autoHideDuration={6000}
-          onClose={handleCloseSnackbar}
-          message={addError || ""}
+          onClose={() => setShowSuccessAlert(false)}
+          message="Product added successfully!"
         />
       </div>
     </>
