@@ -40,3 +40,27 @@ h2 {
   margin-top: 100px;
   margin-bottom: 24px;
 }
+.average-rating {
+  display: flex;
+  justify-content: space-evenly;
+}
+.total-review {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.left-average {
+  display: grid;
+}
+.left-average > div {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.title-rating-2 {
+  padding: 10px;
+}
+.title-rating {
+  padding: 10px;
+  margin-top: 15px;
+}

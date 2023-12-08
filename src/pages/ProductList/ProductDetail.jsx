@@ -2,8 +2,10 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getSingleProduct, getReviewById } from "../../store";
 import { useParams } from "react-router-dom";
-import { Modal, Box } from "@mui/material";
+import { Modal, Box, Avatar, LinearProgress } from "@mui/material";
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
+import * as React from "react";
+
 import {
   Container,
   ImageList,
@@ -50,6 +52,8 @@ function ProductDetail() {
   const product = useSelector((state) => state.products.singleProduct);
   const review = useSelector((state) => state.reviews);
 
+  console.log(reviewData);
+
   useEffect(() => {
     dispatch(getSingleProduct(params.id));
     dispatch(getReviewById(params.id));
@@ -78,6 +82,24 @@ function ProductDetail() {
   const handleCloseModal = () => {
     setSelectedImage(null);
   };
+
+  const [progress, setProgress] = React.useState(0);
+
+  React.useEffect(() => {
+    const timer = setInterval(() => {
+      setProgress((oldProgress) => {
+        if (oldProgress === 100) {
+          return 0;
+        }
+        const diff = Math.random() * 10;
+        return Math.min(oldProgress + diff, 100);
+      });
+    }, 500);
+
+    return () => {
+      clearInterval(timer);
+    };
+  }, []);
 
   return (
     <>
@@ -175,7 +197,7 @@ function ProductDetail() {
               <Typography
                 variant="subtitle1"
                 display="flex"
-                alignItems="center"
+                alignItems="flex-start"
               >
                 <Description sx={{ fontSize: 24, marginRight: 1 }} />
                 Description: {productData.description}
@@ -218,13 +240,106 @@ function ProductDetail() {
               </Typography>
             </Box>
           </div>
-          ;
         </div>
         <div className="container-item">
-          <h2>{reviewData?.data?.data?.averageRating}</h2>
+          <Typography
+            variant="h5"
+            component="div"
+            gutterBottom
+            className="title-rating"
+          >
+            Average Rating
+          </Typography>
+          <Card className="review-card">
+            <CardContent>
+              <div className="average-rating">
+                <div className="left-average">
+                  <Typography variant="h5" fontWeight={100}>
+                    Supposed to be a progress chart
+                  </Typography>
+                  <div>
+                    <p>5&nbsp;stars</p>
+                    <Box sx={{ width: "100%" }}>
+                      <LinearProgress
+                        variant="determinate"
+                        value={reviewData?.data?.data?.averageRating * 20}
+                      />
+                    </Box>
+                    <p>(2)</p>
+                  </div>
+                  <div>
+                    <p>4&nbsp;stars</p>
+                    <Box sx={{ width: "100%" }}>
+                      <LinearProgress
+                        variant="determinate"
+                        value={reviewData?.data?.data?.averageRating * 20}
+                      />
+                    </Box>
+                    <p>(2)</p>
+                  </div>
+                  <div>
+                    <p>3&nbsp;stars</p>
+                    <Box sx={{ width: "100%" }}>
+                      <LinearProgress
+                        variant="determinate"
+                        value={reviewData?.data?.data?.averageRating * 20}
+                      />
+                    </Box>
+                    <p>(2)</p>
+                  </div>
+
+                  <div>
+                    <p>2&nbsp;stars</p>
+                    <Box sx={{ width: "100%" }}>
+                      <LinearProgress
+                        variant="determinate"
+                        value={reviewData?.data?.data?.averageRating * 20}
+                      />
+                    </Box>
+                    <p>(2)</p>
+                  </div>
+                  <div>
+                    <p>1&nbsp;stars</p>
+                    <Box sx={{ width: "100%" }}>
+                      <LinearProgress
+                        variant="determinate"
+                        value={reviewData?.data?.data?.averageRating * 20}
+                      />
+                    </Box>
+                    <p>(10)</p>
+                  </div>
+                </div>
+                <div className="total-review">
+                  <Typography variant="h4" color="primary" align="center">
+                    Total Reviews ({reviewData?.data?.data?.reviews?.length})
+                  </Typography>
+                  <Typography
+                    variant="h2"
+                    color="primary"
+                    align="center"
+                    fontWeight={500}
+                  >
+                    {reviewData?.data?.data?.averageRating}
+                  </Typography>
+                  <Rating
+                    name="read-only"
+                    value={parseFloat(reviewData?.data?.data?.averageRating)}
+                    align="center"
+                    readOnly
+                    precision={0.1}
+                  />
+                  <Typography variant="h5" color="primary" align="center">
+                    Product Average Rating Star
+                  </Typography>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
         </div>
         <div>
-          <h1>Customer Reviews</h1>
+          <Typography variant="h5" gutterBottom className="title-rating-2">
+            Customer Reviews
+          </Typography>
           {reviewData?.data?.data?.reviews.map((review, index) => (
             <Card key={index} className="review-card">
               <CardContent>
@@ -235,10 +350,10 @@ function ProductDetail() {
                   className="profile-user"
                 >
                   <div>
-                    <img
+                    <Avatar
+                      alt="profile"
+                      sx={{ width: 56, height: 56 }}
                       src="https://images.rawpixel.com/image_png_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIzLTA4L3Jhd3BpeGVsX29mZmljZV8xMl9waG90b19vZl9nb2xkZW5fcmV0cmlldmVyX3B1cHB5X2p1bXBpbmdfaXNvbF83MTM2NGE2OS1kZTM0LTQzMWEtYWRkZS04ZTdmZWQ0ZGFiOTIucG5n.png"
-                      alt=""
-                      className="img-review"
                     />
                   </div>
                   <div className="star">
@@ -254,8 +369,9 @@ function ProductDetail() {
                 </Typography>
                 <Rating
                   name="read-only"
-                  value={review.rating} // Use review.rating instead of reviewData?.data?.data?.reviews[0]?.rating
+                  value={review.rating}
                   readOnly
+                  precision={0.5}
                 />
 
                 <Typography variant="body1" color="textSecondary">
