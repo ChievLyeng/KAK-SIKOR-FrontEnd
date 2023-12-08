@@ -1,6 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Provider } from "react-redux";
-import { store } from "./store";
 import ProductList from "./pages/ProductList/ProductList";
 import UsersList from "./pages/UsersList/UsersList";
 import CreateProduct from "./pages/ProductList/CreateProduct";
@@ -11,10 +10,14 @@ import UpdateProduct from "./pages/ProductList/UpdateProduct";
 import MyAccount from "./pages/MyAccount/MyAccount";
 import Login from "./pages/Auth/Login";
 import ProductDetail from "./pages/ProductList/ProductDetail";
+import { PersistGate } from "redux-persist/integration/react";
+import { persistor,store} from "././store/index";
+
 
 function App() {
   return (
     <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
       <Router>
         <Routes>
           <Route path="/" element={<Login />} />
@@ -29,6 +32,7 @@ function App() {
           <Route path="/product-detail/:id" element={<ProductDetail />} />
         </Routes>
       </Router>
+      </PersistGate>
     </Provider>
   );
 }

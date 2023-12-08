@@ -29,7 +29,7 @@ const userSlice = createSlice({
         state.isLoading = false;
         state.error = action.error.message;
       })
-      .addCase(fetchSupplierById.pending, (state, action) => {
+      .addCase(fetchSupplierById.pending, (state) => {
         state.isLoading = true;
         state.error = null;
       })

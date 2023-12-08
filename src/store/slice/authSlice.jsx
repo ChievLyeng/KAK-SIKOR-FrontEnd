@@ -1,56 +1,71 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { loginUser } from "../thunks/userApi";
-import { fetchUserById } from "../thunks/userApi";
 
 const authSlice = createSlice({
-  name: "login",
-  initialState: {
-    user: null,
-    isLoading: false,
-    isAuthenicated: false,
-    error: null,
-  },
-  extraReducers: (builder) => {
-    builder
-      .addCase(loginUser.pending, (state) => {
-        state.user = null;
-        state.isLoading = true;
-        state.isAuthenicated = false;
-        state.error = null;
-      })
-      .addCase(loginUser.fulfilled, (state, action) => {
-        state.user = action.payload;
-        state.isLoading = false;
-        state.isAuthenicated = true;
-        state.error = null;
-      })
-      .addCase(loginUser.rejected, (state, action) => {
-        state.user = null;
-        state.isLoading = false;
-        console.log(action.error.message);
-        if (action.error.message === "Request failed with status code 401") {
-          state.error = "Access Denied! Invalid Credentials";
-        } else {
-          state.error = action.error.message;
+    name: 'auth',
+    initialState:{
+        login:{
+            currentUser : null,
+            isFetching: false,
+            error: false
+        },
+        register:{
+            isFetching: false,
+            error: false,
+            success: false
         }
-      })
-      .addCase(fetchUserById.pending, (state) => {
-        state.user = null;
-        state.isLoading = true;
-        state.isAuthenicated = false;
-        state.error = null;
-      })
-      .addCase(fetchUserById.fulfilled, (state, action) => {
-        state.user = action.payload;
-        state.isLoading = false;
-        state.isAuthenicated = true;
-        state.error = null;
-      })
-      .addCase(fetchUserById.rejected, (state, action) => {
-        state.user = null;
-        state.isLoading = false;
-      });
-  },
+    },
+    reducers:{
+        loginStart: (state) => {
+            state.login.isFetching = true;
+        },
+        loginSuccess: (state,action) => {
+            state.login.isFetching = false;
+            state.login.currentUser = action.payload;
+            state.login.error = false;
+        },
+        loginFailed: (state) => {
+            state.login.isFetching = false;
+            state.login.error = true;
+        },
+        registerStart: (state) => {
+            state.register.isFetching = true;
+        },
+        registerSuccess: (state) => {
+            state.register.isFetching = false;
+            state.register.error = false;
+            state.register.success = true
+        },
+        registerFailed: (state) => {
+            state.register.isFetching = false;
+            state.register.error = true;
+            state.register.success = false;
+        },
+        logOutSuccess: (state) => {
+            state.login.isFetching = false;
+            state.login.currentUser = null;
+            state.login.error = false;
+        },
+        logOutFailed: (state) =>{
+            state.login.isFetching = false;
+            state.login.error = true;
+        },
+        logOutStart: (state) =>{
+            state.login.isFetching = true;
+        },
+        
+    }
 });
 
-export const authsReducer = authSlice.reducer;
+export const {
+    loginStart,
+    loginFailed,
+    loginSuccess,
+    registerFailed,
+    registerSuccess,
+    registerStart,
+    logOutFailed,
+    logOutStart,
+    logOutSuccess
+} = authSlice.actions;
+
+export default authSlice.reducer;

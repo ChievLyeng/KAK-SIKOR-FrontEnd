@@ -9,7 +9,7 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import Typography from "@mui/material/Typography";
 import { useState } from "react";
-import { useDispatch} from "react-redux";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
@@ -20,31 +20,41 @@ export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
- 
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  console.log(email)
+  console.log(password)
 
   const handleLogin = (e) => {
     e.preventDefault();
-    let userCredential = {
-      email,
-      password,
+    const newUser = {
+      email: email,
+      password: password,
     };
-    // console.log("email :",email)
-    // console.log("password :",password)
-    dispatch(loginUser(userCredential)).then((result) => {
-      console.log("result payload :", result.payload);
-      if (result.payload) {
-        setEmail("");
-        setPassword("");
-        navigate("/dashboard");
-        // alert('success')
-      } else {
-        alert("Fail!!!");
-      }
-    });
+    loginUser(newUser, dispatch, navigate);
+    console.log("click!");
   };
+
+  // const handleLogin = (e) => {
+  //   e.preventDefault();
+  //   let userCredential = {
+  //     email,
+  //     password,
+  //   };
+  //   // console.log("email :",email)
+  //   // console.log("password :",password)
+  //   dispatch(loginUser(userCredential)).then((result) => {
+  //     console.log("result payload :", result.payload);
+  //     if (result.payload) {
+  //       setEmail("");
+  //       setPassword("");
+  //       navigate("/dashboard");
+  //       // alert('success')
+  //     } else {
+  //       alert("Fail!!!");
+  //     }
+  //   });
+  // };
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const handleMouseDownPassword = (event) => {

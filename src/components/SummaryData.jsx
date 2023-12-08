@@ -19,7 +19,10 @@ function SummaryData() {
   const orders = useSelector((state) => state.orders.data);
   const products = useSelector((state) => state.products.data);
   const users = useSelector((state) => state.users.data);
-  const reviews = useSelector((state) => state.reviews.data);
+  const reviews = useSelector((state) => {
+    console.log(state)
+    return state.reviews.data
+  });
 
   useEffect(() => {
     dispatch(fetchOrder());
