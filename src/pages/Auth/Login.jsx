@@ -13,7 +13,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
-import { loginUser } from "../../store";
+import { loginUser } from "../../store/thunks/authApi";
 import "../../style/Auth.css";
 
 export default function Login() {

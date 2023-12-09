@@ -65,7 +65,7 @@ function SummaryData() {
               <Link to="/usersList" className="link">
                 <OutlinedCard
                   title="Total User"
-                  value={users.result || 0}
+                  value={users?.result || 0}
                   icon={<PersonOutlineIcon />}
                 />
               </Link>

@@ -11,11 +11,10 @@ import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { styled } from "@mui/material/styles";
-import { updateUserById } from "../store";
+import { updateUserById } from "../store/thunks/authApi";
 import { fetchUserById } from "../store";
-
 import "../style/MyAccount.css";
-import { CleaningServices } from "@mui/icons-material";
+
 
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
@@ -39,44 +38,36 @@ const AccountInformation = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmpassword, setConfirmPassword] = useState('')
-  const [useraccount, setUseraccount] = useState();
-  const userId = useraccount?.user?._id || ''
-  const currentUserId = useraccount?.user?._id
-
   const dispatch = useDispatch()
+  const user = useSelector((state)=> {
+    console.log("state : ",state)
+    return state.auth?.login?.currentUser
+  });
+  const userId = user.data?.user?._id || ''
+  const token = user.token
+  // const currentUserId = useraccount?.user?._id
 
-  const getUser = () => {
-    const data = localStorage.getItem("user");
-    console.log(JSON.parse(data))
-    setUseraccount(JSON.parse(data));
-  };
+  // const getUser = () => {
+  //   const data = localStorage.getItem("user");
+  //   console.log(JSON.parse(data))
+  //   setUseraccount(JSON.parse(data));
+  // };
 
-  const fetchCurrentUser = () => {
-    dispatch(logInSuccess(fetchUserById(currentUserId)))
-  }
+  // const fetchCurrentUser = () => {
+  //   dispatch(logInSuccess(fetchUserById(currentUserId)))
+  // }
 
-  
-  console.log("id",currentUserId)
-
-
-  useEffect(() => {
-    getUser();
-    fetchCurrentUser();
-    
-  }, [dispatch]);
 
   useEffect(() => {
     
-    setFirstName(useraccount?.user?.firstName || '');
-    setLastName(useraccount?.user?.lastName || '');
-    setEmail(useraccount?.user?.email || '')
-    setPhone(useraccount?.user?.phoneNumber || '')
+    setFirstName(user?.data?.user?.firstName || '');
+    setLastName(user?.data?.user?.lastName || '');
+    setEmail(user?.data?.user?.email || '')
+    setPhone(user?.data?.user?.phoneNumber || '')
     // setPassword(useraccount?.user?.password || '')
     // setConfirmPassword(useraccount?.user?.confirmpassword || '')
-   
-
-    
-  }, [useraccount]);
+  
+  }, []);
   
   // const userLogin = useSelector((state) => state.auth?.user?.user);
   // const useraccount = userLogin || null
@@ -89,11 +80,10 @@ const AccountInformation = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     console.log('update click!')
+    // console.log(token)
     
     try {
-      const token = JSON.parse(localStorage.getItem('token'));
-      console.log(token)
-      await dispatch(
+      
         updateUserById({
           userId,
           firstName,
@@ -101,8 +91,7 @@ const AccountInformation = () => {
           phone,
           gender: selectedGender,
           token
-        })
-      );
+        },dispatch)
       // Optionally, you can dispatch an action to update local state if needed
     } catch (error) {
       // Handle error
@@ -138,10 +127,10 @@ const AccountInformation = () => {
 
             <div className="name-role-contianer">
               <Typography variant="h5" className="profile-title">
-                {`${useraccount?.user?.firstName} ${useraccount?.user?.lastName}`}
+                {`${user?.data?.user?.firstName} ${user?.data?.user?.lastName}`}
               </Typography>
 
-              <Typography className="profile-title"> {useraccount?.user?.role} </Typography>
+              <Typography className="profile-title"> {user?.data?.user?.role} </Typography>
             </div>
           </Box>
         </Grid>

@@ -12,6 +12,11 @@ const authSlice = createSlice({
             isFetching: false,
             error: false,
             success: false
+        },
+        updateUser: {
+            currentUser: null,
+            isFetching: false,
+            error: false
         }
     },
     reducers:{
@@ -52,6 +57,18 @@ const authSlice = createSlice({
         logOutStart: (state) =>{
             state.login.isFetching = true;
         },
+        updateUserStart: (state) => {
+            state.updateUser.isFetching = true 
+        },
+        updateUserSuccess: (state,action) => {
+            state.updateUser.isFetching = false
+            state.updateUser.currentUser = action.payload
+            state.updateUser.error = false
+        },
+        updateUserFailed: (state) => {
+            state.login.isFetching = false;
+            state.updateUser.error = true
+        }
         
     }
 });
@@ -65,7 +82,10 @@ export const {
     registerStart,
     logOutFailed,
     logOutStart,
-    logOutSuccess
+    logOutSuccess,
+    updateUserFailed,
+    updateUserStart,
+    updateUserSuccess
 } = authSlice.actions;
 
 export default authSlice.reducer;

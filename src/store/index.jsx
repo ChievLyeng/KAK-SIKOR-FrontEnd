@@ -5,7 +5,7 @@ import { reviewsReducer } from "./slice/reviewSlice";
 import { orderReducer } from "./slice/orderSlice";
 import { categoriesReducer } from "./slice/categoriesSlice";
 import authReducer from './slice/authSlice'
-import thunk from 'redux-thunk';
+import { thunk } from "redux-thunk";
 
 import {
   persistStore,

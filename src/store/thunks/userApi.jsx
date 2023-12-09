@@ -1,9 +1,4 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import {
-  loginFailed,
-  loginStart,
-  loginSuccess
-} from './../slice/authSlice'
 import axios from "axios";
 
 const PORT = 3000
@@ -47,20 +42,7 @@ export const UPDATE_USER = (id) => `http://localhost:3001/api/v1/users/update/${
 //   }
 // );
 
-export const loginUser = async (user, dispatch, navigate) => {
-  axios.defaults.withCredentials = true
-    dispatch(loginStart({ isFetching: true }));
-    try {
-      const res = await axios.post("http://127.0.0.1:3000/api/v1/users/login", user,{
-        withCredentials:true,
-      });
-      dispatch(loginSuccess(res.data));
-      navigate("/");
-    } catch (err) {
-      console.log(err)
-      dispatch(loginFailed());
-    }
-  };
+
 
 export const fetchUserById = createAsyncThunk("user/fetch", async (userId) => {
   try {
