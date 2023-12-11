@@ -1,4 +1,4 @@
-import  { useState } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { createAxios } from "../store/thunks/createInstance";
@@ -19,27 +19,25 @@ import AssignmentIcon from "@mui/icons-material/Assignment";
 import PeopleIcon from "@mui/icons-material/People";
 import RateReviewIcon from "@mui/icons-material/RateReview";
 import AddIcon from "@mui/icons-material/Add";
-import PermIdentityIcon from '@mui/icons-material/PermIdentity';
-import { Link } from 'react-router-dom';
+import PermIdentityIcon from "@mui/icons-material/PermIdentity";
+import { Link } from "react-router-dom";
 import { logOutSuccess } from "../store/slice/authSlice";
 import { logOut } from "../store/thunks/authApi";
-import '../style/Dashboard.css'
+import "../style/Dashboard.css";
 
 export default function TopAppBar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [productSubMenuOpen, setProductSubMenuOpen] = useState(false);
-  const user = useSelector((state)=> state.auth.login.currentUser);
-  const accessToken = user?.token;
+  const user = useSelector((state) => state.auth.login.currentUser);
   const refreshToken = user?.refreshToken;
   const id = user?.data?.user?._id;
-  console.log("id" ,accessToken)
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  let axiosJWT = createAxios(user,dispatch,logOutSuccess);
+  let axiosJWT = createAxios(user, dispatch, logOutSuccess);
 
-  const handleLogout = () =>{
-    logOut(dispatch,id,navigate,refreshToken,axiosJWT);
-  }
+  const handleLogout = () => {
+    logOut(dispatch, id, navigate, refreshToken, axiosJWT);
+  };
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
@@ -52,7 +50,7 @@ export default function TopAppBar() {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="fixed" sx={{ backgroundColor: "white" }}>
-        <Toolbar >
+        <Toolbar>
           <IconButton
             size="large"
             edge="start"
@@ -68,29 +66,22 @@ export default function TopAppBar() {
             <Typography
               variant="h6"
               component="div"
-              sx={{ flexGrow: 1, color: "green"}}
+              sx={{ flexGrow: 1, color: "green" }}
             >
               KAKSIKOR
             </Typography>
           </Link>
-          
+
           <Link to="/myaccount">
             <IconButton>
-              <PermIdentityIcon sx={{color:"black"}} />
+              <PermIdentityIcon sx={{ color: "black" }} />
             </IconButton>
           </Link>
 
           <Link to="" onClick={handleLogout}>
-            <IconButton>
-              Logout
-            </IconButton>
+            <IconButton>Logout</IconButton>
           </Link>
-
-          
-
         </Toolbar>
-
-          
       </AppBar>
 
       <Drawer
@@ -188,7 +179,6 @@ export default function TopAppBar() {
         </Box>
       </Drawer>
       {/* Content goes here */}
-      
     </Box>
   );
 }

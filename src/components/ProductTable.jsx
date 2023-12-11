@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -133,8 +133,8 @@ export default function ProductTable() {
                       />
                     </TableCell>
                     <TableCell align="left">{product._id}</TableCell>
-                    <TableCell align="left">{product?.name}</TableCell>
-                    <TableCell>{product.category?.name}</TableCell>
+                    <TableCell align="left">{product.name}</TableCell>
+                    <TableCell>{product.category.name}</TableCell>
                     <TableCell align="left">{product.price}</TableCell>
                     <TableCell align="left">{product.quantity}</TableCell>
                     <TableCell>{product.Supplier?.email}</TableCell>

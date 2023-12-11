@@ -4,7 +4,6 @@ import { getSingleProduct, getReviewById } from "../../store";
 import { useParams } from "react-router-dom";
 import { Modal, Box, Avatar, LinearProgress } from "@mui/material";
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
-import * as React from "react";
 
 import {
   Container,
@@ -52,8 +51,6 @@ function ProductDetail() {
   const product = useSelector((state) => state.products.singleProduct);
   const review = useSelector((state) => state.reviews);
 
-  console.log(reviewData);
-
   useEffect(() => {
     dispatch(getSingleProduct(params.id));
     dispatch(getReviewById(params.id));
@@ -82,24 +79,6 @@ function ProductDetail() {
   const handleCloseModal = () => {
     setSelectedImage(null);
   };
-
-  const [progress, setProgress] = React.useState(0);
-
-  React.useEffect(() => {
-    const timer = setInterval(() => {
-      setProgress((oldProgress) => {
-        if (oldProgress === 100) {
-          return 0;
-        }
-        const diff = Math.random() * 10;
-        return Math.min(oldProgress + diff, 100);
-      });
-    }, 500);
-
-    return () => {
-      clearInterval(timer);
-    };
-  }, []);
 
   return (
     <>
@@ -340,48 +319,46 @@ function ProductDetail() {
           <Typography variant="h5" gutterBottom className="title-rating-2">
             Customer Reviews
           </Typography>
-          {reviewData.data &&
-            reviewData.data.data.reviews &&
-            reviewData.data.data.reviews.map((review, index) => (
-              <Card key={index} className="review-card">
-                <CardContent>
-                  <Typography
-                    variant="h5"
-                    component="div"
-                    gutterBottom
-                    className="profile-user"
-                  >
-                    <div>
-                      <Avatar
-                        alt="profile"
-                        sx={{ width: 56, height: 56 }}
-                        src="https://images.rawpixel.com/image_png_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIzLTA4L3Jhd3BpeGVsX29mZmljZV8xMl9waG90b19vZl9nb2xkZW5fcmV0cmlldmVyX3B1cHB5X2p1bXBpbmdfaXNvbF83MTM2NGE2OS1kZTM0LTQzMWEtYWRkZS04ZTdmZWQ0ZGFiOTIucG5n.png"
-                      />
-                    </div>
-                    <div className="star">
-                      <p className="username">
-                        {review.userId?.firstName} {review.userId?.lastName}
-                      </p>
-                      <p className="date">
-                        {formatDistanceToNow(new Date(review.createdAt), {
-                          addSuffix: true,
-                        })}
-                      </p>
-                    </div>
-                  </Typography>
-                  <Rating
-                    name="read-only"
-                    value={review.rating}
-                    readOnly
-                    precision={0.5}
-                  />
-
-                  <Typography variant="body1" color="textSecondary">
-                    Description: {review.description}
-                  </Typography>
-                </CardContent>
-              </Card>
-            ))}
+          {reviewData?.data?.data?.reviews.map((review, index) => (
+            <Card key={index} className="review-card">
+              <CardContent>
+                <Typography
+                  variant="h5"
+                  component="div"
+                  gutterBottom
+                  className="profile-user"
+                >
+                  <div>
+                    <Avatar
+                      alt="profile"
+                      sx={{ width: 56, height: 56 }}
+                      src="https://images.rawpixel.com/image_png_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIzLTA4L3Jhd3BpeGVsX29mZmljZV8xMl9waG90b19vZl9nb2xkZW5fcmV0cmlldmVyX3B1cHB5X2p1bXBpbmdfaXNvbF83MTM2NGE2OS1kZTM0LTQzMWEtYWRkZS04ZTdmZWQ0ZGFiOTIucG5n.png"
+                    />
+                  </div>
+                  <div className="star">
+                    <p className="username">
+                      {review.userId?.firstName} {review.userId?.lastName}
+                    </p>
+                    <p className="date">
+                      {formatDistanceToNow(new Date(review.createdAt), {
+                        addSuffix: true,
+                      })}
+                    </p>
+                  </div>
+                </Typography>
+                <Rating
+                  name="read-only"
+                  value={review.rating}
+                  readOnly
+                  precision={0.5}
+                />
+                <Typography variant="h6">{review.title}</Typography>
+                <Typography variant="body1" color="textSecondary">
+                  Description: {review.description}
+                </Typography>
+              </CardContent>
+            </Card>
+          ))}
         </div>
       </Container>
       <Modal
