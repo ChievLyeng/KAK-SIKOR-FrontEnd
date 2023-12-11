@@ -1,0 +1,10 @@
+.placeorder {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.photos {
+  width: 100px;
+  height: 100px;
+}
