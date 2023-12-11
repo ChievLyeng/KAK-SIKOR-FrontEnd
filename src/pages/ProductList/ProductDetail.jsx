@@ -151,8 +151,8 @@ function ProductDetail() {
                 alignItems="center"
               >
                 <AccountCircle sx={{ fontSize: 24, marginRight: 1 }} />
-                Supplier: {productData.Supplier.firstName}{" "}
-                {productData.Supplier.lastName}
+                Supplier: {productData.Supplier?.firstName}{" "}
+                {productData.Supplier?.lastName}
               </Typography>
               <Divider />
             </Box>
