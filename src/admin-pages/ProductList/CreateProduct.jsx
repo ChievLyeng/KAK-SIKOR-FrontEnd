@@ -14,6 +14,7 @@ import "../../style/common.css";
 import "../../style/CreateProduct.css";
 import CancelIcon from "@mui/icons-material/Cancel";
 import { IconButton } from "@mui/material";
+import imageCompression from "browser-image-compression";
 
 const CreateProduct = () => {
   const initialProductData = {
@@ -67,9 +68,26 @@ const CreateProduct = () => {
     setErrors({ ...errors, [name]: value === "" });
   };
 
-  const handlePhotoChange = (e) => {
-    const newPhotos = [...productData.photos, ...e.target.files];
-    setProductData({ ...productData, photos: newPhotos });
+  const handlePhotoChange = async (e) => {
+    try {
+      const options = {
+        maxSizeMB: 0.5, // Set the maximum size in MB for the resized image
+        maxWidthOrHeight: 500, // Set the maximum width or height of the resized image
+        useWebWorker: true,
+      };
+
+      const compressedPhotos = [];
+      for (const file of e.target.files) {
+        const compressedFile = await imageCompression(file, options);
+        compressedPhotos.push(compressedFile);
+      }
+
+      const newPhotos = [...productData.photos, ...compressedPhotos];
+      setProductData({ ...productData, photos: newPhotos });
+    } catch (error) {
+      console.error("Error compressing images:", error);
+      // Handle errors if image compression fails
+    }
   };
 
   const handleSubmit = async () => {

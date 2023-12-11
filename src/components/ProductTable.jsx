@@ -11,8 +11,6 @@ import "../style/ProductTable.css";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProducts, deleteProduct } from "../store";
 import { Link } from "react-router-dom";
-import axios from "axios";
-import { Login } from "@mui/icons-material";
 
 const columns = [
   {
@@ -135,8 +133,8 @@ export default function ProductTable() {
                       />
                     </TableCell>
                     <TableCell align="left">{product._id}</TableCell>
-                    <TableCell align="left">{product.name}</TableCell>
-                    <TableCell>{product.category.name}</TableCell>
+                    <TableCell align="left">{product?.name}</TableCell>
+                    <TableCell>{product.category?.name}</TableCell>
                     <TableCell align="left">{product.price}</TableCell>
                     <TableCell align="left">{product.quantity}</TableCell>
                     <TableCell>{product.Supplier?.email}</TableCell>
