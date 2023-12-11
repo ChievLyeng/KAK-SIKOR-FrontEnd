@@ -340,46 +340,48 @@ function ProductDetail() {
           <Typography variant="h5" gutterBottom className="title-rating-2">
             Customer Reviews
           </Typography>
-          {reviewData?.data?.data?.reviews.map((review, index) => (
-            <Card key={index} className="review-card">
-              <CardContent>
-                <Typography
-                  variant="h5"
-                  component="div"
-                  gutterBottom
-                  className="profile-user"
-                >
-                  <div>
-                    <Avatar
-                      alt="profile"
-                      sx={{ width: 56, height: 56 }}
-                      src="https://images.rawpixel.com/image_png_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIzLTA4L3Jhd3BpeGVsX29mZmljZV8xMl9waG90b19vZl9nb2xkZW5fcmV0cmlldmVyX3B1cHB5X2p1bXBpbmdfaXNvbF83MTM2NGE2OS1kZTM0LTQzMWEtYWRkZS04ZTdmZWQ0ZGFiOTIucG5n.png"
-                    />
-                  </div>
-                  <div className="star">
-                    <p className="username">
-                      {review.userId?.firstName} {review.userId?.lastName}
-                    </p>
-                    <p className="date">
-                      {formatDistanceToNow(new Date(review.createdAt), {
-                        addSuffix: true,
-                      })}
-                    </p>
-                  </div>
-                </Typography>
-                <Rating
-                  name="read-only"
-                  value={review.rating}
-                  readOnly
-                  precision={0.5}
-                />
+          {reviewData.data &&
+            reviewData.data.data.reviews &&
+            reviewData.data.data.reviews.map((review, index) => (
+              <Card key={index} className="review-card">
+                <CardContent>
+                  <Typography
+                    variant="h5"
+                    component="div"
+                    gutterBottom
+                    className="profile-user"
+                  >
+                    <div>
+                      <Avatar
+                        alt="profile"
+                        sx={{ width: 56, height: 56 }}
+                        src="https://images.rawpixel.com/image_png_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIzLTA4L3Jhd3BpeGVsX29mZmljZV8xMl9waG90b19vZl9nb2xkZW5fcmV0cmlldmVyX3B1cHB5X2p1bXBpbmdfaXNvbF83MTM2NGE2OS1kZTM0LTQzMWEtYWRkZS04ZTdmZWQ0ZGFiOTIucG5n.png"
+                      />
+                    </div>
+                    <div className="star">
+                      <p className="username">
+                        {review.userId?.firstName} {review.userId?.lastName}
+                      </p>
+                      <p className="date">
+                        {formatDistanceToNow(new Date(review.createdAt), {
+                          addSuffix: true,
+                        })}
+                      </p>
+                    </div>
+                  </Typography>
+                  <Rating
+                    name="read-only"
+                    value={review.rating}
+                    readOnly
+                    precision={0.5}
+                  />
 
-                <Typography variant="body1" color="textSecondary">
-                  Description: {review.description}
-                </Typography>
-              </CardContent>
-            </Card>
-          ))}
+                  <Typography variant="body1" color="textSecondary">
+                    Description: {review.description}
+                  </Typography>
+                </CardContent>
+              </Card>
+            ))}
         </div>
       </Container>
       <Modal
