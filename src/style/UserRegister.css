@@ -1,0 +1,12 @@
+/* Container styling */
+.form-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Form title styling */
+.title {
+    text-align: center;
+    padding: 41px;
+}

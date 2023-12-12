@@ -8,6 +8,7 @@ import {
 } from "../../store/slice/authV2Slice";
 import { useNavigate } from "react-router-dom";
 import FormContainer from "../../components/FormContainer";
+import TopAppBar from "../../components/TopAppBar";
 
 function ProfileScreen() {
   const dispatch = useDispatch();
@@ -52,95 +53,101 @@ function ProfileScreen() {
   if (userInfo) {
     const { data } = userInfo;
     return (
-      <FormContainer>
-        <Typography variant="h4" sx={{ textAlign: "center", margin: "20px 0" }}>
-          User Profile
-        </Typography>
-        <Box>
-          <InputLabel>First Name</InputLabel>
-          <TextField
-            fullWidth
-            value={data?.user.firstName}
-            variant="outlined"
-            sx={{
-              "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
-                {
-                  borderColor: "#82B440",
+      <>
+        <TopAppBar />
+        <FormContainer>
+          <Typography
+            variant="h4"
+            sx={{ textAlign: "center", margin: "20px 0", paddingTop: "40px " }}
+          >
+            User Profile
+          </Typography>
+          <Box>
+            <InputLabel>First Name</InputLabel>
+            <TextField
+              fullWidth
+              value={data?.user.firstName}
+              variant="outlined"
+              sx={{
+                "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
+                  {
+                    borderColor: "#82B440",
+                  },
+                "& .MuiInputLabel-root.Mui-focused": {
+                  color: "#82B440",
                 },
-              "& .MuiInputLabel-root.Mui-focused": {
-                color: "#82B440",
-              },
-            }}
-          />
+              }}
+            />
 
-          <InputLabel>Last Name</InputLabel>
-          <TextField
-            fullWidth
-            value={data?.user.lastName}
-            variant="outlined"
-            sx={{
-              "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
-                {
-                  borderColor: "#82B440",
+            <InputLabel>Last Name</InputLabel>
+            <TextField
+              fullWidth
+              value={data?.user.lastName}
+              variant="outlined"
+              sx={{
+                "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
+                  {
+                    borderColor: "#82B440",
+                  },
+                "& .MuiInputLabel-root.Mui-focused": {
+                  color: "#82B440",
                 },
-              "& .MuiInputLabel-root.Mui-focused": {
-                color: "#82B440",
-              },
-            }}
-          />
+              }}
+            />
 
-          <InputLabel>Email</InputLabel>
-          <TextField
-            fullWidth
-            value={data?.user.email}
-            variant="outlined"
-            sx={{
-              "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
-                {
-                  borderColor: "#82B440",
+            <InputLabel>Email</InputLabel>
+            <TextField
+              fullWidth
+              value={data?.user.email}
+              variant="outlined"
+              sx={{
+                "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
+                  {
+                    borderColor: "#82B440",
+                  },
+                "& .MuiInputLabel-root.Mui-focused": {
+                  color: "#82B440",
                 },
-              "& .MuiInputLabel-root.Mui-focused": {
-                color: "#82B440",
-              },
+              }}
+            />
+          </Box>
+
+          <Button
+            fullWidth
+            type="button"
+            variant="contained"
+            className="mt-2"
+            onClick={handleLogout}
+            //   disabled={isLoading}
+            sx={{
+              marginTop: "24px",
+              backgroundColor: "#82B440",
+              height: "50px",
+              fontSize: "1.2rem",
             }}
-          />
-        </Box>
+          >
+            Log out
+          </Button>
 
-        <Button
-          fullWidth
-          type="button"
-          variant="contained"
-          className="mt-2"
-          onClick={handleLogout}
-          //   disabled={isLoading}
-          sx={{
-            marginTop: "24px",
-            backgroundColor: "#82B440",
-            height: "50px", // Adjust the height as needed
-            fontSize: "1.2rem",
-          }}
-        >
-          Log out
-        </Button>
-
-        <Button
-          fullWidth
-          type="button"
-          variant="contained"
-          className="mt-2"
-          onClick={handleUpdate}
-          //   disabled={isLoading}
-          sx={{
-            marginTop: "24px",
-            marginBottom: "72px",
-            backgroundColor: "#82B440",
-            height: "50px", // Adjust the height as needed
-            fontSize: "1.2rem",
-          }}
-        >
-          Edit
-        </Button>
-      </FormContainer>
+          <Button
+            fullWidth
+            type="button"
+            variant="contained"
+            className="mt-2"
+            onClick={handleUpdate}
+            //   disabled={isLoading}
+            sx={{
+              marginTop: "24px",
+              marginBottom: "72px",
+              backgroundColor: "#82B440",
+              height: "50px",
+              fontSize: "1.2rem",
+            }}
+          >
+            Edit
+          </Button>
+        </FormContainer>
+      </>
     );
   }
   return <p>No user Data</p>;

@@ -21,15 +21,18 @@ function UserLogin() {
 
   const { userInfo } = useSelector((state) => state.auth);
 
+  // ...
   const { search } = useLocation();
   const sp = new URLSearchParams(search);
-  const redirect = sp.get("redirect") || "/profile";
+  // Set the default redirect path to "/profile" for the login page
+  const redirect = sp.get("redirect") || (isLoading ? "/profile" : "/login");
 
   useEffect(() => {
     if (userInfo) {
       navigate(redirect);
     }
   }, [userInfo, redirect, navigate]);
+  // ...
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -58,14 +61,14 @@ function UserLogin() {
 
       if (data) {
         dispatch(setCredentials(data));
-        navigate(redirect);
+
+        // Only navigate to the user profile if the login was successful
+        navigate("/profile");
       } else {
         if (error && error.message === "USER_NOT_FOUND") {
           setEmailError("User not found");
         } else if (error && error.message === "WRONG_PASSWORD") {
           setPasswordError("Wrong password");
-          // } else {
-          //   setEmailError("Email or Password is incorrect");
         }
       }
     } catch (err) {
@@ -78,7 +81,7 @@ function UserLogin() {
 
   return (
     <FormContainer>
-      <Typography variant="h4" sx={{ textAlign: "center" }}>
+      <Typography variant="h4" sx={{ textAlign: "center", marginTop: "41px" }}>
         Log in
       </Typography>
       <Typography sx={{ textAlign: "center", color: "#a5a5a5" }}>
