@@ -11,7 +11,8 @@ import FormContainer from "../../components/FormContainer";
 function UserLogin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -22,13 +23,7 @@ function UserLogin() {
 
   const { search } = useLocation();
   const sp = new URLSearchParams(search);
-  const redirect = sp.get("redirect") || "/";
-
-  useEffect(() => {
-    if (userInfo) {
-      navigate(redirect);
-    }
-  }, [userInfo, redirect, navigate]);
+  const redirect = sp.get("redirect") || "/cart";
 
   useEffect(() => {
     if (userInfo) {
@@ -39,18 +34,43 @@ function UserLogin() {
   const submitHandler = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await login({ email, password });
-      console.log("Login Data:", data);
+      // Clear error messages when attempting to submit
+      setEmailError("");
+      setPasswordError("");
+
+      if (!email.trim() && !password.trim()) {
+        setEmailError("Username cannot be empty");
+        setPasswordError("Password cannot be empty");
+        return;
+      }
+
+      if (!email.trim()) {
+        setEmailError("Username cannot be empty");
+        return;
+      }
+
+      if (!password.trim()) {
+        setPasswordError("Password cannot be empty");
+        return;
+      }
+
+      const { data, error } = await login({ email, password });
 
       if (data) {
         dispatch(setCredentials(data));
         navigate(redirect);
       } else {
-        setErrorMessage("Invalid credentials or server error");
+        if (error && error.message === "USER_NOT_FOUND") {
+          setEmailError("User not found");
+        } else if (error && error.message === "WRONG_PASSWORD") {
+          setPasswordError("Wrong password");
+          // } else {
+          //   setEmailError("Email or Password is incorrect");
+        }
       }
     } catch (err) {
       console.error("Login Error:", err);
-      setErrorMessage(
+      setPasswordError(
         err?.data?.message || err.error || "Server error occurred"
       );
     }
@@ -66,26 +86,30 @@ function UserLogin() {
       </Typography>
 
       <form onSubmit={submitHandler}>
-        {errorMessage && (
+        {/* {setEmailError && (
           <Typography color="error" sx={{ marginBottom: "16px" }}>
-            {errorMessage}
+            {setEmailError}
           </Typography>
-        )}
+        )} */}
         <TextField
           fullWidth
           label="Email address"
           type="email"
           value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          helperText="*Required"
+          onChange={(e) => {
+            setEmail(e.target.value);
+            setEmailError(""); // Clear usernameError when input changes
+          }}
+          error={Boolean(emailError)}
+          helperText={emailError || "*Required"}
           sx={{
             marginTop: "24px ",
             "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
               {
-                borderColor: "#82B440",
+                borderColor: emailError ? "red" : "#82B440",
               },
             "& .MuiInputLabel-root.Mui-focused": {
-              color: "#82B440",
+              color: emailError ? "red" : "#82B440",
             },
           }}
         />
@@ -95,16 +119,20 @@ function UserLogin() {
           label="Password"
           type="password"
           value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          helperText="*Required"
+          onChange={(e) => {
+            setPassword(e.target.value);
+            setPasswordError(""); // Clear passwordError when input changes
+          }}
+          error={Boolean(passwordError)}
+          helperText={passwordError || "*Required"}
           sx={{
             margin: "24px 0",
             "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
               {
-                borderColor: "#82B440",
+                borderColor: passwordError ? "red" : "#82B440",
               },
             "& .MuiInputLabel-root.Mui-focused": {
-              color: "#82B440",
+              color: passwordError ? "red" : "#82B440",
             },
           }}
         />
