@@ -68,8 +68,6 @@ const UsersTable = () => {
     dispatch(fetchProducts());
   }, [dispatch]);
 
-  console.log(usersData);
-
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [selectedRole, setSelectedRole] = useState("");
@@ -97,8 +95,6 @@ const UsersTable = () => {
   const filteredUsers = (usersData || []).filter((user) =>
     selectedRole ? user.role === selectedRole : true
   );
-  console.log("selectRole :", selectedRole);
-  console.log("filterusers :", filteredUsers);
 
   const filteredUsersByName = (filteredUsers || []).filter((user) => {
     const fullName = `${user.firstName} ${user.lastName}`.toLowerCase();

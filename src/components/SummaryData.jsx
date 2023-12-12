@@ -20,7 +20,6 @@ function SummaryData() {
   const products = useSelector((state) => state.products.data);
   const users = useSelector((state) => state.users.data);
   const reviews = useSelector((state) => {
-    console.log(state);
     return state.reviews.data;
   });
 
@@ -36,8 +35,6 @@ function SummaryData() {
 
   const orderLength = Order ? Order.length : 0;
   const productLength = Products ? Products.length : 0;
-
-  console.log("users", users);
 
   return (
     <>

@@ -74,8 +74,6 @@ export default function ProductTable() {
     setPage(0);
   };
 
-  console.log(orders);
-
   return (
     <>
       <Paper

@@ -54,8 +54,6 @@ export default function ReviewTable() {
     dispatch(fetchReview());
   }, [dispatch]);
 
-  console.log("reviewdata", reviewData);
-
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
 

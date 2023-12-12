@@ -70,8 +70,6 @@ export default function ProductTable() {
     setPage(newPage);
   };
 
-  console.log("Product Data : ", productData);
-
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(+event.target.value);
     setPage(0);
