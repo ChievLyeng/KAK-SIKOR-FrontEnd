@@ -42,8 +42,20 @@ export const usersApiSlice = apiSlice.injectEndpoints({
       }),
     }),
 
-    logout: builder.mutation({
+    update: builder.mutation({
       query: (data) => ({
+        url: `${USERS_URL}/:id`,
+        method: "PUT",
+        credentials: "include",
+        body: JSON.stringify({ data }),
+        headers: {
+          "Content-Type": "application/json", // Ensure the content type is set to JSON
+        },
+      }),
+    }),
+
+    logout: builder.mutation({
+      query: () => ({
         url: `${USERS_URL}/logout`,
         method: "POST",
         credentials: "include",
@@ -58,4 +70,5 @@ export const {
   useRegisterMutation,
   useForgotpasswordMutation,
   useVerificationMutation,
+  useUpdateMutation,
 } = usersApiSlice;

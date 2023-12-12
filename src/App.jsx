@@ -22,6 +22,8 @@ import { PersistGate } from "redux-persist/integration/react";
 import { persistor, store } from "././store/index";
 import clientStore from "./store/storeRtk";
 import UserLogin from "./pages/Auth/UserLogin";
+import ProfileScreen from "./pages/Auth/UserProfile";
+import RegisterScreen from "./pages/Auth/UserRegister";
 
 const isAdminRoute = window.location.pathname.startsWith("/dashboard");
 
@@ -50,6 +52,8 @@ function App() {
               <Route path="placeorder" element={<PlaceOrderPage />} />
               <Route path="/order/:id" element={<OrderPage />} />
               <Route path="/login" element={<UserLogin />} />
+              <Route path="/profile" element={<ProfileScreen />} />
+              <Route path="/register" element={<RegisterScreen />} />
             </Routes>
           </Router>
         </PayPalScriptProvider>

@@ -23,7 +23,7 @@ function UserLogin() {
 
   const { search } = useLocation();
   const sp = new URLSearchParams(search);
-  const redirect = sp.get("redirect") || "/cart";
+  const redirect = sp.get("redirect") || "/profile";
 
   useEffect(() => {
     if (userInfo) {
