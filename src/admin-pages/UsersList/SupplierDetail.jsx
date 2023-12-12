@@ -25,7 +25,7 @@ function SupplierDetail() {
 
   const supplier = useSelector((state) => {
     // console.log(state);
-    return state.users.supplier.data;
+    return state.users?.supplier?.data;
   });
 
   const supplierData = supplier ? supplier : "";
@@ -61,7 +61,7 @@ function SupplierDetail() {
                     variant="h5"
                     className="MuiTypography-root supplier-name"
                   >
-                    {`${supplierData.firstName} ${supplierData.lastName}`}
+                    {`${supplierData?.firstName} ${supplierData.lastName}`}
                   </Typography>
 
                   <Typography className="supplier-email">

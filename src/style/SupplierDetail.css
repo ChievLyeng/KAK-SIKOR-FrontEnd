@@ -61,3 +61,8 @@ h2 {
 .date {
   font-size: 14px;
 }
+
+.MuiContainer-maxWidthXl.supplier-detail-container{
+  margin-top: 100px ;
+  margin-bottom: 100px;
+}

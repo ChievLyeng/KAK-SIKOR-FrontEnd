@@ -7,7 +7,7 @@ export const PORT = 3000;
 export const GET_ALL_USER = `http://localhost:${PORT}/api/v1/users`;
 export const LOGIN_USER = `http://127.0.0.1:${PORT}/api/v1/users/login`;
 export const GET_SUPPPLIER_By_Id = (id) =>
-  `http://localhost:${PORT}/api/v1/users/supplier/${id}`;
+  `http://localhost:${PORT}/api/v1/users/${id}`;
 export const GET_USER = (id) => `http://localhost:${PORT}/api/v1/users/${id}`;
 export const DELETE_USER = (id) =>
   `http://localhost:${PORT}/api/v1/users/delete/${id}`;
