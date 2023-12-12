@@ -5,7 +5,7 @@ import Container from "@mui/material/Container";
 const UsersList = () => {
   return (
     <>
-      <Container maxWidth="Lg" >
+      <Container maxWidth="Lg">
         <TopAppBar />
         <UsersTable />
       </Container>

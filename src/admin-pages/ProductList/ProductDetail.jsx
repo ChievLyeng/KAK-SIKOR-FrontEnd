@@ -25,7 +25,7 @@ import {
   Update,
   RateReview,
 } from "@mui/icons-material";
-import Header from "../../common-component/Header";
+import Header from "../../components/common/Header";
 import TopAppBar from "../../components/TopAppBar";
 import "../../style/ProductDetail.css";
 

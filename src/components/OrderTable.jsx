@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -74,7 +74,7 @@ export default function ProductTable() {
     setPage(0);
   };
 
-  console.log(orders)
+  console.log(orders);
 
   return (
     <>
@@ -110,11 +110,17 @@ export default function ProductTable() {
                     <TableRow hover role="checkbox" tabIndex={-1} key={index}>
                       <TableCell align="left">{2}</TableCell>
                       <TableCell align="left">{`${order.orderBy.firstName} ${order.orderBy.lastName}`}</TableCell>
-                      <TableCell align="left">{ order.products.length >= 2 ? `(${order.products.length}) items`: `(${order.products.length}) item`} </TableCell>
+                      <TableCell align="left">
+                        {order.products.length >= 2
+                          ? `(${order.products.length}) items`
+                          : `(${order.products.length}) item`}{" "}
+                      </TableCell>
                       <TableCell align="left">{2}</TableCell>
                       <TableCell align="left">{order.quantity}</TableCell>
                       <TableCell align="left">{order.status}</TableCell>
-                      <TableCell align="left">{new Date(order.createdAt).toLocaleDateString()}</TableCell>
+                      <TableCell align="left">
+                        {new Date(order.createdAt).toLocaleDateString()}
+                      </TableCell>
                       <TableCell align="left">
                         <div className="action-icon">
                           <i className="fa-regular fa-eye"></i>

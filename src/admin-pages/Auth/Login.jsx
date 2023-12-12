@@ -22,8 +22,8 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  console.log(email)
-  console.log(password)
+  console.log(email);
+  console.log(password);
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -34,27 +34,6 @@ export default function Login() {
     loginUser(newUser, dispatch, navigate);
     console.log("click!");
   };
-
-  // const handleLogin = (e) => {
-  //   e.preventDefault();
-  //   let userCredential = {
-  //     email,
-  //     password,
-  //   };
-  //   // console.log("email :",email)
-  //   // console.log("password :",password)
-  //   dispatch(loginUser(userCredential)).then((result) => {
-  //     console.log("result payload :", result.payload);
-  //     if (result.payload) {
-  //       setEmail("");
-  //       setPassword("");
-  //       navigate("/dashboard");
-  //       // alert('success')
-  //     } else {
-  //       alert("Fail!!!");
-  //     }
-  //   });
-  // };
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const handleMouseDownPassword = (event) => {

@@ -97,8 +97,8 @@ const UsersTable = () => {
   const filteredUsers = (usersData || []).filter((user) =>
     selectedRole ? user.role === selectedRole : true
   );
-  console.log("selectRole :",selectedRole)
-  console.log("filterusers :",filteredUsers)
+  console.log("selectRole :", selectedRole);
+  console.log("filterusers :", filteredUsers);
 
   const filteredUsersByName = (filteredUsers || []).filter((user) => {
     const fullName = `${user.firstName} ${user.lastName}`.toLowerCase();
@@ -185,7 +185,13 @@ const UsersTable = () => {
                   </TableCell>
                   <TableCell>
                     <div className="action-icon">
-                      <Link to={user.role === 'supplier' ? `/supplier/${user._id}` : `/admin/${user._id}`}>
+                      <Link
+                        to={
+                          user.role === "supplier"
+                            ? `/supplier/${user._id}`
+                            : `/admin/${user._id}`
+                        }
+                      >
                         <i className="fa-regular fa-eye"></i>
                       </Link>
                       <Link onClick={() => handleDeleteUser(user._id)}>

@@ -1,6 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProducts, fetchCategories } from "../../store";
-import { Link } from "react-router-dom";
 import ClientTopBar from "../../components/ClientTopBar";
 import { useEffect, useState } from "react";
 import AppBar from "@mui/material/AppBar";

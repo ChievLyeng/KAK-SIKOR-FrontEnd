@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const PORT = 3000;
+export const PORT = 3000;
 
 export const GET_ALL_REVIEW = `http://localhost:${PORT}/api/v1/reviews`;
 export const GET_REVIEW_BY_ID = (id) =>
