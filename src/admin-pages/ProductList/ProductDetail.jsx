@@ -130,6 +130,17 @@ function ProductDetail() {
                 alignItems="center"
               >
                 <AccountCircle sx={{ fontSize: 24, marginRight: 1 }} />
+                Name: {productData?.name}
+              </Typography>
+              <Divider />
+            </Box>
+            <Box sx={{ marginBottom: 2 }}>
+              <Typography
+                variant="subtitle1"
+                display="flex"
+                alignItems="center"
+              >
+                <AccountCircle sx={{ fontSize: 24, marginRight: 1 }} />
                 Supplier: {productData.Supplier?.firstName}{" "}
                 {productData.Supplier?.lastName}
               </Typography>
