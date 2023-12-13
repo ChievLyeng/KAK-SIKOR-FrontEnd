@@ -17,6 +17,15 @@ export const ordersApiSlice = apiSlice.injectEndpoints({
       }),
       keepUnusedDataFor: 5,
     }),
+    getAllOrders: builder.query({
+      providesTags: ['Order'],
+      query: () => {
+        return {
+          url: `${import.meta.env.VITE_BASE_URL}/api/v1/orders`,
+          method: 'GET',
+        };
+      },
+    }),
     payOrder: builder.mutation({
       query: ({ orderId, details }) => ({
         url: `${ORDERS_URL}/${orderId}/pay`,
@@ -38,4 +47,5 @@ export const {
   useGetOrderDetailsQuery,
   usePayOrderMutation,
   useGetPayPalClientIdQuery,
+  useGetAllOrdersQuery,
 } = ordersApiSlice;
