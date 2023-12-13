@@ -1,12 +1,10 @@
 import Container from "@mui/material/Container";
 import TopAppBar from "../../components/TopAppBar";
 import AccountInformation from "../../components/AccountInformation";
-import Header from "../../common-component/Header";
+import Header from "../../components/common/Header";
 import { useEffect, useState } from "react";
 
-
 const MyAccount = () => {
-
   return (
     <>
       <Container maxWidth="xl" className="user-profile-container">
