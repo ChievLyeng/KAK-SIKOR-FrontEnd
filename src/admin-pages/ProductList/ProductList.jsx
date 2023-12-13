@@ -1,12 +1,11 @@
-import TopAppBar from "../../components/TopAppBar";
 import ProductTable from "../../components/ProductTable";
+import Layout from "../../components/common/Layout";
 
 const ProductList = () => {
   return (
-    <>
-      <TopAppBar />
+    <Layout>
       <ProductTable />
-    </>
+    </Layout>
   );
 };
 

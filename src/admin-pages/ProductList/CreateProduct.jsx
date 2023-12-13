@@ -9,12 +9,12 @@ import {
   MenuItem,
 } from "@mui/material";
 import { addProduct, fetchCategories, createCategory } from "../../store";
-import TopAppBar from "../../components/TopAppBar";
 import "../../style/common.css";
 import "../../style/CreateProduct.css";
 import CancelIcon from "@mui/icons-material/Cancel";
 import { IconButton } from "@mui/material";
 import imageCompression from "browser-image-compression";
+import Layout from "../../components/common/Layout";
 
 const CreateProduct = () => {
   const initialProductData = {
@@ -135,8 +135,7 @@ const CreateProduct = () => {
   };
 
   return (
-    <>
-      <TopAppBar />
+    <Layout>
       <div className="create-form">
         <form onSubmit={(e) => e.preventDefault()} className="create-container">
           <div>
@@ -350,7 +349,7 @@ const CreateProduct = () => {
           message="Product added successfully!"
         />
       </div>
-    </>
+    </Layout>
   );
 };
 

@@ -28,6 +28,7 @@ import {
 import Header from "../../components/common/Header";
 import TopAppBar from "../../components/TopAppBar";
 import "../../style/ProductDetail.css";
+import Layout from "../../components/common/Layout";
 
 function ProductDetail() {
   const initialProduct = {
@@ -81,9 +82,8 @@ function ProductDetail() {
   };
 
   return (
-    <>
+    <Layout>
       <Container maxWidth="xl" className="product-detail-container">
-        <TopAppBar />
         <Header title="Product Detail" />
       </Container>
       <Container maxWidth="xl">
@@ -398,7 +398,7 @@ function ProductDetail() {
           )}
         </Box>
       </Modal>
-    </>
+    </Layout>
   );
 }
 

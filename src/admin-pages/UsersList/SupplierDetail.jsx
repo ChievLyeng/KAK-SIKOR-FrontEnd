@@ -1,5 +1,4 @@
 import Header from "../../components/common/Header";
-import TopAppBar from "../../components/TopAppBar";
 import Container from "@mui/material/Container";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -18,6 +17,7 @@ import MyLocationIcon from "@mui/icons-material/MyLocation";
 import AgricultureIcon from "@mui/icons-material/Agriculture";
 import OfflinePinIcon from "@mui/icons-material/OfflinePin";
 import "../../style/SupplierDetail.css";
+import Layout from "../../components/common/Layout";
 
 function SupplierDetail() {
   const dispatch = useDispatch();
@@ -36,9 +36,8 @@ function SupplierDetail() {
   }, [dispatch, params.id]);
 
   return (
-    <>
+    <Layout>
       <Container maxWidth="xl" className="supplier-detail-container">
-        <TopAppBar />
         <Header title="Supplier" />
 
         <Grid container spacing={2} columns={16}>
@@ -128,7 +127,7 @@ function SupplierDetail() {
 
         {/* <ProductTable orders={supplierData} /> */}
       </Container>
-    </>
+    </Layout>
   );
 }
 
