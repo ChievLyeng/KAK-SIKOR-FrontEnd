@@ -1,21 +1,25 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-export const PORT = 3000;
-
 axios.defaults.withCredentials = true;
 
 // product
-export const GET_ALL_PRODUCT = `http://localhost:${PORT}/api/v1/products`;
-export const ADD_PRODUCT = `http://localhost:${PORT}/api/v1/products`;
+export const GET_ALL_PRODUCT = `${
+  import.meta.env.VITE_BASE_URL
+}/api/v1/products`;
+export const ADD_PRODUCT = `${import.meta.env.VITE_BASE_URL}/api/v1/products`;
 export const UPDATE_PRODUCT = (id) =>
-  `http://localhost:${PORT}/api/v1/products/${id}`;
+  `${import.meta.env.VITE_BASE_URL}/api/v1/products/${id}`;
 export const GET_SINGLE_PRODUCT = (id) =>
-  `http://localhost:${PORT}/api/v1/products/${id}`;
+  `${import.meta.env.VITE_BASE_URL}/api/v1/products/${id}`;
 export const DELETE_PRODUCT = (id) =>
-  `http://localhost:${PORT}/api/v1/products/${id}`;
-export const GET_ALL_CATEGORIES = `http://localhost:${PORT}/api/v1/categories`;
-export const CREATE_CATEGORY = `http://localhost:${PORT}/api/v1/catagories`;
+  `${import.meta.env.VITE_BASE_URL}/api/v1/products/${id}`;
+export const GET_ALL_CATEGORIES = `${
+  import.meta.env.VITE_BASE_URL
+}/api/v1/categories`;
+export const CREATE_CATEGORY = `${
+  import.meta.env.VITE_BASE_URL
+}/api/v1/catagories`;
 
 export const updateProductById = createAsyncThunk(
   "products/updateProduct",
