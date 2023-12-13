@@ -21,6 +21,12 @@ import OrderPage from "./client-pages/Order/OrderPage";
 import { PersistGate } from "redux-persist/integration/react";
 import { persistor, store } from "././store/index";
 import clientStore from "./store/storeRtk";
+import UserLogin from "./client-pages/Auth/UserLogin";
+import UserProfile from "./client-pages/Auth/UserProfile";
+import SupplierRegister from "./client-pages/Auth/SupplierRegister";
+import ForgotPassword from "./client-pages/Auth/ForgotPassword";
+import Verification from "./client-pages/Auth/VerifyOTP";
+import ResetPassword from "./client-pages/Auth/ResetNewPassword";
 
 //const isAdminRoute = window.location.pathname.startsWith("/dashboard");
 
@@ -48,6 +54,12 @@ function App() {
               <Route path="payment" element={<PaymentPage />} />
               <Route path="placeorder" element={<PlaceOrderPage />} />
               <Route path="/order/:id" element={<OrderPage />} />
+              <Route path="/userlogin" element={<UserLogin />} />
+              <Route path="/supplier-register" element={<SupplierRegister />} />
+              <Route path="/profile" element={<UserProfile />} />
+              <Route path="/forgot-password" element={<ForgotPassword />} />
+              <Route path="/verify" element={<Verification />} />
+              <Route path="/reset-password" element={<ResetPassword />} />
             </Routes>
           </Router>
         </PayPalScriptProvider>
