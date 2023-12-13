@@ -5,7 +5,7 @@ import { jwtDecode } from "jwt-decode";
 const refreshToken = async () => {
   try {
     const res = await axios.post(
-      "http://127.0.0.1:3000/api/v1/users/refresh-token",
+      `${import.meta.env.VITE_BASE_URL}/api/v1/users/refresh-token`,
       {
         // headers: {
         //   Authorization: `Bearer ${accessToken}`,
