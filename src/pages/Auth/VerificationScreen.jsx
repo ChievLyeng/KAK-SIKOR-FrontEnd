@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { TextField, Button, Typography } from "@mui/material";
 import { useVerificationMutation } from "../../store/slice/userV2Slice";
-import { toast } from "react-toastify";
 
 const Verification = () => {
   const [otp, setOtp] = useState("");
@@ -10,25 +9,28 @@ const Verification = () => {
   const handleVerify = async () => {
     try {
       // Call the verification mutation with email and otp
-      const { data, error } = await verifyMutation({ otp });
+      const { data, error } = await verifyMutation({ userOTP: otp });
 
       console.log("Response from mutation:", data);
 
       // Check the response and show appropriate messages
       if (data) {
-        toast.success("Verification successful!");
-        // Redirect or perform any action upon successful verification
+        // Handle successful verification (e.g., redirect)
+        console.log("Verification successful!");
       } else if (
         error?.statusCode === 401 &&
         error?.message.includes("Invalid OTP")
       ) {
-        toast.error("Invalid OTP. Please enter the correct OTP.");
+        // Handle case of Invalid OTP
+        console.error("Invalid OTP. Please enter the correct OTP.");
       } else {
-        toast.error(error?.message || "Verification failed");
+        // Handle other error cases
+        console.error(error?.message || "Verification failed");
       }
     } catch (error) {
       console.error("Error in handleVerify:", error);
-      toast.error(error?.message || "Error during verification");
+      // Handle errors during verification
+      console.error(error?.message || "Error during verification");
     }
   };
 
