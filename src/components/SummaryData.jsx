@@ -1,11 +1,6 @@
 import { Link } from "react-router-dom";
-<<<<<<< HEAD
 import OutlinedCard from "../components/common/OutlineCard";
 import SaleCard from "../components/common/SaleCard";
-=======
-import OutlinedCard from "./common/OutlineCard";
-import SaleCard from "./common/SaleCard";
->>>>>>> develop
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import Inventory2Icon from "@mui/icons-material/Inventory2";
 import ReviewsIcon from "@mui/icons-material/Reviews";
@@ -14,11 +9,7 @@ import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProducts, fetchUser, fetchReview, fetchOrder } from "../store";
-<<<<<<< HEAD
 import Header from "../components/common/Header";
-=======
-import Header from "./common/Header";
->>>>>>> develop
 import Grid from "@mui/material/Grid";
 import "../style/Dashboard.css";
 
@@ -29,10 +20,6 @@ function SummaryData() {
   const products = useSelector((state) => state.products.data);
   const users = useSelector((state) => state.users.data);
   const reviews = useSelector((state) => {
-<<<<<<< HEAD
-    console.log(state);
-=======
->>>>>>> develop
     return state.reviews.data;
   });
 
@@ -49,11 +36,6 @@ function SummaryData() {
   const orderLength = Order ? Order.length : 0;
   const productLength = Products ? Products.length : 0;
 
-<<<<<<< HEAD
-  console.log("users", users);
-
-=======
->>>>>>> develop
   return (
     <>
       {/* Add margin styles and center content */}

@@ -1,7 +1,4 @@
-<<<<<<< HEAD
-=======
 /* eslint-disable react-refresh/only-export-components */
->>>>>>> develop
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import { usersReducer } from "./slice/userSlice";
 import { productReducer } from "./slice/productSlice";

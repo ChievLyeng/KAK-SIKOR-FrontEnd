@@ -26,10 +26,6 @@ import {
   RateReview,
 } from "@mui/icons-material";
 import Header from "../../components/common/Header";
-<<<<<<< HEAD
-import TopAppBar from "../../components/TopAppBar";
-=======
->>>>>>> develop
 import "../../style/ProductDetail.css";
 import Layout from "../../components/common/Layout";
 
