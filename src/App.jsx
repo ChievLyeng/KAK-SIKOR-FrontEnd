@@ -27,6 +27,7 @@ import RegisterScreen from "./pages/Auth/UserRegister";
 import ForgotPassword from "./pages/Auth/ForgotPassword";
 import Verification from "./pages/Auth/VerificationScreen";
 import ResetPassword from "./pages/Auth/ResetNewPassowrd";
+import RegisterSupplierScreen from "./pages/Auth/SupplierRegister";
 
 const isAdminRoute = window.location.pathname.startsWith("/dashboard");
 function App() {
@@ -59,6 +60,10 @@ function App() {
               <Route path="/forgotpassword" element={<ForgotPassword />} />
               <Route path="/verify" element={<Verification />} />
               <Route path="/resetpassword" element={<ResetPassword />} />
+              <Route
+                path="/supplier-register"
+                element={<RegisterSupplierScreen />}
+              />
             </Routes>
           </Router>
         </PayPalScriptProvider>

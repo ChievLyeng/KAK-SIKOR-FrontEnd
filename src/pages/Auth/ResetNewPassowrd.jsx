@@ -62,7 +62,12 @@ function ResetPassword() {
     }
 
     try {
-      const { data } = await resetPassword({ email, password });
+      // Get the email from local storage
+      const storedEmail = localStorage.getItem("userInfo")
+        ? JSON.parse(localStorage.getItem("userInfo")).email
+        : "";
+
+      const { data } = await resetPassword({ email: storedEmail, password });
       console.log("Reset Password Data:", data);
 
       if (data) {
@@ -86,20 +91,6 @@ function ResetPassword() {
       </Typography>
 
       <form onSubmit={submitHandler}>
-        <TextField
-          fullWidth
-          label="Email address"
-          type="email"
-          value={email}
-          onChange={(e) => {
-            setEmail(e.target.value);
-          }}
-          helperText={"*Required"}
-          sx={{
-            marginTop: "24px ",
-          }}
-        />
-
         {errorMessage && !isTyping && (
           <Typography color="error" sx={{ marginBottom: "16px" }}>
             {errorMessage}

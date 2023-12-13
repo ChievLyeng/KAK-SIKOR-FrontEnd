@@ -10,10 +10,10 @@ import {
   Checkbox,
   FormControlLabel,
 } from "@mui/material";
-import "../style/RegisterPage.css";
+import "../../style/UserRegister.css";
 import { format } from "date-fns";
-import { setCredentials } from "../slices/authSlice";
-import { useRegisterMutation } from "../slices/usersApiSlice";
+import { setCredentials } from "../../store/slice/authV2Slice";
+import { useRegisterMutation } from "../../store/slice/userV2Slice";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -146,7 +146,7 @@ function RegisterSupplierScreen() {
     : "";
 
   return (
-    <form onSubmit={submitHandler}>
+    <form onSubmit={submitHandler} className="form-container">
       <Typography variant="h6" className="title">
         Business Account Sign up
       </Typography>

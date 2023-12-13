@@ -19,6 +19,9 @@ const ForgotPassword = () => {
 
       // Check the response and show appropriate messages
       if (response.data) {
+        // Save the email to local storage
+        localStorage.setItem("userInfo", JSON.stringify({ email }));
+
         toast.success("Password reset link sent successfully!");
       } else {
         toast.error("Error sending reset link");
