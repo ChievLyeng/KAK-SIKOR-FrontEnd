@@ -13,6 +13,7 @@ import ProductDetail from "./admin-pages/ProductList/ProductDetail";
 import { PersistGate } from "redux-persist/integration/react";
 import { persistor, store } from "././store/index";
 import HomePage from "./client-pages/Home/HomePage";
+import ErrorPage from "./components/ErrorPage";
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
             <Route path="/update-product/:id" element={<UpdateProduct />} />
             <Route path="/product-detail/:id" element={<ProductDetail />} />
             <Route path="/home-page" element={<HomePage />} />
+            <Route path="/*" element={<ErrorPage />} />
           </Routes>
         </Router>
       </PersistGate>
