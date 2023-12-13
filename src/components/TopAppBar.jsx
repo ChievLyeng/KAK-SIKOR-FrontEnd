@@ -102,7 +102,7 @@ export default function TopAppBar() {
               {
                 text: "Dashboard",
                 icon: <DashboardIcon />,
-                link: "/",
+                link: "/dashboard",
               },
               {
                 text: "Product",
