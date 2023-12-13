@@ -41,30 +41,13 @@ const AccountInformation = () => {
   });
   const userId = user.data?.user?._id || "";
   const token = user.token;
-  // const currentUserId = useraccount?.user?._id
-
-  // const getUser = () => {
-  //   const data = localStorage.getItem("user");
-  //   console.log(JSON.parse(data))
-  //   setUseraccount(JSON.parse(data));
-  // };
-
-  // const fetchCurrentUser = () => {
-  //   dispatch(logInSuccess(fetchUserById(currentUserId)))
-  // }
 
   useEffect(() => {
     setFirstName(user?.data?.user?.firstName || "");
     setLastName(user?.data?.user?.lastName || "");
     setEmail(user?.data?.user?.email || "");
     setPhone(user?.data?.user?.phoneNumber || "");
-    // setPassword(useraccount?.user?.password || '')
-    // setConfirmPassword(useraccount?.user?.confirmpassword || '')
   }, []);
-
-  // const userLogin = useSelector((state) => state.auth?.user?.user);
-  // const useraccount = userLogin || null
-  // console.log("userlogin",userLogin)
 
   const handleGenderChange = (event) => {
     setSelectedGender(event.target.value);

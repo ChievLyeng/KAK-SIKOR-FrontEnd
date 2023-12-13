@@ -12,10 +12,9 @@ import {
 // import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-export const PORT = 3000;
-
-const LOGIN_USER = `http://localhost:${PORT}/api/v1/users/login`;
-const UPDATE_USER = (id) => `http://localhost:3000/api/v1/users/${id}`;
+const LOGIN_USER = `${import.meta.env.VITE_BASE_URL}/api/v1/users/login`;
+const UPDATE_USER = (id) =>
+  `${import.meta.env.VITE_BASE_URL}/api/v1/users/${id}`;
 
 export const loginUser = async (user, dispatch, navigate) => {
   console.log("fethc apii");
