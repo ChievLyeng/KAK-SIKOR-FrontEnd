@@ -31,11 +31,11 @@ export const usersApiSlice = apiSlice.injectEndpoints({
     }),
 
     verification: builder.mutation({
-      query: (data) => ({
+      query: ({ userOTP }) => ({
         url: `${USERS_URL}/verify-otp`,
         method: "POST",
         credentials: "include",
-        body: JSON.stringify(data),
+        body: JSON.stringify({ userOTP }),
         headers: {
           "Content-Type": "application/json",
         },
