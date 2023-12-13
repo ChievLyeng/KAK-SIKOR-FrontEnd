@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import OutlinedCard from "./common/OutlineCard";
-import SaleCard from "./common/SaleCard";
+import OutlinedCard from "../components/common/OutlineCard";
+import SaleCard from "../components/common/SaleCard";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import Inventory2Icon from "@mui/icons-material/Inventory2";
 import ReviewsIcon from "@mui/icons-material/Reviews";
@@ -9,7 +9,7 @@ import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProducts, fetchUser, fetchReview, fetchOrder } from "../store";
-import Header from "./common/Header";
+import Header from "../components/common/Header";
 import Grid from "@mui/material/Grid";
 import "../style/Dashboard.css";
 

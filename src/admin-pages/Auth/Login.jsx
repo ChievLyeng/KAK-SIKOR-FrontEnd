@@ -30,7 +30,6 @@ export default function Login() {
       password: password,
     };
     loginUser(newUser, dispatch, navigate);
-    console.log("click!");
   };
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);

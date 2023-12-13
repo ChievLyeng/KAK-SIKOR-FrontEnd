@@ -60,7 +60,7 @@ function SupplierDetail() {
                     variant="h5"
                     className="MuiTypography-root supplier-name"
                   >
-                    {`${supplierData?.firstName} ${supplierData.lastName}`}
+                    {`${supplierData?.firstName} ${supplierData?.lastName}`}
                   </Typography>
 
                   <Typography className="supplier-email">

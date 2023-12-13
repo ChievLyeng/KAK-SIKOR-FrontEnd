@@ -5,7 +5,6 @@ import axios from "axios";
 
 export const GET_ALL_COMMENT = `${import.meta.env.VITE_BASE_URL}/api/v1/comments`;
 export const ADD_COMMENT = `${import.meta.env.VITE_BASE_URL}/api/v1/comments/:reviewId`;
-
 export const fetchComment = createAsyncThunk("comments/fetch", async () => {
   const response = await axios.get(GET_ALL_COMMENT);
 
