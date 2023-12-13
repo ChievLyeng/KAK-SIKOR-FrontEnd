@@ -21,17 +21,24 @@ import PeopleIcon from "@mui/icons-material/People";
 import RateReviewIcon from "@mui/icons-material/RateReview";
 import AddIcon from "@mui/icons-material/Add";
 import PermIdentityIcon from "@mui/icons-material/PermIdentity";
+<<<<<<< HEAD
 import { ShoppingCart } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 import { logOutSuccess } from "../store/slice/authSlice";
 import { logOut } from "../store/thunks/authApi";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 
+=======
+import { Link } from "react-router-dom";
+import { logOutSuccess } from "../store/slice/authSlice";
+import { logOut } from "../store/thunks/authApi";
+>>>>>>> develop
 import "../style/Dashboard.css";
 
 export default function TopAppBar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [productSubMenuOpen, setProductSubMenuOpen] = useState(false);
+<<<<<<< HEAD
   // const user = useSelector((state) => state.auth.login.currentUser);
   // const accessToken = user?.token;
   // const refreshToken = user?.refreshToken;
@@ -44,6 +51,18 @@ export default function TopAppBar() {
   // const handleLogout = () => {
   //   logOut(dispatch, id, navigate, refreshToken, axiosJWT);
   // };
+=======
+  const user = useSelector((state) => state.auth.login.currentUser);
+  const refreshToken = user?.refreshToken;
+  const id = user?.data?.user?._id;
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  let axiosJWT = createAxios(user, dispatch, logOutSuccess);
+
+  const handleLogout = () => {
+    logOut(dispatch, id, navigate, refreshToken, axiosJWT);
+  };
+>>>>>>> develop
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
@@ -81,6 +100,7 @@ export default function TopAppBar() {
             </Typography>
           </Link>
 
+<<<<<<< HEAD
           <Link to="/cart">
             <IconButton>
               <ShoppingCart />
@@ -95,13 +115,19 @@ export default function TopAppBar() {
             </IconButton>
           </Link>
 
+=======
+>>>>>>> develop
           <Link to="/myaccount">
             <IconButton>
               <PermIdentityIcon sx={{ color: "black" }} />
             </IconButton>
           </Link>
 
+<<<<<<< HEAD
           <Link to="">
+=======
+          <Link to="" onClick={handleLogout}>
+>>>>>>> develop
             <IconButton>Logout</IconButton>
           </Link>
         </Toolbar>
@@ -125,7 +151,7 @@ export default function TopAppBar() {
               {
                 text: "Dashboard",
                 icon: <DashboardIcon />,
-                link: "/",
+                link: "/dashboard",
               },
               {
                 text: "Product",

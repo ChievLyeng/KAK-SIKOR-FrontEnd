@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -11,8 +11,6 @@ import "../style/ProductTable.css";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProducts, deleteProduct } from "../store";
 import { Link } from "react-router-dom";
-import axios from "axios";
-import { Login } from "@mui/icons-material";
 
 const columns = [
   {
@@ -71,8 +69,6 @@ export default function ProductTable() {
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
-
-  console.log("Product Data : ", productData);
 
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(+event.target.value);

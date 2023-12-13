@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
@@ -9,8 +10,7 @@ const SaleCard = ({ title, value, icon }) => {
     <Box className="outside-box">
       <Card variant="outlined" className="sale-card">
         <CardContent className="MuiCardContent-root">
-          <Typography
-            className="TypographyTittle" gutterBottom>
+          <Typography className="TypographyTittle" gutterBottom>
             {title}
           </Typography>
 

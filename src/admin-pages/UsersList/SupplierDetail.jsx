@@ -1,5 +1,8 @@
 import Header from "../../components/common/Header";
+<<<<<<< HEAD
 import TopAppBar from "../../components/TopAppBar";
+=======
+>>>>>>> develop
 import Container from "@mui/material/Container";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -18,6 +21,10 @@ import MyLocationIcon from "@mui/icons-material/MyLocation";
 import AgricultureIcon from "@mui/icons-material/Agriculture";
 import OfflinePinIcon from "@mui/icons-material/OfflinePin";
 import "../../style/SupplierDetail.css";
+<<<<<<< HEAD
+=======
+import Layout from "../../components/common/Layout";
+>>>>>>> develop
 
 function SupplierDetail() {
   const dispatch = useDispatch();
@@ -25,7 +32,7 @@ function SupplierDetail() {
 
   const supplier = useSelector((state) => {
     // console.log(state);
-    return state.users.supplier.data;
+    return state.users?.supplier?.data;
   });
 
   const supplierData = supplier ? supplier : "";
@@ -33,12 +40,15 @@ function SupplierDetail() {
 
   useEffect(() => {
     dispatch(fetchSupplierById(params.id));
+<<<<<<< HEAD
   }, [dispatch]);
+=======
+  }, [dispatch, params.id]);
+>>>>>>> develop
 
   return (
-    <>
+    <Layout>
       <Container maxWidth="xl" className="supplier-detail-container">
-        <TopAppBar />
         <Header title="Supplier" />
 
         <Grid container spacing={2} columns={16}>
@@ -61,7 +71,11 @@ function SupplierDetail() {
                     variant="h5"
                     className="MuiTypography-root supplier-name"
                   >
+<<<<<<< HEAD
                     {`${supplierData.firstName} ${supplierData.lastName}`}
+=======
+                    {`${supplierData?.firstName} ${supplierData.lastName}`}
+>>>>>>> develop
                   </Typography>
 
                   <Typography className="supplier-email">
@@ -128,7 +142,7 @@ function SupplierDetail() {
 
         {/* <ProductTable orders={supplierData} /> */}
       </Container>
-    </>
+    </Layout>
   );
 }
 

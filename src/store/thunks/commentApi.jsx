@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const PORT = 3000;
+export const PORT = 3000;
 
 export const GET_ALL_COMMENT = `http://localhost:${PORT}/api/v1/comments`;
 export const ADD_COMMENT = `http://localhost:${PORT}/api/v1/comments/:reviewId`;

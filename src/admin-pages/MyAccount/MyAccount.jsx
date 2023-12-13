@@ -1,18 +1,21 @@
 import Container from "@mui/material/Container";
-import TopAppBar from "../../components/TopAppBar";
 import AccountInformation from "../../components/AccountInformation";
+<<<<<<< HEAD
 import Header from "../../components/common/Header";
 import { useEffect, useState } from "react";
+=======
+import Header from "../../components/common/Header.jsx";
+import Layout from "../../components/common/Layout.jsx";
+>>>>>>> develop
 
 const MyAccount = () => {
   return (
-    <>
+    <Layout>
       <Container maxWidth="xl" className="user-profile-container">
-        <TopAppBar />
         <Header title="My Account" />
         <AccountInformation />
       </Container>
-    </>
+    </Layout>
   );
 };
 

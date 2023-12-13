@@ -11,6 +11,7 @@ import UpdateProduct from "./admin-pages/ProductList/UpdateProduct";
 import MyAccount from "./admin-pages/MyAccount/MyAccount";
 import Login from "./admin-pages/Auth/Login";
 import ProductDetail from "./admin-pages/ProductList/ProductDetail";
+<<<<<<< HEAD
 import HomePage from "./components/HomePage";
 import ProductPage from "./client-pages/Products/ProductPage";
 import CartPage from "./client-pages/Cart/CartPage";
@@ -23,11 +24,17 @@ import { persistor, store } from "././store/index";
 import clientStore from "./store/storeRtk";
 
 const isAdminRoute = window.location.pathname.startsWith("/dashboard");
+=======
+import { PersistGate } from "redux-persist/integration/react";
+import { persistor, store } from "././store/index";
+import HomePage from "./client-pages/Home/HomePage";
+>>>>>>> develop
 
 function App() {
   return (
     <Provider store={isAdminRoute ? store : clientStore}>
       <PersistGate loading={null} persistor={persistor}>
+<<<<<<< HEAD
         <PayPalScriptProvider deferLoading={true}>
           <Router>
             <Routes>
@@ -51,6 +58,23 @@ function App() {
             </Routes>
           </Router>
         </PayPalScriptProvider>
+=======
+        <Router>
+          <Routes>
+            <Route path="/" element={<Login />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/myaccount" element={<MyAccount />} />
+            <Route path="/productsList" element={<ProductList />} />
+            <Route path="/usersList" element={<UsersList />} />
+            <Route path="/create-product" element={<CreateProduct />} />
+            <Route path={`/supplier/:id`} element={<SupplierDetail />} />
+            <Route path="/review-list" element={<ReviewList />} />
+            <Route path="/update-product/:id" element={<UpdateProduct />} />
+            <Route path="/product-detail/:id" element={<ProductDetail />} />
+            <Route path="/home-page" element={<HomePage />} />
+          </Routes>
+        </Router>
+>>>>>>> develop
       </PersistGate>
     </Provider>
   );

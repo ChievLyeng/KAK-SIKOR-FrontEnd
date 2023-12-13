@@ -1,17 +1,17 @@
-import SummaryData from "../../components/summaryData";
+import SummaryData from "../../components/SummaryData";
 import OrderTable from "../../components/OrderTable";
 import Container from "@mui/material/Container";
-import TopAppBar from "../../components/TopAppBar";
+
+import Layout from "../../components/common/Layout";
 
 const Dashboard = () => {
   return (
-    <>
+    <Layout>
       <Container maxWidth="xl" className="dashboard-container">
-        <TopAppBar />
         <SummaryData />
         <OrderTable />
       </Container>
-    </>
+    </Layout>
   );
 };
 

@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
@@ -7,13 +8,20 @@ import Typography from "@mui/material/Typography";
 const OutlinedCard = ({ title, value, icon }) => {
   return (
     <Box className="outside-box">
-      <Card variant="outlined" >
-        <CardContent className="MuiCardContent-root" sx={{}} >
-          <Typography  component="div" className="MuiTypography-root TypographyTittle" gutterBottom>
+      <Card variant="outlined">
+        <CardContent className="MuiCardContent-root" sx={{}}>
+          <Typography
+            component="div"
+            className="MuiTypography-root TypographyTittle"
+            gutterBottom
+          >
             {title}
           </Typography>
 
-          <Typography component="div" className="MuiTypography-root customTypography">
+          <Typography
+            component="div"
+            className="MuiTypography-root customTypography"
+          >
             {value}
           </Typography>
 

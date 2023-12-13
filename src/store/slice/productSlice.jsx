@@ -43,6 +43,7 @@ const productSlice = createSlice({
       })
       .addCase(addProduct.fulfilled, (state, action) => {
         state.isAdding = false;
+        state.data = action.payload;
         // Handle the successful addition of the product here if needed
       })
       .addCase(addProduct.rejected, (state, action) => {
@@ -86,6 +87,7 @@ const productSlice = createSlice({
       })
       .addCase(deleteProduct.fulfilled, (state, action) => {
         state.isDeleting = false;
+        state.data = action.payload;
         // Optionally handle success message or update state as needed
       })
       .addCase(deleteProduct.rejected, (state, action) => {
