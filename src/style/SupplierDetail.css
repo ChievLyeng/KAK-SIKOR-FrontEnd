@@ -1,68 +1,79 @@
-.container-details {
+.communication-item{
+  margin-top: 24px;
   display: flex;
-  gap: 130px;
-  justify-content: center;
-}
-h2 {
-  margin-bottom: 20px;
-}
-.container-item p {
-  margin-bottom: 20px;
-}
-.container-details {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  flex-direction: row;
+  align-items: center;
+  gap: 16px
 }
 
-.container-details > div {
-  margin-right: 20px;
+.userinfo-box{
+  background-color: white;
+  color: black;
+  padding: 16px;
+  margin-top: 24px;
+  height: 320px;
+  border-radius: 5px;
 }
 
-.container-item {
-  flex: 1;
-}
-
-.container-item p {
-  margin-top: 10px;
-  margin-bottom: 10px;
-}
-
-.container-item strong {
-  margin-right: 8px;
-}
-
-.review-card {
-  margin-bottom: 30px;
-}
-.img-review {
-  width: 50px;
-  border-radius: 50%;
-}
-.profile-user {
-  display: flex;
-  gap: 20px;
-}
-.star {
+.total-info-box{
   display: flex;
   flex-direction: column;
-  gap: 1px;
+  justify-content: center;
+  gap: 24px;
 }
 
-.username {
-  font-size: 16px;
-  font-weight: 600;
+.stack-avatar{
+  margin-top: 24px;
 }
 
-.date {
-  font-size: 14px;
+.MuiAvatar-root.supplier-profile{
+  width: 160px;
+  height: 160px;
+  border-radius: 80px;
 }
 
-.MuiContainer-maxWidthXl.supplier-detail-container{
-  margin-top: 100px ;
-  margin-bottom: 100px;
+.MuiTypography-root.supplier-name{
+  margin-left: 16px;
+  margin-top: 24px;
+  font-weight: bold;
 }
+
+.MuiTypography-root.supplier-email{
+  margin-left: 16px;
+  margin-top: 8px;
+  color: gray;
+}
+
+.MuiTypography-root.title{
+  font-weight: bold;
+  color: #82B440;
+}
+
+.MuiTypography-root.sub-title{
+  font-weight: bold;
+  color: #000000;
+  /* margin-bottom: px; */
+}
+
+.communication-icon{
+  color: #82B440;
+}
+
+.sale-card{
+  height: 330px;
+}
+
+.MuiTypography-root.saleTypography{
+  color: #82B440;
+  font-size: 48px;
+  font-weight: bold;
+}
+
+/* contianer */
+.MuiContainer-maxWidthXl.supplier-detail-container {
+  margin-top: 100px;
+  margin-bottom: 24px;
+}
+
+
+
