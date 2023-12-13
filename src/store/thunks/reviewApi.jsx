@@ -1,13 +1,11 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-export const PORT = 3000;
-
-export const GET_ALL_REVIEW = `http://localhost:${PORT}/api/v1/reviews`;
+export const GET_ALL_REVIEW = `${import.meta.env.VITE_BASE_URL}/api/v1/reviews`;
 export const GET_REVIEW_BY_ID = (id) =>
-  `http://localhost:${PORT}/api/v1/reviews/product/${id}`;
+  `${import.meta.env.VITE_BASE_URL}/api/v1/reviews/product/${id}`;
 export const DELETE_REVIEW = (id) =>
-  `http://localhost:${PORT}/api/v1/reviews/${id}`;
+  `${import.meta.env.VITE_BASE_URL}/api/v1/reviews/${id}`;
 
 export const fetchReview = createAsyncThunk("reviews/fetch", async () => {
   const response = await axios.get(GET_ALL_REVIEW);

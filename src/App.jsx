@@ -22,16 +22,16 @@ import { PersistGate } from "redux-persist/integration/react";
 import { persistor, store } from "././store/index";
 import clientStore from "./store/storeRtk";
 
-const isAdminRoute = window.location.pathname.startsWith("/dashboard");
+//const isAdminRoute = window.location.pathname.startsWith("/dashboard");
 
 function App() {
   return (
-    <Provider store={isAdminRoute ? store : clientStore}>
+    <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <PayPalScriptProvider deferLoading={true}>
           <Router>
             <Routes>
-              <Route path="/loginAdmin" element={<Login />} />
+              <Route path="/login" element={<Login />} />
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/myaccount" element={<MyAccount />} />
               <Route path="/productsList" element={<ProductList />} />

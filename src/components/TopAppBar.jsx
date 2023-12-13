@@ -7,7 +7,6 @@ import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
-import Badge from "@material-ui/core/Badge";
 import MenuIcon from "@mui/icons-material/Menu";
 import Drawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
@@ -47,9 +46,6 @@ export default function TopAppBar() {
   const toggleProductSubMenu = () => {
     setProductSubMenuOpen(!productSubMenuOpen);
   };
-
-  const { cartItems } = useSelector((state) => state.cart);
-  console.log(cartItems); // log the state.cart
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -106,7 +102,7 @@ export default function TopAppBar() {
               {
                 text: "Dashboard",
                 icon: <DashboardIcon />,
-                link: "/dashboard",
+                link: "/",
               },
               {
                 text: "Product",

@@ -22,8 +22,6 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  console.log(email);
-  console.log(password);
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -32,7 +30,6 @@ export default function Login() {
       password: password,
     };
     loginUser(newUser, dispatch, navigate);
-    console.log("click!");
   };
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);

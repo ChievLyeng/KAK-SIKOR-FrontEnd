@@ -1,18 +1,17 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-export const PORT = 3000;
-
 // user
-export const GET_ALL_USER = `http://localhost:${PORT}/api/v1/users`;
-export const LOGIN_USER = `http://127.0.0.1:${PORT}/api/v1/users/login`;
+export const GET_ALL_USER = `${import.meta.env.VITE_BASE_URL}/api/v1/users`;
+export const LOGIN_USER = `${import.meta.env.VITE_BASE_URL}/api/v1/users/login`;
 export const GET_SUPPPLIER_By_Id = (id) =>
-  `http://localhost:${PORT}/api/v1/users/${id}`;
-export const GET_USER = (id) => `http://localhost:${PORT}/api/v1/users/${id}`;
+  `${import.meta.env.VITE_BASE_URL}/api/v1/users/${id}`;
+export const GET_USER = (id) =>
+  `${import.meta.env.VITE_BASE_URL}/api/v1/users/${id}`;
 export const DELETE_USER = (id) =>
-  `http://localhost:${PORT}/api/v1/users/delete/${id}`;
+  `${import.meta.env.VITE_BASE_URL}/api/v1/users/delete/${id}`;
 export const UPDATE_USER = (id) =>
-  `http://localhost:3001/api/v1/users/update/${id}`;
+  `${import.meta.env.VITE_BASE_URL}/api/v1/users/update/${id}`;
 
 export const fetchUserById = createAsyncThunk("user/fetch", async (userId) => {
   try {
