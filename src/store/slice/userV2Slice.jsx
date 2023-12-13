@@ -31,13 +31,13 @@ export const usersApiSlice = apiSlice.injectEndpoints({
     }),
 
     verification: builder.mutation({
-      query: (otp) => ({
+      query: (data) => ({
         url: `${USERS_URL}/verify-otp`,
         method: "POST",
         credentials: "include",
-        body: JSON.stringify({ otp }),
+        body: JSON.stringify(data),
         headers: {
-          "Content-Type": "application/json", // Ensure the content type is set to JSON
+          "Content-Type": "application/json",
         },
       }),
     }),
@@ -49,7 +49,7 @@ export const usersApiSlice = apiSlice.injectEndpoints({
         credentials: "include",
         body: JSON.stringify({ data }),
         headers: {
-          "Content-Type": "application/json", // Ensure the content type is set to JSON
+          "Content-Type": "application/json",
         },
       }),
     }),

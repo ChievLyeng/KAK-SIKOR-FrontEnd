@@ -25,7 +25,7 @@ function UserLogin() {
   const { search } = useLocation();
   const sp = new URLSearchParams(search);
   // Set the default redirect path to "/profile" for the login page
-  const redirect = sp.get("redirect") || (isLoading ? "/profile" : "/login");
+  const redirect = sp.get("redirect") || "/profile";
 
   useEffect(() => {
     if (userInfo) {
@@ -151,7 +151,7 @@ function UserLogin() {
           label={
             <Typography variant="body2">
               Remember me{" "}
-              <Link to="/custom-forgot-password" className="forgot">
+              <Link to="/forgotpassword" className="forgot">
                 Forgot Password
               </Link>
             </Typography>

@@ -24,6 +24,8 @@ import clientStore from "./store/storeRtk";
 import UserLogin from "./pages/Auth/UserLogin";
 import ProfileScreen from "./pages/Auth/UserProfile";
 import RegisterScreen from "./pages/Auth/UserRegister";
+import ForgotPassword from "./pages/Auth/ForgotPassword";
+import Verification from "./pages/Auth/VerificationScreen";
 
 const isAdminRoute = window.location.pathname.startsWith("/dashboard");
 
@@ -54,6 +56,8 @@ function App() {
               <Route path="/login" element={<UserLogin />} />
               <Route path="/profile" element={<ProfileScreen />} />
               <Route path="/register" element={<RegisterScreen />} />
+              <Route path="/forgotpassword" element={<ForgotPassword />} />
+              <Route path="/verify" element={<Verification />} />
             </Routes>
           </Router>
         </PayPalScriptProvider>

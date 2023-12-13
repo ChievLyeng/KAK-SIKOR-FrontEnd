@@ -44,13 +44,11 @@ function RegisterScreen() {
 
   const { search } = useLocation();
   const sp = new URLSearchParams(search);
-  // Set the default redirect path to "/login"
+  // Set the default redirect path to "/login" for the register page
   const redirect = sp.get("redirect") || "/login";
 
   useEffect(() => {
     if (userInfo) {
-      // Log the redirect path to ensure it's set correctly
-      console.log("Redirecting to:", redirect);
       navigate(redirect);
     }
   }, [userInfo, redirect, navigate]);
@@ -126,7 +124,9 @@ function RegisterScreen() {
       const { data } = await register(formData);
       if (data) {
         dispatch(setCredentials(data));
-        navigate(redirect);
+
+        // Set the redirect path to "/login" after successful registration
+        navigate("/login");
       } else {
         console.error("Invalid credentials or server error");
       }

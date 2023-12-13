@@ -8,7 +8,6 @@ import {
 } from "../../store/slice/authV2Slice";
 import { useNavigate } from "react-router-dom";
 import FormContainer from "../../components/FormContainer";
-import TopAppBar from "../../components/TopAppBar";
 
 function ProfileScreen() {
   const dispatch = useDispatch();
@@ -54,7 +53,6 @@ function ProfileScreen() {
     const { data } = userInfo;
     return (
       <>
-        <TopAppBar />
         <FormContainer>
           <Typography
             variant="h4"
