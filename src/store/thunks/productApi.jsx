@@ -20,6 +20,8 @@ export const GET_ALL_CATEGORIES = `${
 export const CREATE_CATEGORY = `${
   import.meta.env.VITE_BASE_URL
 }/api/v1/catagories`;
+export const GET_PRODUCT_BY_CATEGORY = (id) =>
+  `${import.meta.env.VITE_BASE_URL}/api/v1/products/category/${id}`;
 
 export const updateProductById = createAsyncThunk(
   "products/updateProduct",
@@ -106,6 +108,18 @@ export const fetchCategories = createAsyncThunk(
   async () => {
     try {
       const response = await axios.get(GET_ALL_CATEGORIES);
+      return response.data;
+    } catch (error) {
+      return error.response.data;
+    }
+  }
+);
+
+export const getProductByCategory = createAsyncThunk(
+  "categories/getProductByCategory",
+  async ({ id }) => {
+    try {
+      const response = await axios.get(GET_PRODUCT_BY_CATEGORY(id));
       return response.data;
     } catch (error) {
       return error.response.data;

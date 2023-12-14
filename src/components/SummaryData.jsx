@@ -65,7 +65,7 @@ function SummaryData() {
               <Link to="" className="link">
                 <OutlinedCard
                   title="Total Order"
-                  value={orders.length}
+                  value={orders?.length}
                   icon={<ShoppingBagIcon />}
                 />
               </Link>

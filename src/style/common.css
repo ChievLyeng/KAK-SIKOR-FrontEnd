@@ -5,7 +5,6 @@
 
 .product-photo-container {
   display: flex;
-  gap: 5px;
 }
 
 @media (max-width: 600px) {

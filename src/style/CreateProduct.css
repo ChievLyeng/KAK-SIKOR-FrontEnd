@@ -1,4 +1,8 @@
 .create-container {
   display: flex;
-  gap: 30px;
+}
+.create-container-2 {
+  display: grid;
+  width: 95%;
+  margin: 0 auto;
 }
