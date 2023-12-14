@@ -95,7 +95,7 @@ const HomePage = () => {
               >
                 <Card sx={{ minWidth: 140, maxWidth: 240 }}>
                   <Link
-                    to={`/products/${product._id}`}
+                    to={`/product/${product._id}`}
                     sx={{ textDecoration: "none" }}
                   >
                     <CardMedia
