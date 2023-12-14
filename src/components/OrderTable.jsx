@@ -59,8 +59,6 @@ export default function ProductTable() {
   // const orders = useSelector((state) => state.orders?.data?.orders);
 
   const { data: orders, isLoading, isError } = useGetAllordersQuery();
-  console.log("data", orders);
-  console.log("length", orders.length);
 
   useEffect(() => {
     dispatch(fetchProducts());

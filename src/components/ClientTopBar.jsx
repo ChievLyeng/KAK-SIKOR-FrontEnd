@@ -37,6 +37,10 @@ const ClientTopBar = () => {
     navigate("/Cart");
   };
 
+  const handleHomePage = () => {
+    navigate("/");
+  };
+
   const menuItems = [
     { text: "Home", icon: <HomeIcon />, path: "/" },
     { text: "Product Market", icon: <StoreIcon />, path: "/product-market" },
@@ -66,6 +70,7 @@ const ClientTopBar = () => {
               variant="h6"
               component="div"
               sx={{ flexGrow: 1, color: green[500] }}
+              onClick={handleHomePage}
             >
               KAKSIKOR
             </Typography>
