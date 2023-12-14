@@ -21,6 +21,7 @@ import OrderPage from "./client-pages/Order/OrderPage";
 import { PersistGate } from "redux-persist/integration/react";
 import { persistor, store } from "././store/index";
 import clientStore from "./store/storeRtk";
+import ErrorPage from "./components/ErrorPage";
 
 //const isAdminRoute = window.location.pathname.startsWith("/dashboard");
 
@@ -48,6 +49,7 @@ function App() {
               <Route path="payment" element={<PaymentPage />} />
               <Route path="placeorder" element={<PlaceOrderPage />} />
               <Route path="/order/:id" element={<OrderPage />} />
+              <Route path="/*" element={<ErrorPage />} />
             </Routes>
           </Router>
         </PayPalScriptProvider>
