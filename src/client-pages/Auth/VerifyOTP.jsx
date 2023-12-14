@@ -1,16 +1,26 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { TextField, Button, Typography } from "@mui/material";
 import { useVerificationMutation } from "../../store/slice/userV2Slice";
 import FormContainer from "../../components/FormContainer";
 import { useNavigate } from "react-router-dom";
 
 const Verification = () => {
-  const navigate = useNavigate(); // Initialize useNavigate
+  const navigate = useNavigate();
   const [otp, setOtp] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   const [verifyMutation, { isLoading }] = useVerificationMutation();
+
+  const clearError = () => setErrorMessage("");
+
+  const handleInputChange = (e) => {
+    setOtp(e.target.value);
+    clearError(); // Clear error when user types
+  };
 
   const handleVerify = async () => {
     try {
+      clearError();
+
       // Call the verification mutation with email and otp
       const { data, error } = await verifyMutation({ userOTP: otp });
 
@@ -18,46 +28,56 @@ const Verification = () => {
 
       // Check the response and show appropriate messages
       if (data) {
-        // Handle successful verification
         console.log("Verification successful!");
 
-        // Navigate to the reset password screen upon successful verification
-        navigate("/reset-password"); // Change "/reset-password" to the actual path of your reset password screen
+        navigate("/reset-password");
       } else if (
         error?.statusCode === 401 &&
         error?.message.includes("Invalid OTP")
       ) {
-        // Handle case of Invalid OTP
+        setErrorMessage("Invalid OTP. Please enter the correct OTP.");
         console.error("Invalid OTP. Please enter the correct OTP.");
       } else {
-        // Handle other error cases
-        console.error(error?.message || "Verification failed");
+        const errorText = error?.message || "Verification failed";
+        setErrorMessage(errorText);
+        console.error(errorText);
       }
     } catch (error) {
+      const errorText = error?.message || "Error during verification";
+      setErrorMessage(errorText);
       console.error("Error in handleVerify:", error);
-      // Handle errors during verification
-      console.error(error?.message || "Error during verification");
+      console.error(errorText);
     }
   };
 
   return (
     <FormContainer>
-      <Typography
-        variant="h4"
-        className="title"
-        sx={{ margin: "24px", textAlign: "center" }}
-      >
+      <Typography variant="h4" className="title">
         Verification
+      </Typography>
+      <Typography>
+        Please Check your Email. We'll send the OTP code to your email.
       </Typography>
       <TextField
         fullWidth
         label="OTP"
         type="text"
         value={otp}
-        onChange={(e) => setOtp(e.target.value)}
-        helperText="Enter the OTP code"
+        onChange={handleInputChange}
+        helperText={errorMessage || "Enter the OTP code"}
+        error={Boolean(errorMessage)}
         margin="normal"
         variant="outlined"
+        sx={{
+          margin: "34px 0",
+          "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
+            {
+              borderColor: errorMessage ? "red" : "#82B440",
+            },
+          "& .MuiInputLabel-root.Mui-focused": {
+            color: errorMessage ? "red" : "#82B440",
+          },
+        }}
       />
       <Button
         type="button"
@@ -65,7 +85,7 @@ const Verification = () => {
         onClick={handleVerify}
         disabled={isLoading}
         fullWidth
-        sx={{ backgroundColor: "#82B440", margin: "24px 0" }}
+        sx={{ backgroundColor: "#82B440" }}
       >
         Verify OTP
       </Button>

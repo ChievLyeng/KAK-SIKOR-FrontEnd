@@ -17,6 +17,7 @@ import Loader from "../../components/Loader";
 import { setCredentials } from "../../store/slice/authV2Slice";
 import { useLoginMutation } from "../../store/slice/userV2Slice";
 import FormContainer from "../../components/FormContainer";
+import GoogleButton from "react-google-button";
 
 function UserLogin() {
   const [email, setEmail] = useState("");
@@ -26,6 +27,19 @@ function UserLogin() {
   const [showPassword, setShowPassword] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const { state } = useLocation();
+  const registrationSuccess =
+    localStorage.getItem("registrationSuccess") === "true";
+
+  const clearRegistrationSuccess = () => {
+    // Clear the registration success status in localStorage
+    localStorage.removeItem("registrationSuccess");
+  };
+
+  useEffect(() => {
+    // Call the function to clear registration success when the component mounts
+    clearRegistrationSuccess();
+  }, []);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -116,6 +130,12 @@ function UserLogin() {
         Welcome Back!
       </Typography>
 
+      {registrationSuccess && (
+        <Typography sx={{ textAlign: "center", color: "green" }}>
+          Account registered successfully! Please log in.
+        </Typography>
+      )}
+
       <form onSubmit={submitHandler}>
         <TextField
           fullWidth
@@ -192,14 +212,19 @@ function UserLogin() {
           disabled={isLoading}
           sx={{
             marginTop: "24px",
-            marginBottom: "72px",
             backgroundColor: "#82B440",
           }}
         >
           Log in
         </Button>
 
-        <Typography sx={{ textAlign: "center", color: "#a5a5a5" }}>
+        <Typography sx={{ textAlign: "right", margin: "45px 0" }}>
+          <Link to="/forgot-password">Forgot Password?</Link>
+        </Typography>
+
+        <Typography
+          sx={{ textAlign: "center", color: "#a5a5a5", marginBottom: "24px" }}
+        >
           or Log in with
         </Typography>
 
@@ -216,6 +241,15 @@ function UserLogin() {
         >
           Continue with Google
         </Button>
+        {/* <GoogleButton
+          fullWidth
+          sx={{
+            backgroundColor: "#4285F4", // Change the background color
+            color: "#FFFFFF", // Change the text color
+          }}
+        >
+          Log in with Google
+        </GoogleButton> */}
 
         {isLoading && <Loader />}
 
@@ -225,13 +259,7 @@ function UserLogin() {
             textAlign: "center",
           }}
         >
-          Dont have account?{" "}
-          <Link
-            to={redirect ? `/register?redirect=${redirect}` : "/register"}
-            className="forgot"
-          >
-            Sign up
-          </Link>
+          Dont have account? <Link to="/user-register">Sign up</Link>
         </Typography>
       </form>
     </FormContainer>

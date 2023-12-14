@@ -45,7 +45,7 @@ export const usersApiSlice = apiSlice.injectEndpoints({
     update: builder.mutation({
       query: (data) => ({
         url: `${USERS_URL}/:id`,
-        method: "PUT",
+        method: "POST",
         credentials: "include",
         body: JSON.stringify({ data }),
         headers: {
@@ -57,8 +57,12 @@ export const usersApiSlice = apiSlice.injectEndpoints({
     resetpassword: builder.mutation({
       query: (data) => ({
         url: `${USERS_URL}/reset-password`,
-        method: "PUT",
-        body: data,
+        method: "POST",
+        credentials: "include",
+        body: data, // Add this line to include the request body
+        headers: {
+          "Content-Type": "application/json",
+        },
       }),
     }),
 

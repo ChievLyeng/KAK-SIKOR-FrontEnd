@@ -1,4 +1,4 @@
-.communication-item{
+.communication-item {
   margin-top: 24px;
   display: flex;
   flex-direction: row;
@@ -6,7 +6,7 @@
   gap: 16px
 }
 
-.userinfo-box{
+.userinfo-box {
   background-color: white;
   color: black;
   padding: 16px;
@@ -15,55 +15,57 @@
   border-radius: 5px;
 }
 
-.total-info-box{
+.total-info-box {
   display: flex;
   flex-direction: column;
   justify-content: center;
   gap: 24px;
 }
 
-.stack-avatar{
+.stack-avatar {
   margin-top: 24px;
 }
 
-.MuiAvatar-root.supplier-profile{
+.MuiAvatar-root.supplier-profile {
   width: 160px;
   height: 160px;
   border-radius: 80px;
 }
 
-.MuiTypography-root.supplier-name{
+.MuiTypography-root.supplier-name {
   margin-left: 16px;
   margin-top: 24px;
   font-weight: bold;
 }
 
-.MuiTypography-root.supplier-email{
+.MuiTypography-root.supplier-email {
   margin-left: 16px;
   margin-top: 8px;
   color: gray;
 }
 
-.MuiTypography-root.title{
+.MuiTypography-root.title {
   font-weight: bold;
   color: #82B440;
+  text-align: center;
+  margin: 21px 0;
 }
 
-.MuiTypography-root.sub-title{
+.MuiTypography-root.sub-title {
   font-weight: bold;
   color: #000000;
   /* margin-bottom: px; */
 }
 
-.communication-icon{
+.communication-icon {
   color: #82B440;
 }
 
-.sale-card{
+.sale-card {
   height: 330px;
 }
 
-.MuiTypography-root.saleTypography{
+.MuiTypography-root.saleTypography {
   color: #82B440;
   font-size: 48px;
   font-weight: bold;
@@ -74,6 +76,3 @@
   margin-top: 100px;
   margin-bottom: 24px;
 }
-
-
-
