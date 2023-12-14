@@ -11,7 +11,7 @@ import UpdateProduct from "./admin-pages/ProductList/UpdateProduct";
 import MyAccount from "./admin-pages/MyAccount/MyAccount";
 import Login from "./admin-pages/Auth/Login";
 import ProductDetail from "./admin-pages/ProductList/ProductDetail";
-import HomePage from "./components/HomePage";
+import HomePage from "./client-pages/Home/HomePage";
 import ProductPage from "./client-pages/Products/ProductPage";
 import CartPage from "./client-pages/Cart/CartPage";
 import ShippingPage from "./client-pages/Shipping/ShippingPage";

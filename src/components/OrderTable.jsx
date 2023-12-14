@@ -11,6 +11,7 @@ import "../style/ProductTable.css";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProducts } from "../store";
 import { fetchOrder } from "../store";
+import { useGetAllordersQuery } from "../store/slice/ordersApiSlice";
 
 const columns = [
   {
@@ -55,7 +56,11 @@ const columns = [
 
 export default function ProductTable() {
   const dispatch = useDispatch();
-  const orders = useSelector((state) => state.orders?.data?.orders);
+  // const orders = useSelector((state) => state.orders?.data?.orders);
+
+  const { data: orders, isLoading, isError } = useGetAllordersQuery();
+  console.log("data", orders);
+  console.log("length", orders.length);
 
   useEffect(() => {
     dispatch(fetchProducts());
@@ -107,15 +112,17 @@ export default function ProductTable() {
                   .map((order, index) => (
                     <TableRow hover role="checkbox" tabIndex={-1} key={index}>
                       <TableCell align="left">{2}</TableCell>
-                      <TableCell align="left">{`${order.orderBy.firstName} ${order.orderBy.lastName}`}</TableCell>
+                      <TableCell align="left">{`${order.firstName} ${order.lastName}`}</TableCell>
                       <TableCell align="left">
-                        {order.products.length >= 2
-                          ? `(${order.products.length}) items`
-                          : `(${order.products.length}) item`}{" "}
+                        {order.orderItems >= 2
+                          ? `(${order.orderItems}) items`
+                          : `(${order.orderItems}) item`}{" "}
                       </TableCell>
                       <TableCell align="left">{2}</TableCell>
-                      <TableCell align="left">{order.quantity}</TableCell>
-                      <TableCell align="left">{order.status}</TableCell>
+                      <TableCell align="left">{order.orderItems.qty}</TableCell>
+                      <TableCell align="left">
+                        {order.isPaid ? "Paid" : "Not yet paid"}
+                      </TableCell>
                       <TableCell align="left">
                         {new Date(order.createdAt).toLocaleDateString()}
                       </TableCell>

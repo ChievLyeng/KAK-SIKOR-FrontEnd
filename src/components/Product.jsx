@@ -1,34 +1,40 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Card, CardContent, CardMedia, Typography } from "@material-ui/core";
-
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import CardMedia from "@mui/material/CardMedia";
+import Typography from "@mui/material/Typography";
+import { Button, CardActionArea, CardActions } from "@mui/material";
+import "../style/HomePage.css";
 const Product = ({ product }) => {
   return (
-    <Card className="my-3 p-3 rounded">
-      <Link to={`/product/${product._id}`}>
-        {product.photos && product.photos.length > 0 ? (
-          <CardMedia
-            component="img"
-            alt="Product Image"
-            height="200"
-            image={product.photos[0].url} // Fix: Accessing the 'url' property
-          />
-        ) : (
-          <div>No Image Available</div>
-        )}
-      </Link>
-
-      <CardContent>
-        <Link to={`/product/${product._id}`}>
-          <Typography variant="h6" component="div">
-            <strong>{product.name}</strong>
+    <Card sx={{ maxWidth: 156 }}>
+      <CardActionArea>
+        <CardMedia
+          component="img"
+          height="140"
+          image={product.photos[0].url}
+          alt="green iguana"
+        />
+        <CardContent>
+          <Typography gutterBottom variant="h5" component="div">
+            {product.name}
           </Typography>
-        </Link>
-
-        <Typography variant="h5" component="h3">
-          ${product.price}
-        </Typography>
-      </CardContent>
+          <Typography variant="body2" color="text.secondary">
+            {product.description}
+          </Typography>
+        </CardContent>
+      </CardActionArea>
+      <CardActions>
+        <div className="btn">
+          <Button size="small" color="primary">
+            Share
+          </Button>
+          <Button size="small" color="primary">
+            Share
+          </Button>
+        </div>
+      </CardActions>
     </Card>
   );
 };
