@@ -9,7 +9,6 @@ import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProducts, fetchUser, fetchReview, fetchOrder } from "../store";
-import { useGetAllordersQuery } from "../store/slice/ordersApiSlice";
 import Header from "../components/common/Header";
 import Grid from "@mui/material/Grid";
 import "../style/Dashboard.css";
@@ -19,9 +18,12 @@ function SummaryData() {
 
   const products = useSelector((state) => state.products.data);
   const users = useSelector((state) => state.users.data);
-  const { data: orders, isLoading, isError } = useGetAllordersQuery();
+  // const { data: orders, isLoading, isError } = useGetAllordersQuery();
   const reviews = useSelector((state) => {
     return state.reviews.data;
+  });
+  const orders = useSelector((state) => {
+    return state.orders?.data;
   });
   const Products = products.products;
   const productLength = Products ? Products.length : 0;
@@ -65,7 +67,7 @@ function SummaryData() {
               <Link to="" className="link">
                 <OutlinedCard
                   title="Total Order"
-                  value={orders.length}
+                  value={orders?.length}
                   icon={<ShoppingBagIcon />}
                 />
               </Link>
