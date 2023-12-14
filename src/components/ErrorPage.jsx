@@ -1,14 +1,20 @@
 import "../style/ErrorPage.css"; // Import the CSS file
-import Layout from "./common/Layout";
+import ClientLayout from "./common/ClientLayout";
+import Typography from "@mui/material/Typography";
+import { Box, Grid } from "@mui/material";
 
 const ErrorPage = () => {
   return (
-    <Layout>
-      <div className="error-container">
-        <h1>404 - Page Not Found</h1>
-        <p>Oops! The page you are looking for does not exist.</p>
-      </div>
-    </Layout>
+    <ClientLayout>
+      <Box className="error-container">
+        <Typography sx={{ fontWeight: "bold" }} variant="h2">
+          404 - Page Not Found
+        </Typography>
+        <Typography>
+          Oops! The page you are looking for does not exist.
+        </Typography>
+      </Box>
+    </ClientLayout>
   );
 };
 

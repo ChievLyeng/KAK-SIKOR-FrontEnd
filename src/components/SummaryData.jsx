@@ -9,6 +9,7 @@ import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProducts, fetchUser, fetchReview, fetchOrder } from "../store";
+import { useGetAllordersQuery } from "../store/slice/ordersApiSlice";
 import Header from "../components/common/Header";
 import Grid from "@mui/material/Grid";
 import "../style/Dashboard.css";
@@ -16,12 +17,14 @@ import "../style/Dashboard.css";
 function SummaryData() {
   const dispatch = useDispatch();
 
-  const orders = useSelector((state) => state.orders.data);
   const products = useSelector((state) => state.products.data);
   const users = useSelector((state) => state.users.data);
+  const { data: orders, isLoading, isError } = useGetAllordersQuery();
   const reviews = useSelector((state) => {
     return state.reviews.data;
   });
+  const Products = products.products;
+  const productLength = Products ? Products.length : 0;
 
   useEffect(() => {
     dispatch(fetchOrder());
@@ -29,12 +32,6 @@ function SummaryData() {
     dispatch(fetchUser());
     dispatch(fetchReview());
   }, [dispatch]);
-
-  const Order = orders.orders;
-  const Products = products.products;
-
-  const orderLength = Order ? Order.length : 0;
-  const productLength = Products ? Products.length : 0;
 
   return (
     <>
@@ -68,7 +65,7 @@ function SummaryData() {
               <Link to="" className="link">
                 <OutlinedCard
                   title="Total Order"
-                  value={orderLength}
+                  value={orders.length}
                   icon={<ShoppingBagIcon />}
                 />
               </Link>
