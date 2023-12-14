@@ -2,8 +2,10 @@ import { useState } from "react";
 import { TextField, Button, Typography } from "@mui/material";
 import { useForgotpasswordMutation } from "../../store/slice/userV2Slice";
 import FormContainer from "../../components/FormContainer";
+import { useNavigate } from "react-router-dom";
 
 const ForgotPassword = () => {
+  const navigate = useNavigate(); // Replace useHistory with useNavigate
   const [email, setEmail] = useState("");
   const [forgotPassword, { isLoading }] = useForgotpasswordMutation();
 
@@ -22,6 +24,9 @@ const ForgotPassword = () => {
         localStorage.setItem("userInfo", JSON.stringify({ email }));
 
         console.log("Password reset link sent successfully!");
+
+        // Navigate to the OTP screen upon successful password reset
+        navigate("/verify");
       } else {
         console.error("Error sending reset link");
       }
@@ -33,7 +38,7 @@ const ForgotPassword = () => {
 
   return (
     <FormContainer>
-      <Typography variant="h4" className="title">
+      <Typography variant="h4" className="title" sx={{ margin: "24px" }}>
         Forgot Password
       </Typography>
       <TextField
@@ -49,10 +54,10 @@ const ForgotPassword = () => {
       <Button
         type="button"
         variant="contained"
-        color="primary"
         onClick={handleForgotPassword}
         disabled={isLoading}
         fullWidth
+        sx={{ backgroundColor: "#82B440", margin: "24px 0" }}
       >
         Send Reset Link
       </Button>

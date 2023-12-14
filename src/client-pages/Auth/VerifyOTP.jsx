@@ -2,8 +2,10 @@ import { useState } from "react";
 import { TextField, Button, Typography } from "@mui/material";
 import { useVerificationMutation } from "../../store/slice/userV2Slice";
 import FormContainer from "../../components/FormContainer";
+import { useNavigate } from "react-router-dom";
 
 const Verification = () => {
+  const navigate = useNavigate(); // Initialize useNavigate
   const [otp, setOtp] = useState("");
   const [verifyMutation, { isLoading }] = useVerificationMutation();
 
@@ -16,8 +18,11 @@ const Verification = () => {
 
       // Check the response and show appropriate messages
       if (data) {
-        // Handle successful verification (e.g., redirect)
+        // Handle successful verification
         console.log("Verification successful!");
+
+        // Navigate to the reset password screen upon successful verification
+        navigate("/reset-password"); // Change "/reset-password" to the actual path of your reset password screen
       } else if (
         error?.statusCode === 401 &&
         error?.message.includes("Invalid OTP")
@@ -37,7 +42,11 @@ const Verification = () => {
 
   return (
     <FormContainer>
-      <Typography variant="h4" className="title">
+      <Typography
+        variant="h4"
+        className="title"
+        sx={{ margin: "24px", textAlign: "center" }}
+      >
         Verification
       </Typography>
       <TextField
@@ -53,10 +62,11 @@ const Verification = () => {
       <Button
         type="button"
         variant="contained"
-        color="primary"
         onClick={handleVerify}
         disabled={isLoading}
-        fullWidth>
+        fullWidth
+        sx={{ backgroundColor: "#82B440", margin: "24px 0" }}
+      >
         Verify OTP
       </Button>
     </FormContainer>

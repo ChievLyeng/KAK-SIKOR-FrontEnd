@@ -88,11 +88,6 @@ function UserLogin() {
       </Typography>
 
       <form onSubmit={submitHandler}>
-        {/* {setEmailError && (
-          <Typography color="error" sx={{ marginBottom: "16px" }}>
-            {setEmailError}
-          </Typography>
-        )} */}
         <TextField
           fullWidth
           label="Email address"

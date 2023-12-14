@@ -84,7 +84,11 @@ function ResetPassword() {
 
   return (
     <FormContainer>
-      <Typography variant="h5" className="title">
+      <Typography
+        variant="h4"
+        className="title"
+        sx={{ margin: "24px", textAlign: "center" }}
+      >
         Reset Password
       </Typography>
 
@@ -190,7 +194,6 @@ function ResetPassword() {
           disabled={isLoading}
           sx={{
             marginTop: "24px",
-            marginBottom: "72px",
             backgroundColor: "#82B440",
           }}
         >
