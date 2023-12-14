@@ -24,7 +24,7 @@ function UserLogin() {
   const { search } = useLocation();
   const sp = new URLSearchParams(search);
   // Set the default redirect path to "/profile" for the login page
-  const redirect = sp.get("redirect") || "/cart";
+  const redirect = sp.get("redirect") || "/profile";
 
   useEffect(() => {
     if (userInfo) {
@@ -62,7 +62,7 @@ function UserLogin() {
         dispatch(setCredentials(data));
 
         // Only navigate to the user profile if the login was successful
-        navigate("/cart");
+        navigate("/profile");
       } else {
         if (error && error.message === "USER_NOT_FOUND") {
           setEmailError("User not found");
@@ -155,7 +155,8 @@ function UserLogin() {
             marginTop: "24px",
             marginBottom: "72px",
             backgroundColor: "#82B440",
-          }}>
+          }}
+        >
           Log in
         </Button>
 
@@ -173,7 +174,8 @@ function UserLogin() {
             color: "black",
             border: "1px solid black",
             margin: "24px 0",
-          }}>
+          }}
+        >
           Continue with Google
         </Button>
 
@@ -183,11 +185,13 @@ function UserLogin() {
           sx={{
             marginTop: "72px",
             textAlign: "center",
-          }}>
+          }}
+        >
           Dont have account?{" "}
           <Link
             to={redirect ? `/register?redirect=${redirect}` : "/register"}
-            className="forgot">
+            className="forgot"
+          >
             Sign up
           </Link>
         </Typography>

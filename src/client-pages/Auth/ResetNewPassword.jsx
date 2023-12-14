@@ -13,7 +13,6 @@ import {
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useDispatch, useSelector } from "react-redux";
 import { useResetpasswordMutation } from "../../store/slice/userV2Slice";
-import { toast } from "react-toastify";
 import FormContainer from "../../components/FormContainer";
 
 function ResetPassword() {
@@ -70,7 +69,7 @@ function ResetPassword() {
       console.log("Reset Password Data:", data);
 
       if (data) {
-        toast.success("Password reset successfully!");
+        console.log("Password reset successfully!");
         navigate(redirect);
       } else {
         setErrorMessage("Invalid credentials or server error");
@@ -107,7 +106,8 @@ function ResetPassword() {
             "& .MuiInputLabel-root.Mui-focused": {
               color: "#82B440",
             },
-          }}>
+          }}
+        >
           <InputLabel htmlFor="outlined-adornment-password">
             New Password
           </InputLabel>
@@ -120,7 +120,8 @@ function ResetPassword() {
                   aria-label="toggle password visibility"
                   onClick={handleClickShowPassword}
                   onMouseDown={handleMouseDownPassword}
-                  edge="end">
+                  edge="end"
+                >
                   {showPassword ? <VisibilityOff /> : <Visibility />}
                 </IconButton>
               </InputAdornment>
@@ -149,7 +150,8 @@ function ResetPassword() {
             "& .MuiInputLabel-root.Mui-focused": {
               color: "#82B440",
             },
-          }}>
+          }}
+        >
           <InputLabel htmlFor="outlined-adornment-confirm-password">
             Confirm Password
           </InputLabel>
@@ -162,7 +164,8 @@ function ResetPassword() {
                   aria-label="toggle password visibility"
                   onClick={handleClickShowPassword}
                   onMouseDown={handleMouseDownPassword}
-                  edge="end">
+                  edge="end"
+                >
                   {showPassword ? <VisibilityOff /> : <Visibility />}
                 </IconButton>
               </InputAdornment>
@@ -189,7 +192,8 @@ function ResetPassword() {
             marginTop: "24px",
             marginBottom: "72px",
             backgroundColor: "#82B440",
-          }}>
+          }}
+        >
           Reset Password
         </Button>
       </form>

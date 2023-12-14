@@ -27,6 +27,7 @@ import SupplierRegister from "./client-pages/Auth/SupplierRegister";
 import ForgotPassword from "./client-pages/Auth/ForgotPassword";
 import Verification from "./client-pages/Auth/VerifyOTP";
 import ResetPassword from "./client-pages/Auth/ResetNewPassword";
+import UserRegister from "./client-pages/Auth/UserRegister";
 
 //const isAdminRoute = window.location.pathname.startsWith("/dashboard");
 
@@ -56,6 +57,7 @@ function App() {
               <Route path="/order/:id" element={<OrderPage />} />
               <Route path="/userlogin" element={<UserLogin />} />
               <Route path="/supplier-register" element={<SupplierRegister />} />
+              <Route path="/user-register" element={<UserRegister />} />
               <Route path="/profile" element={<UserProfile />} />
               <Route path="/forgot-password" element={<ForgotPassword />} />
               <Route path="/verify" element={<Verification />} />

@@ -7,17 +7,15 @@ import {
   InputLabel,
   Select,
   MenuItem,
-  Checkbox,
-  FormControlLabel,
 } from "@mui/material";
 import { format } from "date-fns";
 import { setCredentials } from "../../store/slice/authV2Slice";
 import { useRegisterMutation } from "../../store/slice/userV2Slice";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import FormContainer from "../../components/FormContainer";
 
-function SupplierRegister() {
+function UserRegister() {
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -36,20 +34,17 @@ function SupplierRegister() {
       district: "",
       village: "",
     },
-    farmName: "",
-    harvestSchedule: "",
-    isOrganic: false,
-    supplierStatus: "pending",
   });
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [register, { isLoading }] = useRegisterMutation();
+  const [register] = useRegisterMutation();
   const { userInfo } = useSelector((state) => state.auth);
 
   const { search } = useLocation();
   const sp = new URLSearchParams(search);
+  // Set the default redirect path to "/login" for the register page
   const redirect = sp.get("redirect") || "/userlogin";
 
   useEffect(() => {
@@ -89,7 +84,6 @@ function SupplierRegister() {
 
   const validateForm = () => {
     const newErrors = {};
-
     // Validate required fields
     if (!formData.firstName.trim()) {
       newErrors.firstName = "First Name is required";
@@ -130,7 +124,9 @@ function SupplierRegister() {
       const { data } = await register(formData);
       if (data) {
         dispatch(setCredentials(data));
-        navigate(redirect);
+
+        // Set the redirect path to "/login" after successful registration
+        navigate("/userlogin");
       } else {
         console.error("Invalid credentials or server error");
       }
@@ -147,9 +143,14 @@ function SupplierRegister() {
   return (
     <FormContainer>
       <form onSubmit={submitHandler} className="form-container">
-        <Typography variant="h6" className="title">
-          Business Account Sign up
+        <Typography
+          variant="h4"
+          className="title"
+          sx={{ fontWeight: "bolder", textAlign: "center", margin: "24px" }}
+        >
+          Sign up
         </Typography>
+
         <TextField
           fullWidth
           label="First Name"
@@ -341,65 +342,12 @@ function SupplierRegister() {
           error={Boolean(errors.confirmPassword)}
         />
 
-        <TextField
+        <Button
+          type="submit"
+          variant="contained"
           fullWidth
-          label="Farm Name"
-          type="text"
-          name="farmName"
-          value={formData.farmName}
-          onChange={handleChange}
-          margin="normal"
-          variant="outlined"
-          helperText="Optional"
-        />
-
-        <TextField
-          fullWidth
-          label="Harvest Schedule"
-          type="date"
-          name="harvestSchedule"
-          value={formData.harvestSchedule}
-          onChange={handleChange}
-          margin="normal"
-          variant="outlined"
-          InputLabelProps={{
-            shrink: true,
-          }}
-          helperText="Optional"
-        />
-
-        <FormControl fullWidth variant="outlined" margin="normal">
-          <InputLabel id="organic-label">Is Organic</InputLabel>
-          <Select
-            labelId="organic-label"
-            label="Is Organic"
-            name="isOrganic"
-            value={formData.isOrganic}
-            onChange={handleChange}
-          >
-            <MenuItem value={false}>No</MenuItem>
-            <MenuItem value={true}>Yes</MenuItem>
-          </Select>
-        </FormControl>
-
-        <FormControlLabel
-          control={
-            <Checkbox
-              defaultChecked
-              sx={{ "&.Mui-checked": { color: "#82B440" } }}
-            />
-          }
-          label={
-            <Typography variant="body2">
-              I accept and agree to the{" "}
-              <Link to="/custom-forgot-password" className="forgot">
-                Term of use
-              </Link>
-            </Typography>
-          }
-        />
-
-        <Button type="submit" variant="contained" color="primary" fullWidth>
+          sx={{ backgroundColor: "#82B440", margin: "24px 0" }}
+        >
           Register
         </Button>
       </form>
@@ -407,4 +355,4 @@ function SupplierRegister() {
   );
 }
 
-export default SupplierRegister;
+export default UserRegister;

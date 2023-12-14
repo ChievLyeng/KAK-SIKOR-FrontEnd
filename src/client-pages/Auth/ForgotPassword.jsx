@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { TextField, Button, Typography } from "@mui/material";
 import { useForgotpasswordMutation } from "../../store/slice/userV2Slice";
-import { toast } from "react-toastify";
 import FormContainer from "../../components/FormContainer";
 
 const ForgotPassword = () => {
@@ -22,13 +21,13 @@ const ForgotPassword = () => {
         // Save the email to local storage
         localStorage.setItem("userInfo", JSON.stringify({ email }));
 
-        toast.success("Password reset link sent successfully!");
+        console.log("Password reset link sent successfully!");
       } else {
-        toast.error("Error sending reset link");
+        console.error("Error sending reset link");
       }
     } catch (error) {
       console.error("Error in handleForgotPassword:", error);
-      toast.error(error?.data?.message || "Error sending reset link");
+      console.error(error?.data?.message || "Error sending reset link");
     }
   };
 
@@ -53,7 +52,8 @@ const ForgotPassword = () => {
         color="primary"
         onClick={handleForgotPassword}
         disabled={isLoading}
-        fullWidth>
+        fullWidth
+      >
         Send Reset Link
       </Button>
     </FormContainer>
