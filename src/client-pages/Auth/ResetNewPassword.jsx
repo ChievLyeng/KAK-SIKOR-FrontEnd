@@ -21,7 +21,6 @@ function ResetPassword() {
   const [errorMessage, setErrorMessage] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
-  const [email, setEmail] = useState("");
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -29,7 +28,6 @@ function ResetPassword() {
     event.preventDefault();
   };
 
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const [resetPassword, { isLoading }] = useResetpasswordMutation();
@@ -64,6 +62,8 @@ function ResetPassword() {
       const storedEmail = localStorage.getItem("userInfo")
         ? JSON.parse(localStorage.getItem("userInfo")).email
         : "";
+
+      console.log(storedEmail);
 
       const { data } = await resetPassword({ email: storedEmail, password });
       console.log("Reset Password Data:", data);

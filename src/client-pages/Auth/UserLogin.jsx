@@ -1,6 +1,17 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Button, TextField, Typography } from "@mui/material";
+import {
+  Button,
+  TextField,
+  Typography,
+  FormControl,
+  InputLabel,
+  OutlinedInput,
+  InputAdornment,
+  FormHelperText,
+  IconButton,
+} from "@mui/material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useDispatch, useSelector } from "react-redux";
 import Loader from "../../components/Loader";
 import { setCredentials } from "../../store/slice/authV2Slice";
@@ -12,6 +23,9 @@ function UserLogin() {
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [isTyping, setIsTyping] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -20,7 +34,17 @@ function UserLogin() {
 
   const { userInfo } = useSelector((state) => state.auth);
 
-  // ...
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
+
+  const handleInputChange = () => {
+    setIsTyping(true);
+    setErrorMessage(""); // Clear the error message
+  };
+
   const { search } = useLocation();
   const sp = new URLSearchParams(search);
   // Set the default redirect path to "/profile" for the login page
@@ -31,7 +55,6 @@ function UserLogin() {
       navigate(redirect);
     }
   }, [userInfo, redirect, navigate]);
-  // ...
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -58,11 +81,17 @@ function UserLogin() {
 
       const { data, error } = await login({ email, password });
 
-      if (data) {
-        dispatch(setCredentials(data));
+      console.log("Data from login mutation:", data);
 
-        // Only navigate to the user profile if the login was successful
-        navigate("/profile");
+      if (data) {
+        const { token, refreshToken, data: userData } = data;
+
+        if (userData) {
+          dispatch(setCredentials({ token, refreshToken, userData }));
+          navigate("/profile");
+        } else {
+          console.error("Invalid user data structure:", data);
+        }
       } else {
         if (error && error.message === "USER_NOT_FOUND") {
           setEmailError("User not found");
@@ -111,34 +140,49 @@ function UserLogin() {
           }}
         />
 
-        <TextField
+        <FormControl
           fullWidth
-          label="Password"
-          type="password"
-          value={password}
-          onChange={(e) => {
-            setPassword(e.target.value);
-            setPasswordError(""); // Clear passwordError when input changes
-          }}
-          error={Boolean(passwordError)}
-          helperText={passwordError || "*Required"}
+          variant="outlined"
           sx={{
             margin: "24px 0",
             "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
               {
-                borderColor: passwordError ? "red" : "#82B440",
+                borderColor: "#82B440",
               },
             "& .MuiInputLabel-root.Mui-focused": {
-              color: passwordError ? "red" : "#82B440",
+              color: "#82B440",
             },
           }}
-        />
-
-        <Typography variant="body2">
-          <Link to="/forgotpassword" className="forgot">
-            Forgot Password
-          </Link>
-        </Typography>
+        >
+          <InputLabel htmlFor="outlined-adornment-password">
+            New Password
+          </InputLabel>
+          <OutlinedInput
+            id="outlined-adornment-password"
+            type={showPassword ? "text" : "password"}
+            endAdornment={
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={handleClickShowPassword}
+                  onMouseDown={handleMouseDownPassword}
+                  edge="end"
+                >
+                  {showPassword ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+              </InputAdornment>
+            }
+            label="New Password"
+            value={password}
+            onChange={(e) => {
+              handleInputChange();
+              setPassword(e.target.value);
+            }}
+          />
+          <FormHelperText id="outlined-adornment-password-helper-text">
+            *Required
+          </FormHelperText>
+        </FormControl>
 
         <Button
           fullWidth
@@ -168,7 +212,6 @@ function UserLogin() {
             backgroundColor: "white",
             color: "black",
             border: "1px solid black",
-            margin: "24px 0",
           }}
         >
           Continue with Google
