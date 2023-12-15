@@ -60,6 +60,8 @@ export default function ProductTable() {
 
   const { data: orders, isLoading, isError } = useGetAllordersQuery();
 
+  console.log("order", orders);
+
   useEffect(() => {
     dispatch(fetchProducts());
     dispatch(fetchOrder());

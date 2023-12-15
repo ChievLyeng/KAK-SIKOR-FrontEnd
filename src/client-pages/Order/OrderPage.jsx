@@ -21,6 +21,14 @@ const OrderScreen = () => {
     isError,
   } = useGetOrderDetailsQuery(orderId);
 
+  console.log(order);
+
+  const Items = order?.orderItems;
+
+  console.log("Items", Items);
+
+  // console.log("qty", order.orderItems[0].qty);
+
   const [payOrder, { isLoading: loadingPay }] = usePayOrderMutation();
 
   const [{ isPending }, paypalDispatch] = usePayPalScriptReducer();
@@ -77,6 +85,10 @@ const OrderScreen = () => {
     });
   };
 
+  const calculateTotalQuantity = (Items) => {
+    return Items.reduce((total, item) => total + item.qty, 0);
+  };
+
   return isLoading ? (
     <Loader />
   ) : isError ? (
@@ -113,11 +125,22 @@ const OrderScreen = () => {
       <div>
         <div>
           <h3>Order Summary</h3>
+          <div>
+            {Items && (
+              <div>
+                {Items.map((item, index) => (
+                  <div key={index}>Quantity: {item.qty}</div>
+                ))}
+                <div>Total Quantity: {calculateTotalQuantity(Items)}</div>
+              </div>
+            )}
+          </div>
           <div>ItemsPrice : $ {order.itemsPrice}</div>
           <div>ShippingPrice : ${order.shippingPrice}</div>
           <div>TaxPrice : ${order.taxPrice}</div>
           <div>TotalPrice : ${order.totalPrice}</div>
         </div>
+
         <div>
           {!order.isPaid && (
             <>

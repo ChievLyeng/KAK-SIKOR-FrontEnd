@@ -19,6 +19,8 @@ const PlaceOrderPage = () => {
   const [createOrder, { isLoading, isError }] = useCreateOrderMutation();
 
   console.log(cart.cartItems);
+  console.log("cart", cart);
+  console.log("quantity", cart?.cartItems[0].quantity);
 
   useEffect(() => {
     if (!cart.shippingAddress.address) {

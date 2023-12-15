@@ -12,13 +12,10 @@ export const ordersApiSlice = apiSlice.injectEndpoints({
       }),
     }),
     getAllorders: builder.query({
-      providesTags: ["Order"],
-      query: () => {
-        return {
-          url: `${import.meta.env.VITE_BASE_URL}/api/v1/orders`,
-          method: "GET",
-        };
-      },
+      query: () => ({
+        url: ORDERS_URL,
+      }),
+      keepUnusedDataFor: 5,
     }),
     getOrderDetails: builder.query({
       query: (orderId) => ({
