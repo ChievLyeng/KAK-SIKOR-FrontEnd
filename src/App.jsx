@@ -29,6 +29,7 @@ import Verification from "./client-pages/Auth/VerifyOTP";
 import ResetPassword from "./client-pages/Auth/ResetNewPassword";
 import UserRegister from "./client-pages/Auth/UserRegister";
 import ErrorPage from "./components/ErrorPage";
+import AdminOrder from "./admin-pages/Order/AdminOrder";
 
 //const isAdminRoute = window.location.pathname.startsWith("/dashboard");
 
@@ -49,6 +50,7 @@ function App() {
               <Route path="/review-list" element={<ReviewList />} />
               <Route path="/update-product/:id" element={<UpdateProduct />} />
               <Route path="/product-detail/:id" element={<ProductDetail />} />
+              <Route path="/order" element={<AdminOrder />} />
               <Route path="/" element={<HomePage />} />
               <Route path="/product/:id" element={<ProductPage />} />
               <Route path="/cart" element={<CartPage />} />

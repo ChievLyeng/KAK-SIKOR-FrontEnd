@@ -23,7 +23,8 @@ function SummaryData() {
     return state.reviews.data;
   });
   const orders = useSelector((state) => {
-    return state.orders?.data;
+    console.log(state)
+    return state.orders?.data?.data;
   });
   const Products = products.products;
   const productLength = Products ? Products.length : 0;
@@ -67,7 +68,7 @@ function SummaryData() {
               <Link to="" className="link">
                 <OutlinedCard
                   title="Total Order"
-                  value={orders?.length}
+                  value={orders?.result}
                   icon={<ShoppingBagIcon />}
                 />
               </Link>
