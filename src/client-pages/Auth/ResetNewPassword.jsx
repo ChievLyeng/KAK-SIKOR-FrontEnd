@@ -45,7 +45,7 @@ function ResetPassword() {
 
   const { userInfo } = useSelector((state) => state.auth);
 
-  const redirect = "/login"; // Redirect to login page after resetting password
+  const redirect = "/userlogin"; // Redirect to login page after resetting password
 
   useEffect(() => {
     if (userInfo) {
