@@ -19,6 +19,7 @@ const PlaceOrderPage = () => {
   const [createOrder, { isLoading, isError }] = useCreateOrderMutation();
 
   console.log(cart.cartItems);
+  console.log("cart", cart);
 
   useEffect(() => {
     if (!cart.shippingAddress.address) {
@@ -39,6 +40,7 @@ const PlaceOrderPage = () => {
         taxPrice: cart.taxPrice,
         totalPrice: cart.totalPrice,
       }).unwrap();
+
       dispatch(clearCartItems());
       navigate(`/order/${res._id}`);
     } catch (err) {

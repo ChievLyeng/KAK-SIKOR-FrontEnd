@@ -13,6 +13,7 @@ import Loader from "../../components/Loader";
 import Message from "../../components/Message";
 import { useGetProductDetailsQuery } from "../../store/slice/productsApiSlice";
 import { addToCart } from "../../store/slice/cartSlice";
+import ClientLayout from "../../components/common/ClientLayout";
 import "../../style/ProductPage.css";
 
 const ProductPage = () => {
@@ -27,6 +28,8 @@ const ProductPage = () => {
     isLoading,
     isError,
   } = useGetProductDetailsQuery(productId);
+
+  console.log(product);
 
   const handleQtyChange = (e) => {
     const value = e.target.value;
@@ -59,65 +62,87 @@ const ProductPage = () => {
 
   return (
     <>
-      {isLoading ? (
-        <Loader />
-      ) : isError ? (
-        <Message variant="danger">{isError?.data?.message}</Message>
-      ) : (
-        <>
-          <Link component={RouterLink} color="primary" to="/">
-            Go Back
-          </Link>
-
-          <Grid container>
-            {product.product.photos && product.product.photos.length > 0 && (
-              <Card>
-                <CardMedia
-                  component="img"
-                  alt={product.product.name}
-                  className="image-detail"
-                  image={product.product.photos[0].url}
-                />
-              </Card>
-            )}
-          </Grid>
-
-          <div className="product-detail">
-            <p>{product.product.quantity > 0 ? "In Stock" : "Out of Stock"}</p>
-            <h2>{product.product.price}$</h2>
-
-            {product.product.quantity > 0 && (
-              <TextField
-                type="number"
-                label="Quantity"
-                value={qty}
-                onChange={handleQtyChange}
-                variant="outlined"
-                error={!!inputError}
-                helperText={inputError}
-              />
-            )}
-
-            <Button
-              variant="contained"
-              type="button"
-              onClick={addToCartHandler}
+      <ClientLayout>
+        {isLoading ? (
+          <Loader />
+        ) : isError ? (
+          <Message variant="danger">{isError?.data?.message}</Message>
+        ) : (
+          <>
+            <Link
+              component={RouterLink}
+              color="primary"
+              to="/"
+              className="goBack"
             >
-              ADD TO CART
-            </Button>
+              GO BACK
+            </Link>
 
-            <div>
-              <h3>Nutrition Fact</h3>
-              <div>{product.product.Nutrition_Fact}</div>
+            <div className="productName">{product.product.name}</div>
+            <div className="product-container">
+              <Grid container>
+                {product.product.photos &&
+                  product.product.photos.length > 0 && (
+                    <Card>
+                      <CardMedia
+                        component="img"
+                        alt={product.product.name}
+                        className="image-detail"
+                        width="361"
+                        height="352"
+                        image={product.product.photos[0].url}
+                      />
+                    </Card>
+                  )}
+              </Grid>
             </div>
+            <div className="product-detail">
+              <div className="inStock">
+                {product.product.quantity > 0 ? "In Stock" : "Out of Stock"}
+              </div>
+              <div className="productPrice">{product.product.price}$</div>
 
-            <div>
-              <h3>Description</h3>
-              <div>{product.product.description}</div>
+              {product.product.quantity > 0 && (
+                <TextField
+                  type="number"
+                  label="Quantity"
+                  value={qty}
+                  onChange={handleQtyChange}
+                  variant="outlined"
+                  error={!!inputError}
+                  helperText={inputError}
+                />
+              )}
+
+              <Button
+                variant="contained"
+                className="btn"
+                style={{
+                  backgroundColor: "#82B440",
+                  width: "100%",
+                  marginBottom: "16px",
+                }}
+                type="button"
+                onClick={addToCartHandler}
+              >
+                ADD TO CART
+              </Button>
+
+              <div className="detailInfo">
+                <div>
+                  <h3>Nutrition Fact</h3>
+                  <div>{product.product.Nutrition_Fact}</div>
+                </div>
+
+                <div>
+                  <h3>Description</h3>
+                  <div>{product.product.description}</div>
+                </div>
+              </div>
             </div>
-          </div>
-        </>
-      )}
+          </>
+        )}
+      </ClientLayout>
     </>
   );
 };

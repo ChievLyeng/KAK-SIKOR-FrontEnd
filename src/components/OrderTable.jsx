@@ -77,6 +77,8 @@ export default function ProductTable() {
   });
   
 
+  console.log("order", orders);
+
   useEffect(() => {
     dispatch(fetchProducts());
     dispatch(fetchOrder());

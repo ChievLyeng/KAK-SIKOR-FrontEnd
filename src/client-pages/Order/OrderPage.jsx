@@ -13,13 +13,20 @@ import { PayPalButtons, usePayPalScriptReducer } from "@paypal/react-paypal-js";
 
 const OrderScreen = () => {
   const { id: orderId } = useParams();
-
   const {
     data: order,
     refetch,
     isLoading,
     isError,
   } = useGetOrderDetailsQuery(orderId);
+
+  console.log(order);
+
+  const Items = order?.orderItems;
+
+  console.log("Items", Items);
+
+  // console.log("qty", order.orderItems[0].qty);
 
   const [payOrder, { isLoading: loadingPay }] = usePayOrderMutation();
 
@@ -77,6 +84,10 @@ const OrderScreen = () => {
     });
   };
 
+  // const calculateTotalQuantity = (Items) => {
+  //   return Items.reduce((total, item) => total + item.qty, 0);
+  // };
+
   return isLoading ? (
     <Loader />
   ) : isError ? (
@@ -118,6 +129,7 @@ const OrderScreen = () => {
           <div>TaxPrice : ${order.taxPrice}</div>
           <div>TotalPrice : ${order.totalPrice}</div>
         </div>
+
         <div>
           {!order.isPaid && (
             <>

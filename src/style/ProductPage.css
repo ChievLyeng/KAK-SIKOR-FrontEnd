@@ -1,9 +1,38 @@
-.image-detail {
-  width: 250px;
-  height: 250px;
+.product-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.goBack {
+  padding: 16px;
+}
+
+.productName {
+  font-weight: bold;
+  font-size: 20px;
+  text-align: left;
+  padding: 16px;
 }
 
 .product-detail {
+  padding: 16px;
   display: flex;
   flex-direction: column;
+}
+
+.inStock {
+  color: #94c13c;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.productPrice {
+  font-size: 32px;
+}
+
+.detailInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
 }
