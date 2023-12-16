@@ -1,6 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
@@ -12,8 +11,6 @@ import Button from "@mui/material/Button";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { styled } from "@mui/material/styles";
 import { updateUserById } from "../store/thunks/authApi";
-import * as React from 'react';
-import Alert from '@mui/material/Alert';
 import { Snackbar } from "@mui/material";
 import "../style/MyAccount.css";
 
@@ -37,18 +34,16 @@ const AccountInformation = () => {
   const [lastName, setLastName] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
-  const [updatesuccess,setUpdateSuccess] = useState(false);
-  const user = JSON.parse(localStorage.getItem("user"))
+  const [updatesuccess, setUpdateSuccess] = useState(false);
+  const user = JSON.parse(localStorage.getItem("user"));
   const userId = user._id || "";
-  const token = JSON.parse(localStorage.getItem("token"))
+  const token = JSON.parse(localStorage.getItem("token"));
 
   useEffect(() => {
-
     setFirstName(user?.firstName || "");
     setLastName(user?.lastName || "");
     setEmail(user?.email || "");
     setPhone(user?.phoneNumber || "");
-    
   }, []);
 
   const handleGenderChange = (event) => {
@@ -60,27 +55,21 @@ const AccountInformation = () => {
     console.log("update click!");
 
     try {
-       const updatedData = await updateUserById(
-        {
-          userId,
-          firstName,
-          lastName,
-          phone,
-          gender: selectedGender,
-          token,
-        },
+      const updatedData = await updateUserById({
+        userId,
+        firstName,
+        lastName,
+        phone,
+        gender: selectedGender,
+        token,
+      });
 
-      );
-      
-      if(updatedData){
-        localStorage.setItem("user",JSON.stringify(updatedData?.updatedUser))
-        setUpdateSuccess(true)
-        
+      if (updatedData) {
+        localStorage.setItem("user", JSON.stringify(updatedData?.updatedUser));
+        setUpdateSuccess(true);
       }
 
-      console.log(updatedData)
-      
-
+      console.log(updatedData);
     } catch (error) {
       // Handle error
       console.error("Error updating profile:", error);
@@ -89,8 +78,6 @@ const AccountInformation = () => {
 
   return (
     <>
-    
-
       <form onSubmit={handleSubmit}>
         <Grid container columns={16} gap={10} className="container-all-grid">
           {/* profile */}
@@ -226,19 +213,11 @@ const AccountInformation = () => {
         </Grid>
       </form>
       <Snackbar
-          open={updatesuccess}
-          autoHideDuration={3000}
-          onClose={() => setUpdateSuccess(false)}
-          message="Update successfully!"
-        />
-      {/* <Stack sx={{ width: '100%' }} spacing={2}
-      open = {updatesuccess}
-      onClose={()=> setUpdateSuccess(false)}
-      >
-      <Alert variant="outlined" severity="success">
-        Update Successfully!
-      </Alert>
-    </Stack> */}
+        open={updatesuccess}
+        autoHideDuration={3000}
+        onClose={() => setUpdateSuccess(false)}
+        message="Update successfully!"
+      />
     </>
   );
 };
