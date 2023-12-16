@@ -40,7 +40,7 @@ function App() {
         <PayPalScriptProvider deferLoading={true}>
           <Router>
             <Routes>
-              <Route path="/login" element={<Login />} />
+              {/* <Route path="/login" element={<Login />} /> */}
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/myaccount" element={<MyAccount />} />
               <Route path="/productsList" element={<ProductList />} />

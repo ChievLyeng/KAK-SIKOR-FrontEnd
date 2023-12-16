@@ -23,7 +23,6 @@ function SummaryData() {
     return state.reviews.data;
   });
   const orders = useSelector((state) => {
-    console.log(state)
     return state.orders?.data?.data;
   });
   const Products = products.products;

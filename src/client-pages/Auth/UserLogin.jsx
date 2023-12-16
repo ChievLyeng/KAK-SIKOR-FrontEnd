@@ -88,7 +88,9 @@ function UserLogin() {
 
         if (userData) {
           dispatch(setCredentials({ token, refreshToken, userData }));
-          navigate("/profile");
+          navigate("/myaccount");
+          localStorage.setItem('user',JSON.stringify(userData.user))
+          localStorage.setItem('token',JSON.stringify(token))
         } else {
           console.error("Invalid user data structure:", data);
         }

@@ -3,6 +3,7 @@ import Container from "@mui/material/Container";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchSupplierById } from "../../store";
+import { getProductBySupplier } from "../../store";
 import { useParams } from "react-router-dom";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
@@ -27,13 +28,28 @@ function SupplierDetail() {
     // console.log(state);
     return state.users?.supplier?.data;
   });
+  
+  const supplierProduct = useSelector((state) => {
+    return state.products?.supplierProduct
+  })
+  console.log(supplierProduct)
 
   const supplierData = supplier ? supplier : "";
   const supplierAddress = supplierData.address ? supplierData.address : "";
 
   useEffect(() => {
     dispatch(fetchSupplierById(params.id));
+    dispatch(getProductBySupplier(params.id));
   }, [dispatch, params.id]);
+
+  const timeConversion = (time) => {
+    const convertedTime = new Intl.DateTimeFormat("en-US", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+    }) .format(new Date(time))
+    return convertedTime
+  }
 
   return (
     <Layout>
@@ -94,14 +110,14 @@ function SupplierDetail() {
                   <div className="communication-item">
                     <AgricultureIcon className="communication-icon" />
                     <Typography variant="h5" component="div">
-                      {supplierData.farmName}
+                      {supplierData?.farmName}
                     </Typography>
                   </div>
 
                   <div className="communication-item">
                     <OfflinePinIcon className="communication-icon" />
                     <Typography variant="h5" component="div">
-                      {supplierData.createdAt}
+                      {timeConversion(supplierData.createdAt)}
                     </Typography>
                   </div>
                 </Grid>
@@ -112,7 +128,7 @@ function SupplierDetail() {
             <Box className="userinfo-box total-info-box">
               <OutlinedCard
                 title="Total Product"
-                value="2"
+                value={supplierProduct?.result}
                 icon={<Inventory2Icon />}
               />
 

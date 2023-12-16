@@ -61,10 +61,9 @@ export const logOut = async (
 
 export const updateUserById = async (
   { userId, firstName, lastName, phone, gender, token },
-  dispatch
 ) => {
-  dispatch(updateUserStart());
   try {
+     
     const response = await axios.put(
       UPDATE_USER(userId),
       {
@@ -79,8 +78,8 @@ export const updateUserById = async (
         },
       }
     );
-    dispatch(updateUserSuccess(response.data));
+    return response.data
   } catch (error) {
-    dispatch(updateUserFailed());
+      return error
   }
 };

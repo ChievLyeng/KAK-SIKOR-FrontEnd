@@ -12,6 +12,9 @@ import Button from "@mui/material/Button";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { styled } from "@mui/material/styles";
 import { updateUserById } from "../store/thunks/authApi";
+import * as React from 'react';
+import Alert from '@mui/material/Alert';
+import { Snackbar } from "@mui/material";
 import "../style/MyAccount.css";
 
 const VisuallyHiddenInput = styled("input")({
@@ -34,19 +37,18 @@ const AccountInformation = () => {
   const [lastName, setLastName] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
-  const dispatch = useDispatch();
-  const user = useSelector((state) => {
-    console.log("state : ", state);
-    return state.auth?.login?.currentUser;
-  });
-  const userId = user.data?.user?._id || "";
-  const token = user.token;
+  const [updatesuccess,setUpdateSuccess] = useState(false);
+  const user = JSON.parse(localStorage.getItem("user"))
+  const userId = user._id || "";
+  const token = JSON.parse(localStorage.getItem("token"))
 
   useEffect(() => {
-    setFirstName(user?.data?.user?.firstName || "");
-    setLastName(user?.data?.user?.lastName || "");
-    setEmail(user?.data?.user?.email || "");
-    setPhone(user?.data?.user?.phoneNumber || "");
+
+    setFirstName(user?.firstName || "");
+    setLastName(user?.lastName || "");
+    setEmail(user?.email || "");
+    setPhone(user?.phoneNumber || "");
+    
   }, []);
 
   const handleGenderChange = (event) => {
@@ -56,10 +58,9 @@ const AccountInformation = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("update click!");
-    // console.log(token)
 
     try {
-      updateUserById(
+       const updatedData = await updateUserById(
         {
           userId,
           firstName,
@@ -68,9 +69,18 @@ const AccountInformation = () => {
           gender: selectedGender,
           token,
         },
-        dispatch
+
       );
-      // Optionally, you can dispatch an action to update local state if needed
+      
+      if(updatedData){
+        localStorage.setItem("user",JSON.stringify(updatedData?.updatedUser))
+        setUpdateSuccess(true)
+        
+      }
+
+      console.log(updatedData)
+      
+
     } catch (error) {
       // Handle error
       console.error("Error updating profile:", error);
@@ -79,6 +89,8 @@ const AccountInformation = () => {
 
   return (
     <>
+    
+
       <form onSubmit={handleSubmit}>
         <Grid container columns={16} gap={10} className="container-all-grid">
           {/* profile */}
@@ -213,6 +225,20 @@ const AccountInformation = () => {
           </Grid>
         </Grid>
       </form>
+      <Snackbar
+          open={updatesuccess}
+          autoHideDuration={3000}
+          onClose={() => setUpdateSuccess(false)}
+          message="Update successfully!"
+        />
+      {/* <Stack sx={{ width: '100%' }} spacing={2}
+      open = {updatesuccess}
+      onClose={()=> setUpdateSuccess(false)}
+      >
+      <Alert variant="outlined" severity="success">
+        Update Successfully!
+      </Alert>
+    </Stack> */}
     </>
   );
 };

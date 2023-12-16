@@ -4,6 +4,9 @@ import axios from "axios";
 axios.defaults.withCredentials = true;
 
 // product
+export const GET_PROUDUCT_BY_SUPPLIER = (id) =>
+  `${import.meta.env.VITE_BASE_URL}/api/v1/products/supplier/${id}`;
+
 export const GET_ALL_PRODUCT = `${
   import.meta.env.VITE_BASE_URL
 }/api/v1/products`;
@@ -32,6 +35,19 @@ export const updateProductById = createAsyncThunk(
     }
   }
 );
+
+export const getProductBySupplier = createAsyncThunk(
+  "products/bysupplier",
+  async (id) => {
+    try{
+      const response = await axios.get(GET_PROUDUCT_BY_SUPPLIER(id));
+      return response.data;
+    }catch(error) {
+      return error.response.data
+    }
+  }
+)
+
 
 export const fetchProducts = createAsyncThunk("product/fetch", async () => {
   const response = await axios.get(GET_ALL_PRODUCT);

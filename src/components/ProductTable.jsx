@@ -130,12 +130,12 @@ export default function ProductTable() {
                         style={{ width: "50px", height: "50px" }}
                       />
                     </TableCell>
-                    <TableCell align="left">{product._id}</TableCell>
-                    <TableCell align="left">{product.name}</TableCell>
-                    <TableCell>{product.category.name}</TableCell>
-                    <TableCell align="left">{product.price}</TableCell>
-                    <TableCell align="left">{product.quantity}</TableCell>
-                    <TableCell>{product.Supplier?.email}</TableCell>
+                    <TableCell align="left">{product?._id}</TableCell>
+                    <TableCell align="left">{product?.name}</TableCell>
+                    <TableCell>{product?.category?.name}</TableCell>
+                    <TableCell align="left">{product?.price}</TableCell>
+                    <TableCell align="left">{product?.quantity}</TableCell>
+                    <TableCell>{`${product.Supplier?.firstName} ${product.Supplier?.lastName} `}</TableCell>
                     <TableCell>
                       <div className="action-icon">
                         <Link to={`/product-detail/${product._id}`}>

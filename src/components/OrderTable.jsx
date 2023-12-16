@@ -58,6 +58,19 @@ const columns = [
 ];
 
 export default function ProductTable() {
+
+  const timeConversion = (time) => {
+    const convertedTime = new Intl.DateTimeFormat("en-US", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+      hour: "numeric",
+      minute: "numeric",
+    }) .format(new Date(time))
+
+    return convertedTime
+  }
+
   const dispatch = useDispatch();
   const orders = useSelector((state) => {
     return state.orders?.data?.data?.orders;
@@ -172,13 +185,7 @@ export default function ProductTable() {
                       </TableCell>
 
                       <TableCell align="left">
-                        {new Intl.DateTimeFormat("en-US", {
-                          year: "numeric",
-                          month: "short",
-                          day: "numeric",
-                          hour: "numeric",
-                          minute: "numeric",
-                        }).format(new Date(order.createdAt))}
+                        {timeConversion(order.createdAt)}
                       </TableCell>
                       <TableCell align="left">
                         <Link to="/" className="link">
