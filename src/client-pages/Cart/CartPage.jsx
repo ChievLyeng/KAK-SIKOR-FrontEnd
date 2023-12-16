@@ -14,6 +14,7 @@ import {
 import { Delete as DeleteIcon } from "@material-ui/icons";
 import { removeFromCart } from "../../store/slice/cartSlice";
 import Message from "../../components/Message";
+import ClientLayout from "../../components/common/ClientLayout";
 import "../../style/Cart.css";
 
 const CartPage = () => {
@@ -33,83 +34,94 @@ const CartPage = () => {
   };
 
   return (
-    <Grid container spacing={3}>
-      <Grid item md={8}>
-        <Typography variant="h4" style={{ marginBottom: "20px" }}>
-          Shopping Cart
-        </Typography>
-        {cartItems.length === 0 ? (
-          <Message>
-            Your cart is empty <Link to="/">Go Back</Link>
-          </Message>
-        ) : (
-          <Card variant="outlined">
-            <List>
-              {cartItems.map((item) => (
-                <ListItem key={item._id}>
-                  <div className="cart-proceed">
-                    <div>
-                      <Grid container spacing={2}>
-                        <Grid item md={2}>
-                          <img
-                            src={item.photos[0].url}
-                            alt={item.name}
-                            className="cart-image"
-                          />
-                        </Grid>
-                        <Grid item md={3}>
-                          <Link to={`/product/${item._id}`}>{item.name}</Link>
-                          <Typography variant="body2">{item.qty}qty</Typography>
-                        </Grid>
-                      </Grid>
-                    </div>
-                    <div className="cart-price">
-                      <div>
-                        <ListItemSecondaryAction>
-                          <IconButton
-                            edge="end"
-                            aria-label="delete"
-                            onClick={() => removeFromCartHandler(item._id)}
-                          >
-                            <DeleteIcon />
-                          </IconButton>
-                        </ListItemSecondaryAction>
+    <>
+      <ClientLayout>
+        <Grid container className="container">
+          <Grid item md={8}>
+            <Typography variant="h4" style={{ marginBottom: "20px" }}>
+              Shopping Cart
+            </Typography>
+            {cartItems.length === 0 ? (
+              <Message>
+                Your cart is empty <Link to="/">Go Back</Link>
+              </Message>
+            ) : (
+              <Card variant="outlined">
+                <List>
+                  {cartItems.map((item) => (
+                    <ListItem key={item._id}>
+                      <div className="cart-proceed">
+                        <div>
+                          <Grid container spacing={2}>
+                            <Grid item md={2}>
+                              <img
+                                src={item.photos[0].url}
+                                alt={item.name}
+                                className="cart-image"
+                              />
+                            </Grid>
+                            <Grid item md={3}>
+                              <Link to={`/product/${item._id}`}>
+                                {item.name}
+                              </Link>
+                              <Typography variant="body2">
+                                {item.qty}qty
+                              </Typography>
+                            </Grid>
+                          </Grid>
+                        </div>
+                        <div className="cart-price">
+                          <div>
+                            <ListItemSecondaryAction>
+                              <IconButton
+                                edge="end"
+                                aria-label="delete"
+                                onClick={() => removeFromCartHandler(item._id)}
+                              >
+                                <DeleteIcon />
+                              </IconButton>
+                            </ListItemSecondaryAction>
+                          </div>
+                          <div>
+                            <Typography variant="body2">
+                              ${item.price}/Kg
+                            </Typography>
+                          </div>
+                        </div>
                       </div>
-                      <div>
-                        <Typography variant="body2">
-                          ${item.price}/Kg
-                        </Typography>
-                      </div>
-                    </div>
-                  </div>
-                </ListItem>
-              ))}
-            </List>
-          </Card>
-        )}
-      </Grid>
-      <div>
-        <Typography variant="h6">Order Summary</Typography>
-        <div className="order-summary">
+                    </ListItem>
+                  ))}
+                </List>
+              </Card>
+            )}
+          </Grid>
           <div>
-            <div>Subtotal: ${cart.itemsPrice}</div>
-            <div>ShippingPrice: ${cart.shippingPrice}</div>
-            <div>TaxPrice: ${cart.taxPrice}</div>
-            <div>TotalPrice: ${cart.totalPrice}</div>
+            <Typography variant="h6" className="orderTitle">
+              ORDER SUMMARY
+            </Typography>
+            <div className="orderSummary">
+              <div>Subtotal: ${cart.itemsPrice}</div>
+              <div>ShippingPrice: ${cart.shippingPrice}</div>
+              <div>TaxPrice: ${cart.taxPrice}</div>
+              <div>TotalPrice: ${cart.totalPrice}</div>
+              <div>
+                <Button
+                  variant="contained"
+                  style={{
+                    backgroundColor: "#82B440",
+                    width: "361px",
+                  }}
+                  disabled={cartItems.length === 0}
+                  onClick={checkoutHandler}
+                >
+                  Proceed To Checkout
+                </Button>
+              </div>
+            </div>
           </div>
-          <div>
-            <Button
-              variant="contained"
-              color="primary"
-              disabled={cartItems.length === 0}
-              onClick={checkoutHandler}
-            >
-              Proceed To Checkout
-            </Button>
-          </div>
-        </div>
-      </div>
-    </Grid>
+        </Grid>
+      </ClientLayout>
+    </>
   );
 };
 

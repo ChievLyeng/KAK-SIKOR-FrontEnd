@@ -20,7 +20,6 @@ const PlaceOrderPage = () => {
 
   console.log(cart.cartItems);
   console.log("cart", cart);
-  console.log("quantity", cart?.cartItems[0].quantity);
 
   useEffect(() => {
     if (!cart.shippingAddress.address) {
@@ -41,6 +40,7 @@ const PlaceOrderPage = () => {
         taxPrice: cart.taxPrice,
         totalPrice: cart.totalPrice,
       }).unwrap();
+
       dispatch(clearCartItems());
       navigate(`/order/${res._id}`);
     } catch (err) {

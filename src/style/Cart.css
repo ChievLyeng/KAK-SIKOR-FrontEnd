@@ -11,3 +11,17 @@
   flex-direction: column;
   justify-content: space-between;
 }
+
+.container {
+  padding: 16px;
+}
+
+.orderTitle {
+  color: #94c13c;
+}
+
+.orderSummary {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}

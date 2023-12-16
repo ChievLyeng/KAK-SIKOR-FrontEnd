@@ -5,6 +5,7 @@ import { TextField, Button } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { saveShippingAddress } from "../../store/slice/cartSlice";
+import ClientLayout from "../../components/common/ClientLayout";
 import "../../style/ShippingPage.css";
 
 const ShippingScreen = () => {
@@ -24,35 +25,50 @@ const ShippingScreen = () => {
   };
 
   return (
-    <div>
-      <CheckoutSteps step1 step2 />
-
-      <h2>Shipping</h2>
-      <form onSubmit={submitHandler} className="shipping">
+    <>
+      <ClientLayout>
         <div>
-          <TextField
-            type="string"
-            label="Address"
-            variant="outlined"
-            value={address}
-            onChange={(e) => setAddress(e.target.value)}
-          />
-        </div>
-        <div>
-          <TextField
-            type="string"
-            label="City"
-            variant="outlined"
-            value={city}
-            onChange={(e) => setCity(e.target.value)}
-          />
-        </div>
+          <CheckoutSteps step1 step2 />
+          <div className="shipping">
+            <form onSubmit={submitHandler} className="shipping">
+              <h2>Shipping</h2>
+              <div>
+                <TextField
+                  type="string"
+                  label="Address"
+                  variant="outlined"
+                  value={address}
+                  onChange={(e) => setAddress(e.target.value)}
+                  style={{ width: "100%" }}
+                />
+              </div>
+              <div>
+                <TextField
+                  type="string"
+                  label="City"
+                  variant="outlined"
+                  value={city}
+                  onChange={(e) => setCity(e.target.value)}
+                  style={{ width: "100%" }}
+                />
+              </div>
 
-        <Button variant="contained" type="submit" color="primary">
-          Continue
-        </Button>
-      </form>
-    </div>
+              <Button
+                variant="contained"
+                type="submit"
+                style={{
+                  backgroundColor: "#82B440",
+                  width: "100%",
+                  marginBottom: "16px",
+                }}
+              >
+                Continue
+              </Button>
+            </form>
+          </div>
+        </div>
+      </ClientLayout>
+    </>
   );
 };
 

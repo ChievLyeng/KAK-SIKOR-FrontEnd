@@ -10,12 +10,14 @@ export const ordersApiSlice = apiSlice.injectEndpoints({
         method: "POST",
         body: { ...order },
       }),
+      invalidatesTags: ["Order", "Product"],
     }),
     getAllorders: builder.query({
       query: () => ({
         url: ORDERS_URL,
       }),
       keepUnusedDataFor: 5,
+      providesTags: ["Order"],
     }),
     getOrderDetails: builder.query({
       query: (orderId) => ({
@@ -26,7 +28,7 @@ export const ordersApiSlice = apiSlice.injectEndpoints({
     payOrder: builder.mutation({
       query: ({ orderId, details }) => ({
         url: `${ORDERS_URL}/${orderId}/pay`,
-        method: "PUT",
+        method: "PATCH",
         body: { ...details },
       }),
     }),
