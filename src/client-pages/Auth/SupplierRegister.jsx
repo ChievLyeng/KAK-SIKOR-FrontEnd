@@ -287,16 +287,14 @@ function SupplierRegister() {
             fullWidth
             variant="outlined"
             margin="normal"
-            sx={styles.textField}
-          >
+            sx={styles.textField}>
             <InputLabel id="gender-label">Gender</InputLabel>
             <Select
               labelId="gender-label"
               label="Gender"
               name="gender"
               value={formData.gender}
-              onChange={handleChange}
-            >
+              onChange={handleChange}>
               <MenuItem value="Male">Male</MenuItem>
               <MenuItem value="Female">Female</MenuItem>
               <MenuItem value="Other">Other</MenuItem>
@@ -408,16 +406,14 @@ function SupplierRegister() {
             fullWidth
             variant="outlined"
             margin="normal"
-            sx={styles.textField}
-          >
+            sx={styles.textField}>
             <InputLabel id="organic-label">Is Organic</InputLabel>
             <Select
               labelId="organic-label"
               label="Is Organic"
               name="isOrganic"
               value={formData.isOrganic}
-              onChange={handleChange}
-            >
+              onChange={handleChange}>
               <MenuItem value={false}>No</MenuItem>
               <MenuItem value={true}>Yes</MenuItem>
             </Select>
@@ -457,8 +453,7 @@ function SupplierRegister() {
                 color={passwordValidation[key] ? "green" : "red"}
                 sx={{
                   display: "flex",
-                }}
-              >
+                }}>
                 {passwordValidation[key] ? "✓" : "✗"} {key}
               </Typography>
             ))}
@@ -498,8 +493,7 @@ function SupplierRegister() {
           type="submit"
           variant="contained"
           sx={{ backgroundColor: "#82B440" }}
-          fullWidth
-        >
+          fullWidth>
           Register
         </Button>
       </form>

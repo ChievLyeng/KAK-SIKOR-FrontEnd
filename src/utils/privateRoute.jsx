@@ -11,7 +11,7 @@ const PrivateRoutes = () => {
       <Outlet />
     </CookiesProvider>
   ) : (
-    <Navigate to="/login" />
+    <Navigate to="/userlogin" />
   );
 };
 

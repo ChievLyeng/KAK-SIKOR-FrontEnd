@@ -20,7 +20,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import FormContainer from "../../components/FormContainer";
 
-const UserRegister = () => {
+function UserRegister() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [password, setPassword] = useState("");
@@ -150,13 +150,12 @@ const UserRegister = () => {
     : "";
 
   return (
-    <FormContainer>
-      <form onSubmit={submitHandler} className="form-container">
+    <form onSubmit={submitHandler} className="form-container">
+      <FormContainer>
         <Typography
           variant="h4"
           className="title"
-          sx={{ fontWeight: "bolder", textAlign: "center", margin: "24px" }}
-        >
+          sx={{ fontWeight: "bolder", textAlign: "center", margin: "24px" }}>
           Sign up
         </Typography>
 
@@ -172,9 +171,7 @@ const UserRegister = () => {
             variant="outlined"
             helperText={errors.firstName || "*Required"}
             error={Boolean(errors.firstName)}
-            sx={styles.textField}
           />
-
           <TextField
             fullWidth
             label="Last Name"
@@ -186,7 +183,6 @@ const UserRegister = () => {
             variant="outlined"
             helperText={errors.lastName || "*Required"}
             error={Boolean(errors.lastName)}
-            sx={styles.textField}
           />
         </div>
 
@@ -201,7 +197,6 @@ const UserRegister = () => {
           variant="outlined"
           helperText={errors.username || "*Required"}
           error={Boolean(errors.username)}
-          sx={styles.textField}
         />
 
         <TextField
@@ -215,7 +210,6 @@ const UserRegister = () => {
           variant="outlined"
           helperText={errors.email || "*Required"}
           error={Boolean(errors.email)}
-          sx={styles.textField}
         />
 
         <TextField
@@ -229,7 +223,6 @@ const UserRegister = () => {
           variant="outlined"
           helperText={errors.phoneNumber || "*Required"}
           error={Boolean(errors.phoneNumber)}
-          sx={styles.textField}
         />
 
         <div style={{ display: "flex", gap: "16px" }}>
@@ -242,23 +235,20 @@ const UserRegister = () => {
             onChange={handleChange}
             margin="normal"
             variant="outlined"
-            sx={styles.textField}
             InputLabelProps={{
               shrink: true,
             }}
             helperText={errors.birthDate || "Optional"}
             error={Boolean(errors.birthDate)}
           />
-
-          <FormControl fullWidth variant="outlined" sx={styles.textField}>
+          <FormControl fullWidth variant="outlined" margin="normal">
             <InputLabel id="gender-label">Gender</InputLabel>
             <Select
               labelId="gender-label"
               label="Gender"
               name="gender"
               value={formData.gender}
-              onChange={handleChange}
-            >
+              onChange={handleChange}>
               <MenuItem value="Male">Male</MenuItem>
               <MenuItem value="Female">Female</MenuItem>
               <MenuItem value="Other">Other</MenuItem>
@@ -278,9 +268,7 @@ const UserRegister = () => {
             variant="outlined"
             helperText="Optional"
             error={Boolean(errors.address?.city)}
-            sx={styles.textField}
           />
-
           <TextField
             fullWidth
             label="Home Number"
@@ -292,10 +280,8 @@ const UserRegister = () => {
             variant="outlined"
             helperText="Optional"
             error={Boolean(errors.address?.homeNumber)}
-            sx={styles.textField}
           />
         </div>
-
         <div style={{ display: "flex", gap: "16px" }}>
           <TextField
             fullWidth
@@ -308,9 +294,7 @@ const UserRegister = () => {
             variant="outlined"
             helperText="Optional"
             error={Boolean(errors.address?.street)}
-            sx={styles.textField}
           />
-
           <TextField
             fullWidth
             label="Commune"
@@ -322,10 +306,8 @@ const UserRegister = () => {
             variant="outlined"
             helperText="Optional"
             error={Boolean(errors.address?.commune)}
-            sx={styles.textField}
           />
         </div>
-
         <div style={{ display: "flex", gap: "16px" }}>
           <TextField
             fullWidth
@@ -338,9 +320,7 @@ const UserRegister = () => {
             variant="outlined"
             helperText="Optional"
             error={Boolean(errors.address?.district)}
-            sx={styles.textField}
           />
-
           <TextField
             fullWidth
             label="Village"
@@ -352,95 +332,43 @@ const UserRegister = () => {
             variant="outlined"
             helperText="Optional"
             error={Boolean(errors.address?.village)}
-            sx={styles.textField}
           />
         </div>
-
-        <FormControl fullWidth variant="outlined" sx={styles.textField}>
-          <InputLabel htmlFor="outlined-adornment-password">
-            New Password
-          </InputLabel>
-          <OutlinedInput
-            id="outlined-adornment-password"
-            type={showPassword ? "text" : "password"}
-            endAdornment={
-              <InputAdornment position="end">
-                <IconButton
-                  aria-label="toggle password visibility"
-                  onClick={handleClickShowPassword}
-                  onMouseDown={handleMouseDownPassword}
-                  edge="end"
-                >
-                  {showPassword ? <VisibilityOff /> : <Visibility />}
-                </IconButton>
-              </InputAdornment>
-            }
-            label="New Password"
-            value={password}
-            onChange={(e) => {
-              handleInputChange();
-              setPassword(e.target.value);
-            }}
-          />
-          <FormHelperText id="outlined-adornment-password-helper-text">
-            *Required
-          </FormHelperText>
-        </FormControl>
-
-        <FormControl fullWidth variant="outlined" sx={styles.textField}>
-          <InputLabel htmlFor="outlined-adornment-confirm-password">
-            Confirm Password
-          </InputLabel>
-          <OutlinedInput
-            id="outlined-adornment-confirm-password"
-            type={showPassword ? "text" : "password"}
-            endAdornment={
-              <InputAdornment position="end">
-                <IconButton
-                  aria-label="toggle password visibility"
-                  onClick={handleClickShowPassword}
-                  onMouseDown={handleMouseDownPassword}
-                  edge="end"
-                >
-                  {showPassword ? <VisibilityOff /> : <Visibility />}
-                </IconButton>
-              </InputAdornment>
-            }
-            label="Confirm Password"
-            value={confirmPassword}
-            onChange={(e) => {
-              handleInputChange();
-              setConfirmPassword(e.target.value);
-            }}
-          />
-          <FormHelperText id="outlined-adornment-confirm-password-helper-text">
-            *Required
-          </FormHelperText>
-        </FormControl>
+        <TextField
+          fullWidth
+          label="Password"
+          type="password"
+          name="password"
+          value={formData.password}
+          onChange={handleChange}
+          margin="normal"
+          variant="outlined"
+          helperText={errors.password || "*Required"}
+          error={Boolean(errors.password)}
+        />
+        <TextField
+          fullWidth
+          label="Confirm Password"
+          type="password"
+          name="confirmPassword"
+          value={formData.confirmPassword}
+          onChange={handleChange}
+          margin="normal"
+          variant="outlined"
+          helperText={errors.confirmPassword || "*Required"}
+          error={Boolean(errors.confirmPassword)}
+        />
 
         <Button
           type="submit"
           variant="contained"
           fullWidth
-          sx={{ backgroundColor: "#82B440", margin: "24px 0" }}
-        >
+          sx={{ backgroundColor: "#82B440", margin: "24px 0" }}>
           Register
         </Button>
-      </form>
-    </FormContainer>
+      </FormContainer>
+    </form>
   );
-};
-
-const styles = {
-  textField: {
-    margin: "15px 0",
-    "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
-      borderColor: "#82B440",
-    },
-    "& .MuiInputLabel-root.Mui-focused": {
-      color: "#82B440",
-    },
-  },
-};
+}
 
 export default UserRegister;

@@ -28,6 +28,7 @@ import ForgotPassword from "./client-pages/Auth/ForgotPassword";
 import Verification from "./client-pages/Auth/VerifyOTP";
 import ResetPassword from "./client-pages/Auth/ResetNewPassword";
 import UserRegister from "./client-pages/Auth/UserRegister";
+import PrivateRoutes from "./utils/privateRoute";
 
 //const isAdminRoute = window.location.pathname.startsWith("/dashboard");
 
@@ -58,10 +59,18 @@ function App() {
               <Route path="/userlogin" element={<UserLogin />} />
               <Route path="/supplier-register" element={<SupplierRegister />} />
               <Route path="/user-register" element={<UserRegister />} />
-              <Route path="/profile" element={<UserProfile />} />
+              {/* <Route path="/profile" element={<UserProfile />} /> */}
               <Route path="/forgot-password" element={<ForgotPassword />} />
               <Route path="/verify" element={<Verification />} />
               <Route path="/reset-password" element={<ResetPassword />} />
+              <Route
+                path="/profile"
+                element={
+                  <PrivateRoutes>
+                    <UserProfile />
+                  </PrivateRoutes>
+                }
+              />
             </Routes>
           </Router>
         </PayPalScriptProvider>

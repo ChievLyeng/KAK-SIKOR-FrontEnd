@@ -17,7 +17,6 @@ import Loader from "../../components/Loader";
 import { setCredentials } from "../../store/slice/authV2Slice";
 import { useLoginMutation } from "../../store/slice/userV2Slice";
 import FormContainer from "../../components/FormContainer";
-import GoogleButton from "react-google-button";
 
 function UserLogin() {
   const [email, setEmail] = useState("");
@@ -46,7 +45,8 @@ function UserLogin() {
 
   const [login, { isLoading }] = useLoginMutation();
 
-  const { userInfo } = useSelector((state) => state.auth);
+ const { userInfo } = useSelector((state) => state.auth);
+ console.log("UserInfo from Redux state:", userInfo);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -76,6 +76,7 @@ function UserLogin() {
       // Clear error messages when attempting to submit
       setEmailError("");
       setPasswordError("");
+      setErrorMessage(""); // Clear the generic error message
 
       if (!email.trim() && !password.trim()) {
         setEmailError("Username cannot be empty");
@@ -111,13 +112,24 @@ function UserLogin() {
           setEmailError("User not found");
         } else if (error && error.message === "WRONG_PASSWORD") {
           setPasswordError("Wrong password");
+        } else if (error && error.data && error.data.message) {
+          // Display detailed error message from the backend
+          setErrorMessage(error.data.message);
+        } else {
+          // If no detailed message, display a generic message
+          setPasswordError("Server error occurred");
         }
       }
     } catch (err) {
       console.error("Login Error:", err);
-      setPasswordError(
-        err?.data?.message || err.error || "Server error occurred"
-      );
+
+      if (err?.data?.message) {
+        // Display detailed error message from the backend
+        setErrorMessage(err.data.message);
+      } else {
+        // If no detailed message, display a generic message
+        setPasswordError("Server error occurred");
+      }
     }
   };
 
@@ -172,8 +184,7 @@ function UserLogin() {
             "& .MuiInputLabel-root.Mui-focused": {
               color: "#82B440",
             },
-          }}
-        >
+          }}>
           <InputLabel htmlFor="outlined-adornment-password">
             New Password
           </InputLabel>
@@ -186,8 +197,7 @@ function UserLogin() {
                   aria-label="toggle password visibility"
                   onClick={handleClickShowPassword}
                   onMouseDown={handleMouseDownPassword}
-                  edge="end"
-                >
+                  edge="end">
                   {showPassword ? <VisibilityOff /> : <Visibility />}
                 </IconButton>
               </InputAdornment>
@@ -213,8 +223,7 @@ function UserLogin() {
           sx={{
             marginTop: "24px",
             backgroundColor: "#82B440",
-          }}
-        >
+          }}>
           Log in
         </Button>
 
@@ -223,8 +232,7 @@ function UserLogin() {
         </Typography>
 
         <Typography
-          sx={{ textAlign: "center", color: "#a5a5a5", marginBottom: "24px" }}
-        >
+          sx={{ textAlign: "center", color: "#a5a5a5", marginBottom: "24px" }}>
           or Log in with
         </Typography>
 
@@ -237,19 +245,9 @@ function UserLogin() {
             backgroundColor: "white",
             color: "black",
             border: "1px solid black",
-          }}
-        >
+          }}>
           Continue with Google
         </Button>
-        {/* <GoogleButton
-          fullWidth
-          sx={{
-            backgroundColor: "#4285F4", // Change the background color
-            color: "#FFFFFF", // Change the text color
-          }}
-        >
-          Log in with Google
-        </GoogleButton> */}
 
         {isLoading && <Loader />}
 
@@ -257,8 +255,7 @@ function UserLogin() {
           sx={{
             marginTop: "72px",
             textAlign: "center",
-          }}
-        >
+          }}>
           Dont have account? <Link to="/user-register">Sign up</Link>
         </Typography>
       </form>
