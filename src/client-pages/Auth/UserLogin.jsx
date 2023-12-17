@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
   Button,
@@ -10,6 +10,7 @@ import {
   InputAdornment,
   FormHelperText,
   IconButton,
+  Alert,
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useDispatch, useSelector } from "react-redux";
@@ -25,18 +26,16 @@ function UserLogin() {
   const [passwordError, setPasswordError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
+  const [backendError, setBackendError] = useState("");
   const { state } = useLocation();
   const registrationSuccess =
     localStorage.getItem("registrationSuccess") === "true";
 
   const clearRegistrationSuccess = () => {
-    // Clear the registration success status in localStorage
     localStorage.removeItem("registrationSuccess");
   };
 
   useEffect(() => {
-    // Call the function to clear registration success when the component mounts
     clearRegistrationSuccess();
   }, []);
 
@@ -45,8 +44,8 @@ function UserLogin() {
 
   const [login, { isLoading }] = useLoginMutation();
 
- const { userInfo } = useSelector((state) => state.auth);
- console.log("UserInfo from Redux state:", userInfo);
+  const { userInfo } = useSelector((state) => state.auth);
+  console.log("UserInfo from Redux state:", userInfo);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -56,12 +55,11 @@ function UserLogin() {
 
   const handleInputChange = () => {
     setIsTyping(true);
-    setErrorMessage(""); // Clear the error message
+    setBackendError(""); // Clear the error message
   };
 
   const { search } = useLocation();
   const sp = new URLSearchParams(search);
-  // Set the default redirect path to "/profile" for the login page
   const redirect = sp.get("redirect") || "/profile";
 
   useEffect(() => {
@@ -70,17 +68,18 @@ function UserLogin() {
     }
   }, [userInfo, redirect, navigate]);
 
+  // Inside your component, where you handle form submission
   const submitHandler = async (e) => {
     e.preventDefault();
     try {
-      // Clear error messages when attempting to submit
       setEmailError("");
       setPasswordError("");
-      setErrorMessage(""); // Clear the generic error message
+      setBackendError("");
 
       if (!email.trim() && !password.trim()) {
         setEmailError("Username cannot be empty");
         setPasswordError("Password cannot be empty");
+        setBackendError("Both fields are required");
         return;
       }
 
@@ -113,22 +112,18 @@ function UserLogin() {
         } else if (error && error.message === "WRONG_PASSWORD") {
           setPasswordError("Wrong password");
         } else if (error && error.data && error.data.message) {
-          // Display detailed error message from the backend
-          setErrorMessage(error.data.message);
+          setBackendError(error.data.message);
         } else {
-          // If no detailed message, display a generic message
-          setPasswordError("Server error occurred");
+          setBackendError("Server error occurred");
         }
       }
     } catch (err) {
       console.error("Login Error:", err);
 
       if (err?.data?.message) {
-        // Display detailed error message from the backend
-        setErrorMessage(err.data.message);
+        setBackendError(err.data.message);
       } else {
-        // If no detailed message, display a generic message
-        setPasswordError("Server error occurred");
+        setBackendError("Server error occurred");
       }
     }
   };
@@ -146,6 +141,12 @@ function UserLogin() {
         <Typography sx={{ textAlign: "center", color: "green" }}>
           Account registered successfully! Please log in.
         </Typography>
+      )}
+
+      {backendError && (
+        <Alert severity="error" sx={{ marginTop: "16px" }}>
+          {backendError}
+        </Alert>
       )}
 
       <form onSubmit={submitHandler}>
@@ -186,7 +187,7 @@ function UserLogin() {
             },
           }}>
           <InputLabel htmlFor="outlined-adornment-password">
-            New Password
+            Password
           </InputLabel>
           <OutlinedInput
             id="outlined-adornment-password"
@@ -202,12 +203,13 @@ function UserLogin() {
                 </IconButton>
               </InputAdornment>
             }
-            label="New Password"
+            label="Password"
             value={password}
             onChange={(e) => {
               handleInputChange();
               setPassword(e.target.value);
             }}
+            error={Boolean(passwordError)}
           />
           <FormHelperText id="outlined-adornment-password-helper-text">
             *Required
@@ -227,12 +229,20 @@ function UserLogin() {
           Log in
         </Button>
 
-        <Typography sx={{ textAlign: "right", margin: "45px 0" }}>
+        <Typography
+          sx={{
+            textAlign: "right",
+            margin: "45px 0",
+          }}>
           <Link to="/forgot-password">Forgot Password?</Link>
         </Typography>
 
         <Typography
-          sx={{ textAlign: "center", color: "#a5a5a5", marginBottom: "24px" }}>
+          sx={{
+            textAlign: "center",
+            color: "#a5a5a5",
+            marginBottom: "24px",
+          }}>
           or Log in with
         </Typography>
 
@@ -256,7 +266,7 @@ function UserLogin() {
             marginTop: "72px",
             textAlign: "center",
           }}>
-          Dont have account? <Link to="/user-register">Sign up</Link>
+          Don't have an account? <Link to="/user-register">Sign up</Link>
         </Typography>
       </form>
     </FormContainer>
