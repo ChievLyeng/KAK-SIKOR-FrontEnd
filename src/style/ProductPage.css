@@ -1,8 +1,4 @@
-.product-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
+
 
 .goBack {
   padding: 16px;

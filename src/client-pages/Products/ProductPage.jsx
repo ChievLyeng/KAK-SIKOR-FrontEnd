@@ -63,7 +63,7 @@ const ProductPage = () => {
   return (
     <>
       <ClientLayout>
-        {isLoading ? (
+       <div> {isLoading ? (
           <Loader />
         ) : isError ? (
           <Message variant="danger">{isError?.data?.message}</Message>
@@ -141,7 +141,7 @@ const ProductPage = () => {
               </div>
             </div>
           </>
-        )}
+        )}</div>
       </ClientLayout>
     </>
   );

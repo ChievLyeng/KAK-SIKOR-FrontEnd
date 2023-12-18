@@ -30,6 +30,8 @@ import ResetPassword from "./client-pages/Auth/ResetNewPassword";
 import UserRegister from "./client-pages/Auth/UserRegister";
 import ErrorPage from "./components/ErrorPage";
 import AdminOrder from "./admin-pages/Order/AdminOrder";
+import CategoryPage from "./client-pages/productList/CategoryPage";
+import ClientCreateProduct from "./client-pages/productList/ClientCreateProduct";
 
 //const isAdminRoute = window.location.pathname.startsWith("/dashboard");
 
@@ -65,6 +67,11 @@ function App() {
               <Route path="/forgot-password" element={<ForgotPassword />} />
               <Route path="/verify" element={<Verification />} />
               <Route path="/reset-password" element={<ResetPassword />} />
+              <Route path="/category/:id" element={<CategoryPage />} />
+              <Route
+                path="/client-upload/:id"
+                element={<ClientCreateProduct />}
+              />
               <Route path="/*" element={<ErrorPage />} />
             </Routes>
           </Router>

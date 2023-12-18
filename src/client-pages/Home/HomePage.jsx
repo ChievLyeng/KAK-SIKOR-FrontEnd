@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchProducts, fetchCategories } from "../../store";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import InputBase from "@mui/material/InputBase";
@@ -21,24 +22,16 @@ const HomePage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { id } = useParams();
-
-  const handleClick = () => {
-    navigate(`/product/${id}`);
-  };
-
-  const [currentUser, setCurrentUser] = useState(null);
   const [categories, setCategories] = useState([]);
   const [products, setProducts] = useState([]);
   const categoriesData = useSelector(
     (state) => state.categories.data.categories
   );
   const productsData = useSelector((state) => state.products.data.products);
-  const user = useSelector((state) => state.auth?.login?.currentUser);
 
   useEffect(() => {
     dispatch(fetchCategories());
     dispatch(fetchProducts());
-    setCurrentUser(user);
     setProducts(productsData);
   }, [dispatch]);
 
@@ -70,18 +63,19 @@ const HomePage = () => {
           />
         </Toolbar>
         <Tabs
-          value={0} // Set the default value if needed
           variant="scrollable"
           scrollButtons={false}
           sx={{ marginTop: "24px", marginBottom: "24px" }}
           aria-label="scrollable prevent tabs example"
+          value={categories}
         >
           {categories?.map((category, index) => (
             <Tab
-              key={index}
+              key={category._id}
               label={category.name}
               component={Link}
               to={`/category/${category._id}`}
+              value={category._id}
             />
           ))}
         </Tabs>
@@ -116,8 +110,8 @@ const HomePage = () => {
                       <Typography variant="caption" sx={{ color: "green" }}>
                         {product.price || ""}$/KG
                       </Typography>
-                      <Typography variant="caption" onClick={handleClick}>
-                        DETAILS
+                      <Typography variant="caption">
+                        <ShoppingCartIcon sx={{ color: "green" }} />
                       </Typography>
                     </CardActions>
                   </Link>
