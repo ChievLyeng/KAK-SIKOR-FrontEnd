@@ -41,6 +41,10 @@ const ClientTopBar = () => {
     navigate("/");
   };
 
+  const handleAccClick = () => {
+    navigate("/userlogin");
+  };
+
   const menuItems = [
     { text: "Home", icon: <HomeIcon />, path: "/" },
     { text: "Product Market", icon: <StoreIcon />, path: "/product-market" },
@@ -74,7 +78,11 @@ const ClientTopBar = () => {
             >
               KAKSIKOR
             </Typography>
-            <IconButton color="black" aria-label="user">
+            <IconButton
+              color="black"
+              aria-label="user"
+              onClick={handleAccClick}
+            >
               <AccountCircleIcon sx={{ color: "black" }} />
             </IconButton>
             <IconButton

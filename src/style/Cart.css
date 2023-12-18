@@ -1,27 +1,50 @@
-.cart-proceed {
-  display: flex;
-  gap: 200px;
-}
-.cart-image {
-  width: 100px;
-}
-
-.cart-price {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
 .container {
-  padding: 16px;
+  padding: 0 16px;
 }
 
-.orderTitle {
+hr {
+  opacity: 0.4;
+  width: 80%;
+  margin: 0 auto;
+}
+
+.recipe {
+  margin: 10px 0;
+}
+
+.cart-img {
+  width: 100px;
+  height: 100%;
+  border-radius: 10px;
+}
+.title {
+  margin-bottom: 24px;
+}
+
+a {
+  text-decoration: none;
+}
+.cart-item {
+  margin-bottom: 1rem;
+  width: 95%;
+  /* margin: 0.5rem auto; */
+  box-shadow: none;
+}
+.order {
   color: #94c13c;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  margin-top: 24px;
+  text-align: center;
 }
-
-.orderSummary {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+p {
+  margin-top: 15px;
+  text-align: center;
+}
+.btn {
+  margin-top: 15px;
+  width: 100%;
+  padding: 10px 10px;
 }

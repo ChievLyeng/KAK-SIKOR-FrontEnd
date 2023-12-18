@@ -20,6 +20,9 @@
   align-items: center;
   justify-content: center;
 }
+Link {
+  text-decoration: none;
+}
 
 .inputInput {
   flex: 1;

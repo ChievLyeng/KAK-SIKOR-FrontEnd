@@ -89,8 +89,8 @@ function UserLogin() {
         if (userData) {
           dispatch(setCredentials({ token, refreshToken, userData }));
           navigate("/myaccount");
-          localStorage.setItem('user',JSON.stringify(userData.user))
-          localStorage.setItem('token',JSON.stringify(token))
+          localStorage.setItem("user", JSON.stringify(userData.user));
+          localStorage.setItem("token", JSON.stringify(token));
         } else {
           console.error("Invalid user data structure:", data);
         }
@@ -228,10 +228,7 @@ function UserLogin() {
           }}
         >
           Dont have account?{" "}
-          <Link
-            to={redirect ? `/register?redirect=${redirect}` : "/register"}
-            className="forgot"
-          >
+          <Link to="/user-register" className="forgot">
             Sign up
           </Link>
         </Typography>
