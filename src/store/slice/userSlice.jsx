@@ -1,10 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
-import 
-{ 
-  fetchUser, 
-  fetchSupplierById, 
+import {
+  fetchUser,
+  fetchSupplierById,
   deleteUser,
-  updateUserById 
+  updateUserById,
 } from "../thunks/userApi";
 
 const userSlice = createSlice({
@@ -47,6 +46,7 @@ const userSlice = createSlice({
       })
       .addCase(deleteUser.fulfilled, (state, action) => {
         state.isLoading = false;
+        state.data = action.payload;
         // Update the state after successful deletion if needed
       })
       .addCase(deleteUser.rejected, (state, action) => {
@@ -59,7 +59,7 @@ const userSlice = createSlice({
       })
       .addCase(updateUserById.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.data = action.payload
+        state.data = action.payload;
       })
       .addCase(updateUserById.rejected, (state, action) => {
         state.isLoading = false;

@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import { usersReducer } from "./slice/userSlice";
 import { productReducer } from "./slice/productSlice";
@@ -6,6 +7,9 @@ import { orderReducer } from "./slice/orderSlice";
 import { categoriesReducer } from "./slice/categoriesSlice";
 import authReducer from "./slice/authSlice";
 import { thunk } from "redux-thunk";
+import { apiSlice } from "./slice/apiSlice"; //apiSlice
+import cartSliceReducer from "./slice/cartSlice"; //cartSlice
+
 
 import {
   persistStore,
@@ -31,27 +35,22 @@ const rootReducer = combineReducers({
   reviews: reviewsReducer,
   orders: orderReducer,
   categories: categoriesReducer,
+  [apiSlice.reducerPath]: apiSlice.reducer,
+  cart: cartSliceReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-// export const store = configureStore({
-//   reducer: persistedReducer,
-//   middleware: (getDefaultMiddleware) =>
-//     getDefaultMiddleware({
-//       serializableCheck: {
-//         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-//       },
-//     }),
-// })
 export const store = configureStore({
   reducer: persistedReducer,
+
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }).concat(thunk),
+    }).concat(thunk, apiSlice.middleware),
+  devTools: true,
 });
 
 export let persistor = persistStore(store);

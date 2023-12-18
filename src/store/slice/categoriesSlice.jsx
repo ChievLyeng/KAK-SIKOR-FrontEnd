@@ -1,5 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchCategories, createCategory } from "../thunks/productApi";
+import {
+  fetchCategories,
+  createCategory,
+  getProductByCategory,
+} from "../thunks/productApi";
 
 const categoriesSlice = createSlice({
   name: "categories",
@@ -34,6 +38,18 @@ const categoriesSlice = createSlice({
         state.data.push(action.payload); // Push the created category to the existing data array
       })
       .addCase(createCategory.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message;
+      })
+      .addCase(getProductByCategory.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(getProductByCategory.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.data = action.payload; // Assuming the payload contains the fetched products
+      })
+      .addCase(getProductByCategory.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.error.message;
       });

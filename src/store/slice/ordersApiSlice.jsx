@@ -10,6 +10,14 @@ export const ordersApiSlice = apiSlice.injectEndpoints({
         method: "POST",
         body: { ...order },
       }),
+      invalidatesTags: ["Order", "Product"],
+    }),
+    getAllorders: builder.query({
+      query: () => ({
+        url: ORDERS_URL,
+      }),
+      keepUnusedDataFor: 5,
+      providesTags: ["Order"],
     }),
     getOrderDetails: builder.query({
       query: (orderId) => ({
@@ -17,10 +25,19 @@ export const ordersApiSlice = apiSlice.injectEndpoints({
       }),
       keepUnusedDataFor: 5,
     }),
+    getAllOrders: builder.query({
+      providesTags: ['Order'],
+      query: () => {
+        return {
+          url: `${import.meta.env.VITE_BASE_URL}/api/v1/orders`,
+          method: 'GET',
+        };
+      },
+    }),
     payOrder: builder.mutation({
       query: ({ orderId, details }) => ({
         url: `${ORDERS_URL}/${orderId}/pay`,
-        method: "PUT",
+        method: "PATCH",
         body: { ...details },
       }),
     }),
@@ -38,4 +55,5 @@ export const {
   useGetOrderDetailsQuery,
   usePayOrderMutation,
   useGetPayPalClientIdQuery,
+  useGetAllordersQuery,
 } = ordersApiSlice;

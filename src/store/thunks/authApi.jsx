@@ -7,15 +7,14 @@ import {
   logOutSuccess,
   updateUserFailed,
   updateUserStart,
-  updateUserSuccess
+  updateUserSuccess,
 } from "./../slice/authSlice";
 // import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const PORT = 3000;
-
-const LOGIN_USER = `http://localhost:${PORT}/api/v1/users/login`;
-const UPDATE_USER = (id) => `http://localhost:3000/api/v1/users/${id}`;
+const LOGIN_USER = `${import.meta.env.VITE_BASE_URL}/api/v1/users/login`;
+const UPDATE_USER = (id) =>
+  `${import.meta.env.VITE_BASE_URL}/api/v1/users/${id}`;
 
 export const loginUser = async (user, dispatch, navigate) => {
   console.log("fethc apii");
@@ -33,11 +32,17 @@ export const loginUser = async (user, dispatch, navigate) => {
   }
 };
 
-export const logOut = async (dispatch, id, navigate, refreshToken, axiosJWT) => {
+export const logOut = async (
+  dispatch,
+  id,
+  navigate,
+  refreshToken,
+  axiosJWT
+) => {
   console.log("id", id);
   dispatch(logOutStart());
   axios.defaults.withCredentials = true;
-  console.log("regfe",refreshToken)
+  console.log("regfe", refreshToken);
   try {
     const res = await axiosJWT.get(
       `http://127.0.0.1:3000/api/v1/users/logout/${id}`,
@@ -54,27 +59,27 @@ export const logOut = async (dispatch, id, navigate, refreshToken, axiosJWT) => 
   }
 };
 
-export const updateUserById =  async ({ userId, firstName, lastName, phone, gender, token },
-  dispatch
-  ) => {
-  dispatch(updateUserStart())
-    try {
-      const response = await axios.put(
-        UPDATE_USER(userId),
-        {
-          firstName,
-          lastName,
-          phoneNumber: phone,
-          gender,
+export const updateUserById = async (
+  { userId, firstName, lastName, phone, gender, token },
+) => {
+  try {
+     
+    const response = await axios.put(
+      UPDATE_USER(userId),
+      {
+        firstName,
+        lastName,
+        phoneNumber: phone,
+        gender,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
         },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      dispatch(updateUserSuccess(response.data))
-    } catch (error) {
-      dispatch(updateUserFailed())
-    }
-  };
+      }
+    );
+    return response.data
+  } catch (error) {
+      return error
+  }
+};

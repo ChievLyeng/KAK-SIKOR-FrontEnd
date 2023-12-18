@@ -58,7 +58,7 @@ export const usersApiSlice = apiSlice.injectEndpoints({
       query: (data) => ({
         url: `${USERS_URL}/reset-password`,
         method: "PUT",
-        body: JSON.stringify({ data }),
+        body: data,
       }),
     }),
 

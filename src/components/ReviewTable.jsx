@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -8,7 +8,8 @@ import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchReview } from "../store";
+import { deleteReview, fetchReview } from "../store";
+import { Link } from "react-router-dom";
 
 const columns = [
   {
@@ -37,6 +38,12 @@ const columns = [
     minWidth: 170,
     align: "right",
   },
+  {
+    id: "Action",
+    label: "Action",
+    minWidth: 50,
+    align: "left",
+  },
 ];
 
 export default function ReviewTable() {
@@ -46,8 +53,6 @@ export default function ReviewTable() {
   useEffect(() => {
     dispatch(fetchReview());
   }, [dispatch]);
-
-  console.log("reviewdata", reviewData);
 
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -59,6 +64,22 @@ export default function ReviewTable() {
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(+event.target.value);
     setPage(0);
+  };
+
+  const handleDeleteReview = (reviewId) => {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this Review?"
+    );
+    if (confirmDelete) {
+      dispatch(deleteReview(reviewId))
+        .unwrap()
+        .then(() => {
+          dispatch(fetchReview());
+        })
+        .catch((error) => {
+          console.error("Error delete review:", error);
+        });
+    }
   };
 
   return (
@@ -105,6 +126,19 @@ export default function ReviewTable() {
                     <TableCell align="right">{review.rating}</TableCell>
                     <TableCell align="right">
                       {new Date(review.createdAt).toLocaleDateString()}
+                    </TableCell>
+                    <TableCell>
+                      <div className="action-icon">
+                        <Link to={`/product-detail/${review.product?._id}`}>
+                          <i className="fa-regular fa-eye"></i>
+                        </Link>
+                        <Link>
+                          <i
+                            className="fa-solid fa-trash"
+                            onClick={() => handleDeleteReview(review.id)}
+                          ></i>
+                        </Link>
+                      </div>
                     </TableCell>
                   </TableRow>
                 ))}

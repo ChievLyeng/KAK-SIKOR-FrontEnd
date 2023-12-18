@@ -1,11 +1,11 @@
-import axios from 'axios';
+import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 // axios.defaults.withCredentials = true
 
 const refreshToken = async () => {
   try {
     const res = await axios.post(
-      'http://127.0.0.1:3000/api/v1/users/refresh-token',
+      `${import.meta.env.VITE_BASE_URL}/api/v1/users/refresh-token`,
       {
         // headers: {
         //   Authorization: `Bearer ${accessToken}`,
@@ -13,11 +13,11 @@ const refreshToken = async () => {
         // },
       },
       {
-        withCredentials:true
+        withCredentials: true,
       }
     );
 
-    console.log('Refresh Token:', res.data);
+    console.log("Refresh Token:", res.data);
     return res.data;
   } catch (err) {
     console.log(err);
@@ -27,14 +27,14 @@ const refreshToken = async () => {
 export const createAxios = (user, dispatch, stateSuccess) => {
   // const accessToken = user?.token || '';
   // const refToken = user?.refreshToken || '';
-  console.log('Calling axiosJWT!');
+
   const newInstance = axios.create();
   newInstance.interceptors.request.use(
     async (config) => {
       let date = new Date();
       const decodedToken = jwtDecode(user?.token);
-      console.log('Decoded Token:', decodedToken);
-      console.log(decodedToken.exp < date.getTime() / 1000)
+      console.log("Decoded Token:", decodedToken);
+      console.log(decodedToken.exp < date.getTime() / 1000);
 
       if (decodedToken.exp < date.getTime() / 1000) {
         const data = await refreshToken();
@@ -43,7 +43,7 @@ export const createAxios = (user, dispatch, stateSuccess) => {
           token: data.token,
           refreshToken: data.refreshToken,
         };
-        console.log('data refresh:', data);
+        console.log("data refresh:", data);
         dispatch(stateSuccess(refreshUser));
         config.headers["token"] = "Bearer " + data.accessToken;
       }

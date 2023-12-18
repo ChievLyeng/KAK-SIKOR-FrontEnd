@@ -5,6 +5,7 @@ import {
   getSingleProduct,
   updateProductById,
   deleteProduct, // Import the deleteProduct thunk
+  getProductBySupplier
 } from "../thunks/productApi";
 
 const productSlice = createSlice({
@@ -22,6 +23,7 @@ const productSlice = createSlice({
     singleProductError: null,
     isDeleting: false, // New state for delete operation
     deleteError: null, // Error state for delete operation
+    supplierProduct:[]
   },
   extraReducers(builder) {
     builder
@@ -43,6 +45,7 @@ const productSlice = createSlice({
       })
       .addCase(addProduct.fulfilled, (state, action) => {
         state.isAdding = false;
+        state.data = action.payload;
         // Handle the successful addition of the product here if needed
       })
       .addCase(addProduct.rejected, (state, action) => {
@@ -63,7 +66,6 @@ const productSlice = createSlice({
           state.data[index] = updatedProduct;
         }
       })
-
       .addCase(updateProductById.rejected, (state, action) => {
         state.isUpdating = false;
         state.updateError = action.error.message;
@@ -80,12 +82,25 @@ const productSlice = createSlice({
         state.isLoadingSingleProduct = false;
         state.singleProductError = action.error.message;
       })
+      .addCase(getProductBySupplier.pending, (state) => {
+        state.pending = true;
+        state.error = null;
+      })
+      .addCase(getProductBySupplier.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.supplierProduct = action.payload;
+      })
+      .addCase(getProductBySupplier.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message;
+      })
       .addCase(deleteProduct.pending, (state) => {
         state.isDeleting = true;
         state.deleteError = null;
       })
       .addCase(deleteProduct.fulfilled, (state, action) => {
         state.isDeleting = false;
+        state.data = action.payload;
         // Optionally handle success message or update state as needed
       })
       .addCase(deleteProduct.rejected, (state, action) => {

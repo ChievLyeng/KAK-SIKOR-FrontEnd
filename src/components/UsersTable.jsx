@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
@@ -68,8 +68,6 @@ const UsersTable = () => {
     dispatch(fetchProducts());
   }, [dispatch]);
 
-  console.log(usersData);
-
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [selectedRole, setSelectedRole] = useState("");
@@ -97,8 +95,6 @@ const UsersTable = () => {
   const filteredUsers = (usersData || []).filter((user) =>
     selectedRole ? user.role === selectedRole : true
   );
-  console.log("selectRole :",selectedRole)
-  console.log("filterusers :",filteredUsers)
 
   const filteredUsersByName = (filteredUsers || []).filter((user) => {
     const fullName = `${user.firstName} ${user.lastName}`.toLowerCase();
@@ -185,7 +181,13 @@ const UsersTable = () => {
                   </TableCell>
                   <TableCell>
                     <div className="action-icon">
-                      <Link to={user.role === 'supplier' ? `/supplier/${user._id}` : `/admin/${user._id}`}>
+                      <Link
+                        to={
+                          user.role === "supplier"
+                            ? `/supplier/${user._id}`
+                            : `/admin/${user._id}`
+                        }
+                      >
                         <i className="fa-regular fa-eye"></i>
                       </Link>
                       <Link onClick={() => handleDeleteUser(user._id)}>

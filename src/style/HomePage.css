@@ -1,0 +1,88 @@
+.search {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  border-radius: 4px;
+  background-color: rgba(
+    255,
+    255,
+    255,
+    0.15
+  ); /* Adjust transparency as needed */
+  width: 90%; /* Set the width as desired */
+  margin: 0 auto; /* Center the search bar */
+  padding: 5px 10px;
+}
+
+.searchIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.inputInput {
+  flex: 1;
+  padding: 10px;
+  width: 100%;
+  border: none;
+
+  color: green; /* Change text color */
+}
+/* HomePage.css */
+.category-slider {
+  width: 80%;
+  margin: 0 auto;
+}
+
+.category-group {
+  display: flex;
+  justify-content: space-between; /* Align categories evenly */
+}
+
+.category-item {
+  flex: 0 0 30%; /* Adjust width of individual category items */
+  outline: none;
+  margin-bottom: 20px; /* Add margin between categories */
+}
+
+.category-paper {
+  padding: 20px;
+  text-align: center;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
+  border: 1px solid green;
+  width: 100%; /* Ensure category paper takes full width */
+}
+
+.category-paper:hover {
+  transform: translateY(-5px);
+  border-color: #3bb78f;
+}
+
+.category-link {
+  text-decoration: none;
+  color: #333;
+}
+
+.category-name {
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+.product-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.product-container-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 0.5rem;
+}
+.product-container-2 > link {
+  text-decoration: none;
+}

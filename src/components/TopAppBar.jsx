@@ -7,7 +7,6 @@ import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
-import Badge from "@material-ui/core/Badge";
 import MenuIcon from "@mui/icons-material/Menu";
 import Drawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
@@ -21,29 +20,24 @@ import PeopleIcon from "@mui/icons-material/People";
 import RateReviewIcon from "@mui/icons-material/RateReview";
 import AddIcon from "@mui/icons-material/Add";
 import PermIdentityIcon from "@mui/icons-material/PermIdentity";
-import { ShoppingCart } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 import { logOutSuccess } from "../store/slice/authSlice";
 import { logOut } from "../store/thunks/authApi";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-
 import "../style/Dashboard.css";
 
 export default function TopAppBar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [productSubMenuOpen, setProductSubMenuOpen] = useState(false);
-  // const user = useSelector((state) => state.auth.login.currentUser);
-  // const accessToken = user?.token;
-  // const refreshToken = user?.refreshToken;
-  // const id = user?.data?.user?._id;
-  // console.log("id", accessToken);
-  // const dispatch = useDispatch();
-  // const navigate = useNavigate();
-  // let axiosJWT = createAxios(user, dispatch, logOutSuccess);
+  const user = useSelector((state) => state.auth.login.currentUser);
+  const refreshToken = user?.refreshToken;
+  const id = user?.data?.user?._id;
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  let axiosJWT = createAxios(user, dispatch, logOutSuccess);
 
-  // const handleLogout = () => {
-  //   logOut(dispatch, id, navigate, refreshToken, axiosJWT);
-  // };
+  const handleLogout = () => {
+    logOut(dispatch, id, navigate, refreshToken, axiosJWT);
+  };
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
@@ -52,9 +46,6 @@ export default function TopAppBar() {
   const toggleProductSubMenu = () => {
     setProductSubMenuOpen(!productSubMenuOpen);
   };
-
-  const { cartItems } = useSelector((state) => state.cart);
-  console.log(cartItems); // log the state.cart
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -81,27 +72,13 @@ export default function TopAppBar() {
             </Typography>
           </Link>
 
-          <Link to="/cart">
-            <IconButton>
-              <ShoppingCart />
-              {cartItems?.length > 0 && (
-                <Badge
-                  color="primary"
-                  overlap="circular"
-                  badgeContent={cartItems.reduce((a, c) => a + c.qty, 0)}
-                  style={{ marginLeft: "15px" }}
-                />
-              )}
-            </IconButton>
-          </Link>
-
           <Link to="/myaccount">
             <IconButton>
               <PermIdentityIcon sx={{ color: "black" }} />
             </IconButton>
           </Link>
 
-          <Link to="">
+          <Link to="" onClick={handleLogout}>
             <IconButton>Logout</IconButton>
           </Link>
         </Toolbar>
