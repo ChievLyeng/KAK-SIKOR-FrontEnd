@@ -35,6 +35,7 @@ import ClientCreateProduct from "./client-pages/productList/ClientCreateProduct"
 //const isAdminRoute = window.location.pathname.startsWith("/dashboard");
 
 function App() {
+
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
